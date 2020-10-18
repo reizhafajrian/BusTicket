@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "347157552440",
+    "firebase_url": "https://busticket-ac2ab.firebaseio.com",
+    "project_id": "busticket-ac2ab",
+    "storage_bucket": "busticket-ac2ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347157552440:android:00b329d7303ecb9e8b35cd",
+        "android_client_info": {
+          "package_name": "com.example.busticketactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347157552440-crvge0g6lubd0b57s5557eatnkg2eqce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp95UDXfdgr23UKEqciwZUx6dJfJbGfV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347157552440-crvge0g6lubd0b57s5557eatnkg2eqce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

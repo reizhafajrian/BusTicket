@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".regist.RegistAddImageActivity">
+
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Account"
+        android:fontFamily="@font/montserrat_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_please"
+        android:textSize="20dp"
+        android:textColor="@color/whitecolor"
+        android:layout_marginTop="20dp"
+        app:flow_verticalBias="0.0"
+        app:flow_horizontalBias="0.0"
+        android:textAlignment="center"
+        />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_please"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please fill up the forms below for informations"
+        app:layout_constraintTop_toBottomOf="@+id/tv_create"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/container_constraint"
+        android:textSize="20dp"
+        android:fontFamily="@font/montserrat_light"
+        android:textColor="@color/whitecolor"
+        android:layout_marginTop="20dp"
+        app:flow_verticalBias="0.0"
+        app:flow_horizontalBias="0.0"
+        android:textAlignment="center"
+        />
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="220dp"
+        android:background="#EDF1F8"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_constraint"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_please"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="14dp"
+            >
+            <LinearLayout
+                android:id="@+id/ln_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:orientation="vertical"
+                >
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="50dp"
+                    android:visibility="gone">
+                    <ImageButton
+                        android:id="@+id/iv_ava"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"/>
+                </androidx.cardview.widget.CardView>
+                <ImageButton
+                    android:id="@+id/btn_add_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_btn_image_add_photo"
+                    android:background="@drawable/btn_image_round"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible"
+                    />
+
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_nama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Nama"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/round_bg"
+                    android:inputType="textEmailAddress"
+                    />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Bio"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/round_bg"
+                    android:inputType="textEmailAddress"
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="60dp"
+            android:layout_height="45dp"
+            app:icon="@drawable/ic_back"
+            app:iconTint="#DBDBDB"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/whitecolor"
+            >
+        </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_continue"
+            android:layout_width="238dp"
+            android:layout_height="45dp"
+            android:text="Continue"
+            android:textColor="@color/whitecolor"
+            android:backgroundTint="@color/colorPrimary"
+            />
+
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
