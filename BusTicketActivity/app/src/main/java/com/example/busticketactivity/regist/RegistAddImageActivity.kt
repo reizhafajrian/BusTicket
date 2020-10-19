@@ -17,24 +17,29 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.busticketactivity.R
+import com.example.busticketactivity.home.HomeActivity
 import com.example.busticketactivity.utils.ExtraKey
 import com.example.busticketactivity.utils.ExtraKey.Companion.FROM_CAMERA_CODE
 import com.example.busticketactivity.utils.ExtraKey.Companion.FROM_GALLERY_CODE
 import com.example.busticketactivity.utils.ExtraKey.Companion.PERMISSION_CODE
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_regist_add_image.*
 
 
-class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener{
+class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     @Parcelize
     data class Data(
-        var username:String="",
-        var password:String="",
-        var email:String="",
-        var nama:String="",
-        var image:Uri?= Uri.EMPTY,
-        var bio:String=""
-        ):Parcelable
+        var username: String = "",
+        var password: String = "",
+        var email: String = "",
+        var nama: String = "",
+        var image: Uri? = Uri.EMPTY,
+        var bio: String = ""
+    ) : Parcelable
+    private lateinit var auth: FirebaseAuth
     private var imageCameraUri: Uri? = Uri.EMPTY
     private var resIdPhoto: Int? = null
     private var imageUri: Uri? = Uri.EMPTY
@@ -45,12 +50,15 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener{
 
         initiateUi()
     }
-    private fun initiateUi(){
+
+    private fun initiateUi() {
         btn_add_image.setOnClickListener(this)
         btn_continue.setOnClickListener(this)
+        btn_back_regis.setOnClickListener(this)
         iv_ava.setOnClickListener(this)
 
     }
+
     //Function untuk mengambil gambar jika dari gallery
     private fun getImageCameraUri(): Uri? = imageCameraUri
 
@@ -108,6 +116,7 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -115,14 +124,14 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener{
             when (requestCode) {
                 FROM_CAMERA_CODE -> {
                     iv_ava.setImageURI(getImageCameraUri())
-                    btn_add_image.visibility=View.GONE
-                    card_image.visibility=View.VISIBLE
+                    btn_add_image.visibility = View.GONE
+                    card_image.visibility = View.VISIBLE
                     imageUri = getImageCameraUri()
                 }
                 FROM_GALLERY_CODE -> {
                     iv_ava.setImageURI(data?.data)
-                    btn_add_image.visibility=View.GONE
-                    card_image.visibility=View.VISIBLE
+                    btn_add_image.visibility = View.GONE
+                    card_image.visibility = View.VISIBLE
                     imageUri = data?.data
 
                 }
@@ -130,22 +139,61 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener{
         }
 
     }
-    override fun onClick(v: View?) {
-        var nama=findViewById<EditText>(R.id.ed_nama).text.toString()
-        var bio=findViewById<EditText>(R.id.ed_bio).text.toString()
-        val DataItem=intent.getParcelableExtra<Item>("itemregist")
-        val dataUpdate=Data(username = DataItem.Username,password = DataItem.password,email = DataItem.email,nama = nama,bio = bio,image = imageUri)
 
-        when(v?.id){
-            R.id.btn_add_image->{
-              getPictures(R.id.iv_ava)
+    private fun regist(email: String,password: String) {
+
+        auth = Firebase.auth
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+
+                    val user = auth.currentUser
+                    val intent=Intent(this,HomeActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    // If sign in fails, display a message to the use
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+                // ...
+            }
+    }
+
+    override fun onClick(v: View?) {
+        var nama = findViewById<EditText>(R.id.ed_nama).text.toString()
+        var bio = findViewById<EditText>(R.id.ed_bio).text.toString()
+        val DataItem = intent.getParcelableExtra<Item>("itemregist")
+        val dataUpdate = Data(
+            username = DataItem.Username,
+            password = DataItem.password,
+            email = DataItem.email,
+            nama = nama,
+            bio = bio,
+            image = imageUri
+        )
+
+        when (v?.id) {
+            R.id.btn_back_regis->{
+                onBackPressed()
+            }
+            R.id.btn_add_image -> {
+                getPictures(R.id.iv_ava)
 
             }
-            R.id.iv_ava->{
+            R.id.iv_ava -> {
                 getPictures(R.id.iv_ava)
             }
-            R.id.btn_continue->{
-                Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()
+            R.id.btn_continue -> {
+                if (nama == "" || bio == "") {
+                    Toast.makeText(this, "Mohon masukan nama dan bio anda", Toast.LENGTH_SHORT).show()
+                } else {
+                    regist(dataUpdate.email,dataUpdate.password)
+                }
             }
         }
     }
