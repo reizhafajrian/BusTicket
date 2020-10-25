@@ -4,15 +4,15 @@ package com.example.busticketactivity.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.ItemMenuAdapter
 import com.example.busticketactivity.item.ItemMenuClass
-import kotlin.system.exitProcess
+import com.example.busticketactivity.listener.MenuItemListener
 
-class HomeActivity : AppCompatActivity() {
+
+class HomeActivity : AppCompatActivity(),MenuItemListener{
     private lateinit var rvMenu: RecyclerView
     private var listItem =ItemMenuClass(imageButton = mutableListOf())
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,16 +21,17 @@ class HomeActivity : AppCompatActivity() {
         intiateUI()
         showRecyleList()
     }
+    O
 
     private fun intiateUI() {
-        val list=ItemMenuClass(imageButton = mutableListOf(R.drawable.icon_pagoda))
+        val list=ItemMenuClass(imageButton = mutableListOf(R.drawable.icon_borobudur,R.drawable.icon_pisa,R.drawable.icon_monas))
         rvMenu = findViewById(R.id.rv_menu)
         rvMenu.setHasFixedSize(true)
         listItem=list
     }
 
     private fun showRecyleList(){
-        rvMenu.layoutManager=LinearLayoutManager(this)
+        rvMenu.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
         val listItemAdapter=ItemMenuAdapter(listItem)
         rvMenu.adapter=listItemAdapter
     }
@@ -38,7 +39,11 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_HOME)
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.flags=(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+    }
+
+    override fun onItemClick(Image: Int) {
+        TODO("Not yet implemented")
     }
 }

@@ -1,18 +1,18 @@
 package com.example.busticketactivity.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.item.ItemMenuClass
-import com.google.android.material.button.MaterialButton
+import com.example.busticketactivity.listener.MenuItemListener
+import kotlinx.android.synthetic.main.item_menu.view.*
 
-class ItemMenuAdapter(private val listItemData: ItemMenuClass) :
+
+class ItemMenuAdapter(private val listItemData: ItemMenuClass,
+                      private val listener: MenuItemListener) :
     RecyclerView.Adapter<ItemMenuAdapter.ListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -22,7 +22,7 @@ class ItemMenuAdapter(private val listItemData: ItemMenuClass) :
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = listItemData.imageButton[position]
-        holder.btnImage?.backgroundTintList=ContextCompat.getColorStateList(holder.itemView.context,item)
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +30,12 @@ class ItemMenuAdapter(private val listItemData: ItemMenuClass) :
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val btnImage: MaterialButton? = itemView.findViewById<MaterialButton>(R.id.btn_rv)
+        fun bind(item:Int){
+            with(itemView){
+                btn_rv.background=ContextCompat.getDrawable(itemView.context,item)
+                setOnClickListener { listener.onItemClick(item) }
+            }
+        }
 
     }
 
