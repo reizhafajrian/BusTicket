@@ -11,7 +11,7 @@ import com.example.busticketactivity.listener.MenuItemListener
 import kotlinx.android.synthetic.main.item_menu.view.*
 
 
-class ItemMenuAdapter(private val listItemData: ItemMenuClass,
+class ItemMenuAdapter(private val listItemData: MutableList<ItemMenuClass>,
                       private val listener: MenuItemListener) :
     RecyclerView.Adapter<ItemMenuAdapter.ListViewHolder>() {
 
@@ -21,19 +21,19 @@ class ItemMenuAdapter(private val listItemData: ItemMenuClass,
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val item = listItemData.imageButton[position]
+       val item = listItemData[position]
         holder.bind(item)
     }
 
     override fun getItemCount(): Int {
-        return listItemData.imageButton.size
+       return listItemData.size
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item:Int){
+        fun bind(item:ItemMenuClass){
             with(itemView){
-                btn_rv.background=ContextCompat.getDrawable(itemView.context,item)
-                setOnClickListener { listener.onItemClick(item) }
+                btn_rv.background=ContextCompat.getDrawable(itemView.context,item.imageButton)
+                btn_rv.setOnClickListener { listener.onItemClick(item.nama) }
             }
         }
 

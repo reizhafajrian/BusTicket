@@ -2,6 +2,7 @@ package com.example.busticketactivity.regist
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.busticketactivity.R
+import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.home.HomeActivity
 import com.example.busticketactivity.utils.ExtraKey
 import com.example.busticketactivity.utils.ExtraKey.Companion.FROM_CAMERA_CODE
@@ -47,7 +49,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_regist_add_image)
-
         initiateUi()
     }
 
@@ -56,7 +57,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
         btn_continue.setOnClickListener(this)
         btn_back_regis.setOnClickListener(this)
         iv_ava.setOnClickListener(this)
-
     }
 
     //Function untuk mengambil gambar jika dari gallery
@@ -118,7 +118,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && getResIdPhoto() == R.id.iv_ava) {
             when (requestCode) {
@@ -140,34 +139,32 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun regist(email: String,password: String) {
-
+    private fun regist(dataUpdate:Data) {
         auth = Firebase.auth
-        auth.createUserWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(dataUpdate.email, dataUpdate.password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-
-                    val user = auth.currentUser
+                    FireBaseRepo().createUser(dataUpdate)
+                    val emailPref=getSharedPreferences("email",Context.MODE_PRIVATE).edit()
+                    emailPref.putString("email",dataUpdate.email).apply()
                     val intent=Intent(this,HomeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    // If sign in fails, display a message to the use
                     Toast.makeText(
                         baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
-
-                // ...
             }
+
+
     }
 
     override fun onClick(v: View?) {
         var nama = findViewById<EditText>(R.id.ed_nama).text.toString()
         var bio = findViewById<EditText>(R.id.ed_bio).text.toString()
         val DataItem = intent.getParcelableExtra<Item>("itemregist")
+
         val dataUpdate = Data(
             username = DataItem.Username,
             password = DataItem.password,
@@ -183,7 +180,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btn_add_image -> {
                 getPictures(R.id.iv_ava)
-
             }
             R.id.iv_ava -> {
                 getPictures(R.id.iv_ava)
@@ -192,7 +188,8 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 if (nama == "" || bio == "") {
                     Toast.makeText(this, "Mohon masukan nama dan bio anda", Toast.LENGTH_SHORT).show()
                 } else {
-                    regist(dataUpdate.email,dataUpdate.password)
+                    Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()
+                    regist(dataUpdate)
                 }
             }
         }

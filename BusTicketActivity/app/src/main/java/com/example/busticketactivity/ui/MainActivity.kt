@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         },4000)
     }
+
     private fun checkFirstRun() {
         val PREFS_NAME = "MyPrefsFile"
         val PREF_VERSION_CODE_KEY = "version_code"

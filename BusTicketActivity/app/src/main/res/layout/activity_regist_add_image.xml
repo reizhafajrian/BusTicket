@@ -137,7 +137,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         >
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btn_back_regis"
             android:layout_width="60dp"
             android:layout_height="45dp"
@@ -146,8 +146,8 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/whitecolor"
             >
-        </com.google.android.material.button.MaterialButton>
-        <com.google.android.material.button.MaterialButton
+        </Button>
+        <Button
             android:id="@+id/btn_continue"
             android:layout_width="238dp"
             android:layout_height="45dp"

@@ -108,7 +108,7 @@
                     android:layout_gravity="bottom"
                     android:gravity="bottom"
                     >
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btn_sign_in"
                     android:layout_width="match_parent"
                     android:textColor="@color/whitecolor"
