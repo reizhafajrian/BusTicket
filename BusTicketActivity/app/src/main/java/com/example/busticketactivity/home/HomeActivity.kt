@@ -3,8 +3,10 @@ package com.example.busticketactivity.home
 
 import android.content.Context
 import android.content.Intent
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +18,12 @@ import com.example.busticketactivity.listener.MenuItemListener
 import com.example.busticketactivity.signin.UserObject
 import com.example.busticketactivity.tiketmenu.TiketActivty
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_home.*
 
 
 class HomeActivity : AppCompatActivity(), MenuItemListener {
     private lateinit var rvMenu: RecyclerView
+    private val Tag="HomeActivity"
     private var listItem = mutableListOf<ItemMenuClass>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +43,22 @@ class HomeActivity : AppCompatActivity(), MenuItemListener {
             .addOnCompleteListener {
                 if (it.isSuccessful){
                     val list=it.result!!.toObject(UserObject::class.java)
-                    val user=getSharedPreferences("user",Context.MODE_PRIVATE).edit()
+                    val user=getSharedPreferences("dataUser",Context.MODE_PRIVATE).edit()
                     val data= Gson()//inisialisasi GSOn
-                    val json=data.toJson(list)//membuat list menjadi json
-                    user.putString("dataUser",json)//menset data user sebagai shared preferences
-                    Toast.makeText(this, "$json", Toast.LENGTH_SHORT).show()
+                    user.putString("dataUser",data.toJson(list)).commit()//menset data user sebagai shared preferences
+                    if (list != null) {
+
+                        tv_name.text=list.nama
+                    }
                  }
+                else{
+                    Toast.makeText(this, "data anda gagal di tampilkan mohon cek koneksi anda", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
     private fun intiateUI() {
         val list = mutableListOf(
-
             ItemMenuClass(R.drawable.ic_scan,"Scan"),
             ItemMenuClass(R.drawable.ic_shop,"Beli"),
             ItemMenuClass(R.drawable.ic_history,"History")

@@ -52,11 +52,10 @@ class TiketActivty : AppCompatActivity(),TicketItemListener {
     override fun onItemClick(Nama: String) {
         when(Nama){
             Nama->{
-                val intent=Intent(this,PickTicketActivity::class.java)
-                intent.putExtra("title",Nama)
                 val gson=Gson()
                 val data=gson.toJson(datahasil[0])
-
+                val intent=Intent(this,PickTicketActivity::class.java)
+                intent.putExtra("title",Nama)
                 intent.putExtra("dataTicket",data)
                 startActivity(intent)
             }

@@ -3,29 +3,31 @@ package com.example.busticketactivity.pickticket
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Half.toFloat
 import android.util.Log
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
-
 import com.example.busticketactivity.adapter.PickTicketAdapter
 import com.example.busticketactivity.bottomsheets.BottomSheet
 import com.example.busticketactivity.bottomsheets.BottomSheetItemListener
-import com.example.busticketactivity.dataclass.UserData
-import com.example.busticketactivity.firebase.FireBaseRepo
-import com.example.busticketactivity.payment.PaymentActivity
+import com.example.busticketactivity.firebase.GetStatus
+import com.example.busticketactivity.firebase.Response
+import com.example.busticketactivity.firebase.Retro
+import com.example.busticketactivity.home.HomeActivity
+import com.example.busticketactivity.signin.UserObject
 import com.example.busticketactivity.tiketmenu.ItemDataTiket
+import com.google.common.primitives.UnsignedBytes.toInt
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback
 import com.midtrans.sdk.corekit.core.MidtransSDK
 import com.midtrans.sdk.corekit.core.PaymentMethod
 import com.midtrans.sdk.corekit.core.TransactionRequest
+import com.midtrans.sdk.corekit.core.UIKitCustomSetting
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme
 import com.midtrans.sdk.corekit.models.BankType
 import com.midtrans.sdk.corekit.models.ItemDetails
@@ -33,7 +35,9 @@ import com.midtrans.sdk.corekit.models.snap.CreditCard
 import com.midtrans.sdk.corekit.models.snap.TransactionResult
 import com.midtrans.sdk.uikit.SdkUIFlowBuilder
 import kotlinx.android.synthetic.main.activity_pick_ticket.*
-import java.util.ArrayList
+import retrofit2.Call
+import retrofit2.Callback
+import java.util.*
 
 
 class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetItemListener,
@@ -50,16 +54,22 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
         Loader()
     }
 
-    private fun intitateUI() {
-//        val list = mutableListOf<DataItemPickup?>()
-        rvPickTicket = findViewById(R.id.rv_pick_ticket)
+    private fun DataTiket(): ItemDataTiket? {
         val getDataTicket=intent.getStringExtra("dataTicket")
         val gson=Gson()
         val newData=gson.fromJson(getDataTicket,ItemDataTiket::class.java)
-        tv_title_bus.text=newData.nama
-        tv_type_bus.text=newData.type
-        tv_terminal.text=newData.terminal
-        tv_berangkat.text=newData.pergi
+        return newData
+    }
+    private fun intitateUI() {
+//        val list = mutableListOf<DataItemPickup?>()
+        rvPickTicket = findViewById(R.id.rv_pick_ticket)
+        val newData=DataTiket()
+        if (newData!=null) {
+            tv_title_bus.text = newData.nama
+            tv_type_bus.text = newData.type
+            tv_terminal.text = newData.terminal
+            tv_berangkat.text = newData.pergi
+        }
     }
 
     private fun Loader() {
@@ -84,6 +94,9 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
     override fun onClick(nomor: String) {
         when (nomor) {
             nomor -> {
+                val Nomor=getSharedPreferences("nomorKursi", Context.MODE_PRIVATE).edit()
+                Nomor.clear()
+                Nomor.putString("nomorKursi",nomor).commit()
                 ShowBottomSheets()
             }
         }
@@ -113,52 +126,72 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                     "#B61548",
                     "#FFE51255"
                 )
-            ) // set theme. it will replace theme on snap theme on MAP ( optional)
+            )
             .buildSDK()
     }
     override fun onTransactionFinished(result: TransactionResult?) {
-        if(result?.response!=null){
-            when(result.status){
-                TransactionResult.STATUS_SUCCESS->{
-                    Toast.makeText(this, "transaksi berhasil", Toast.LENGTH_SHORT).show()
-                }
-                TransactionResult.STATUS_FAILED->{
-                    Toast.makeText(this, "transaksi gagal", Toast.LENGTH_SHORT).show()
-                }
-            }
-            result?.response?.validationMessages
+        Toast.makeText(this, "${result?.status}", Toast.LENGTH_SHORT).show()
+        if (result?.response!=null){
+            getStatus(TransactionReq().orderId.toString())
         }else{
-            Toast.makeText(this, "transaksi di batalkan", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Transaksi di batalkan", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun getStatus(id:String?){
+        val retro=Retro().getRetroClientInstance("https://api.sandbox.midtrans.com/v2/").create(GetStatus::class.java)
+        retro.getTransaksi(id,"U0ItTWlkLXNlcnZlci1EbHpZeU85Mlp6YjNDa0k1QTlkMUhmdGs=").enqueue(
+            object : Callback<Response> {
+                override fun onResponse(
+                    call: Call<Response>,
+                    response: retrofit2.Response<Response>
+                ) {
+                    val res = response.body()
+                    if (res?.transaction_status.equals("settlement")) {
+
+                    } else {
+
+                    }
+                }
+                override fun onFailure(call: Call<Response>, t: Throwable) {
+                    Log.e("failed", t.message.toString())
+                }
+            }
+        )
+    }
+
     private fun showMidtrans(){
+        val setting = MidtransSDK.getInstance().uiKitCustomSetting
+        MidtransSDK.getInstance().uiKitCustomSetting = setting
         MidtransSDK.getInstance().transactionRequest=TransactionReq()
         MidtransSDK.getInstance().startPaymentUiFlow(this, PaymentMethod.BANK_TRANSFER_BCA)
     }
-    private fun data1():com.midtrans.sdk.corekit.models.CustomerDetails{
-
-        val userdata: UserData =
-            UserData(nama = "reizha",email = "reizha77@gmail.com",nomorTelfon ="085155208046",UserId = "reizha88")
-        val data=com.midtrans.sdk.corekit.models.CustomerDetails()
-        data.firstName=userdata.nama
-        data.lastName=userdata.nama
-        data.email=userdata.email
-        data.phone=userdata.nomorTelfon
-        return data
-    }
+//    private fun data1():com.midtrans.sdk.corekit.models.CustomerDetails{
+//        val getUser=getSharedPreferences("dataUser", Context.MODE_PRIVATE)
+//        val NewGson=Gson()
+//        val json=getUser.getString("dataUser","")
+//        val dataUser=NewGson.fromJson(json,UserObject::class.java)
+////        val userdata: UserData =
+////            UserData(nama = "reizha",email = "reizha77@gmail.com",nomorTelfon ="085155208046",UserId = "reizha88")
+//        val data=com.midtrans.sdk.corekit.models.CustomerDetails()
+//        data.firstName=dataUser.nama
+//        data.lastName=dataUser.nama
+//        data.email=dataUser.email
+//        data.phone="085155208046"
+//        return data
+//    }
     @SuppressLint("WrongConstant")
     private fun TransactionReq(): TransactionRequest {
-        val id="ticekt"
-        val price=20000.0
+        val dataTiket=DataTiket()
+        val id=dataTiket?.nama
+        val price=(dataTiket?.harga)!!.toDouble()
         val quantity=1
-        val itemName="harga"
-        val req= TransactionRequest("${System.currentTimeMillis()} ",20000.0)
-        req.customerDetails=data1()
+        val itemName=dataTiket?.type
+        val req= TransactionRequest("${System.currentTimeMillis()} ",price)
         val details= ItemDetails(id,price,quantity,itemName)
         val arrayDetail: ArrayList<ItemDetails> = arrayListOf<ItemDetails>()
+        val credit= CreditCard()
         arrayDetail.add(details)
         req.itemDetails=arrayDetail
-        val credit= CreditCard()
         credit.isSaveCard=false
         credit.authentication= CreditCard.AUTHENTICATION_TYPE_RBA
         credit.bank= BankType.BCA

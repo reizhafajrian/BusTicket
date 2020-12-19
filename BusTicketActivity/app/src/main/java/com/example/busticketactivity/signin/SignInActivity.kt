@@ -30,8 +30,6 @@ class SignInActivity : AppCompatActivity(),View.OnClickListener {
         tv_register.setOnClickListener(this)
     }
 
-
-
     override fun onStart() {
         val prefs=getSharedPreferences("login",MODE_PRIVATE)
         if (!prefs.getString("login","").isNullOrEmpty()){
@@ -54,7 +52,7 @@ class SignInActivity : AppCompatActivity(),View.OnClickListener {
         auth.signInWithEmailAndPassword(usernameText, passwordText)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-//                    prefs.edit().putString("login","${auth.currentUser}").apply()
+                    prefs.edit().putString("login","${auth.currentUser}").apply()
                    val intent=Intent(this,HomeActivity::class.java)
                     startActivity(intent)
                 } else {

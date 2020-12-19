@@ -32,7 +32,6 @@ class SignInAndRegistActivity : AppCompatActivity(),View.OnClickListener {
     override fun onBackPressed() {
         finish()
     }
-
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_sign_in ->{
