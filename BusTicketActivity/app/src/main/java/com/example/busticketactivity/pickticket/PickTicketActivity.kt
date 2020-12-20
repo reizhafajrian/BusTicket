@@ -14,6 +14,7 @@ import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.PickTicketAdapter
 import com.example.busticketactivity.bottomsheets.BottomSheet
 import com.example.busticketactivity.bottomsheets.BottomSheetItemListener
+import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.firebase.GetStatus
 import com.example.busticketactivity.firebase.Response
 import com.example.busticketactivity.firebase.Retro
@@ -30,6 +31,7 @@ import com.midtrans.sdk.corekit.core.TransactionRequest
 import com.midtrans.sdk.corekit.core.UIKitCustomSetting
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme
 import com.midtrans.sdk.corekit.models.BankType
+import com.midtrans.sdk.corekit.models.CustomerDetails
 import com.midtrans.sdk.corekit.models.ItemDetails
 import com.midtrans.sdk.corekit.models.snap.CreditCard
 import com.midtrans.sdk.corekit.models.snap.TransactionResult
@@ -42,7 +44,7 @@ import java.util.*
 
 class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetItemListener,
     TransactionFinishedCallback {
-    val TAG="PickTicketActivity"
+    val TAG = "PickTicketActivity"
     private val btnAlert by lazy { BottomSheet(this) }
     private lateinit var rvPickTicket: RecyclerView
 
@@ -55,16 +57,17 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
     }
 
     private fun DataTiket(): ItemDataTiket? {
-        val getDataTicket=intent.getStringExtra("dataTicket")
-        val gson=Gson()
-        val newData=gson.fromJson(getDataTicket,ItemDataTiket::class.java)
+        val getDataTicket = intent.getStringExtra("dataTicket")
+        val gson = Gson()
+        val newData = gson.fromJson(getDataTicket, ItemDataTiket::class.java)
         return newData
     }
+
     private fun intitateUI() {
 //        val list = mutableListOf<DataItemPickup?>()
         rvPickTicket = findViewById(R.id.rv_pick_ticket)
-        val newData=DataTiket()
-        if (newData!=null) {
+        val newData = DataTiket()
+        if (newData != null) {
             tv_title_bus.text = newData.nama
             tv_type_bus.text = newData.type
             tv_terminal.text = newData.terminal
@@ -73,14 +76,14 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
     }
 
     private fun Loader() {
-        val titleDoc=intent.getStringExtra("title")
-        val firebaseFirestore=FirebaseFirestore.getInstance()
+        val titleDoc = intent.getStringExtra("title")
+        val firebaseFirestore = FirebaseFirestore.getInstance()
         firebaseFirestore.collection("Bus").document(titleDoc)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     val list = it.result!!.toObject(DataItemPickup::class.java)
-                    Log.d(TAG,"ini list $list")
+                    Log.d(TAG, "ini list $list")
                     if (list != null) {
                         rvPickTicket.layoutManager = GridLayoutManager(this, 5)
                         val listItemAdapter = PickTicketAdapter(list.position, this)
@@ -94,9 +97,9 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
     override fun onClick(nomor: String) {
         when (nomor) {
             nomor -> {
-                val Nomor=getSharedPreferences("nomorKursi", Context.MODE_PRIVATE).edit()
+                val Nomor = getSharedPreferences("nomorKursi", Context.MODE_PRIVATE).edit()
                 Nomor.clear()
-                Nomor.putString("nomorKursi",nomor).commit()
+                Nomor.putString("nomorKursi", nomor).commit()
                 ShowBottomSheets()
             }
         }
@@ -113,11 +116,12 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
             showMidtrans()
         }
     }
-    private fun pay(){
+
+    private fun pay() {
         SdkUIFlowBuilder.init()
             .setContext(this)  // context is mandatory
             .setClientKey("SB-Mid-client-xc9c1l3oJpz9qaOZ") // client_key is mandatory
-            .setTransactionFinishedCallback (this) // set transaction finish callback (sdk callback)
+            .setTransactionFinishedCallback(this) // set transaction finish callback (sdk callback)
             .setMerchantBaseUrl("https://pythonmidtrans.herokuapp.com/") //set merchant url (required)
             .enableLog(true) // enable sdk log (optional)
             .setColorTheme(
@@ -129,17 +133,21 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
             )
             .buildSDK()
     }
+
     override fun onTransactionFinished(result: TransactionResult?) {
-        Toast.makeText(this, "${result?.status}", Toast.LENGTH_SHORT).show()
-        if (result?.response!=null){
+
+        if (result?.response != null) {
             getStatus(TransactionReq().orderId.toString())
-        }else{
+
+        } else {
             Toast.makeText(this, "Transaksi di batalkan", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun getStatus(id:String?){
-        val retro=Retro().getRetroClientInstance("https://api.sandbox.midtrans.com/v2/").create(GetStatus::class.java)
-        retro.getTransaksi(id,"U0ItTWlkLXNlcnZlci1EbHpZeU85Mlp6YjNDa0k1QTlkMUhmdGs=").enqueue(
+
+    private fun getStatus(id: String?) {
+        val retro = Retro().getRetroClientInstance("https://api.sandbox.midtrans.com/v2/")
+            .create(GetStatus::class.java)
+        retro.getTransaksi(id, "U0ItTWlkLXNlcnZlci1EbHpZeU85Mlp6YjNDa0k1QTlkMUhmdGs=").enqueue(
             object : Callback<Response> {
                 override fun onResponse(
                     call: Call<Response>,
@@ -147,11 +155,19 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                 ) {
                     val res = response.body()
                     if (res?.transaction_status.equals("settlement")) {
+                        Toast.makeText(this@PickTicketActivity, "${res?.transaction_status}", Toast.LENGTH_SHORT).show()
+                        val emailPref = getSharedPreferences("email", Context.MODE_PRIVATE)
+                        val email = emailPref.getString("email", "")
+                        val newData = DataTiket()
+                        val nomor = getSharedPreferences("nomorKusri", Context.MODE_PRIVATE)
+                        val nomorKursi=nomor.getString("nomorKusri", "")
 
+                        FireBaseRepo().postPaymentTiket(nomorKursi!!,email!!,newData!!)
                     } else {
 
                     }
                 }
+
                 override fun onFailure(call: Call<Response>, t: Throwable) {
                     Log.e("failed", t.message.toString())
                 }
@@ -159,43 +175,63 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
         )
     }
 
-    private fun showMidtrans(){
+    private fun showMidtrans() {
         val setting = MidtransSDK.getInstance().uiKitCustomSetting
+        setting.isSkipCustomerDetailsPages=true
         MidtransSDK.getInstance().uiKitCustomSetting = setting
-        MidtransSDK.getInstance().transactionRequest=TransactionReq()
+        MidtransSDK.getInstance().transactionRequest = TransactionReq()
         MidtransSDK.getInstance().startPaymentUiFlow(this, PaymentMethod.BANK_TRANSFER_BCA)
     }
-//    private fun data1():com.midtrans.sdk.corekit.models.CustomerDetails{
-//        val getUser=getSharedPreferences("dataUser", Context.MODE_PRIVATE)
-//        val NewGson=Gson()
-//        val json=getUser.getString("dataUser","")
-//        val dataUser=NewGson.fromJson(json,UserObject::class.java)
-////        val userdata: UserData =
-////            UserData(nama = "reizha",email = "reizha77@gmail.com",nomorTelfon ="085155208046",UserId = "reizha88")
-//        val data=com.midtrans.sdk.corekit.models.CustomerDetails()
-//        data.firstName=dataUser.nama
-//        data.lastName=dataUser.nama
-//        data.email=dataUser.email
-//        data.phone="085155208046"
-//        return data
-//    }
+
+        private fun data1():com.midtrans.sdk.corekit.models.CustomerDetails{
+        val getUser=getSharedPreferences("dataUser", Context.MODE_PRIVATE)
+        val NewGson=Gson()
+        val json=getUser.getString("dataUser","")
+        val dataUser=NewGson.fromJson(json,UserObject::class.java)
+//        val userdata: UserData =
+//            UserData(nama = "reizha",email = "reizha77@gmail.com",nomorTelfon ="085155208046",UserId = "reizha88")
+        val data=com.midtrans.sdk.corekit.models.CustomerDetails()
+        data.firstName=dataUser.nama
+        data.lastName=dataUser.nama
+        data.email=dataUser.email
+        data.phone="085155208046"
+        return data
+    }
     @SuppressLint("WrongConstant")
     private fun TransactionReq(): TransactionRequest {
-        val dataTiket=DataTiket()
-        val id=dataTiket?.nama
-        val price=(dataTiket?.harga)!!.toDouble()
-        val quantity=1
-        val itemName=dataTiket?.type
-        val req= TransactionRequest("${System.currentTimeMillis()} ",price)
-        val details= ItemDetails(id,price,quantity,itemName)
+        val dataTiket = DataTiket()
+        val id = dataTiket?.nama
+        val price = (dataTiket?.harga)!!.toDouble()
+        val quantity = 1
+        val itemName = dataTiket?.type
+        val req = TransactionRequest("${System.currentTimeMillis()} ", price)
+        val details = ItemDetails(id, price, quantity, itemName)
         val arrayDetail: ArrayList<ItemDetails> = arrayListOf<ItemDetails>()
-        val credit= CreditCard()
-        arrayDetail.add(details)
-        req.itemDetails=arrayDetail
-        credit.isSaveCard=false
-        credit.authentication= CreditCard.AUTHENTICATION_TYPE_RBA
-        credit.bank= BankType.BCA
-        req.creditCard=credit
+        val user = getSharedPreferences("dataUser", Context.MODE_PRIVATE)
+        val credit = CreditCard()
+        val customerData=CustomerDetails()
+        val dataUser=user.getString("datUser","")
+        val gson = Gson()
+        val newData = gson.fromJson(dataUser, UserObject::class.java)
+        Toast.makeText(this, "${newData}", Toast.LENGTH_SHORT).show()
+//        customerData.apply {
+//            email=newData.email
+//            firstName=newData.email
+//            phone=("0989217182")
+//            lastName=newData.lastname
+//        }
+
+        req.apply {
+            itemDetails=arrayDetail
+            customerDetails=customerData
+        }
+        credit.apply {
+            isSaveCard=false
+            authentication=CreditCard.AUTHENTICATION_TYPE_RBA
+            bank=BankType.BCA
+        }
+
+
         return req
     }
 }
