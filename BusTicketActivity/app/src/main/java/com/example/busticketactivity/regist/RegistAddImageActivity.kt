@@ -2,6 +2,7 @@ package com.example.busticketactivity.regist
 
 import android.Manifest
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 
 import android.content.Intent
@@ -11,22 +12,29 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 
 import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.busticketactivity.R
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.home.HomeActivity
-import com.example.busticketactivity.utils.ExtraKey
 import com.example.busticketactivity.utils.ExtraKey.Companion.FROM_CAMERA_CODE
 import com.example.busticketactivity.utils.ExtraKey.Companion.FROM_GALLERY_CODE
 import com.example.busticketactivity.utils.ExtraKey.Companion.PERMISSION_CODE
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_regist_add_image.*
 
@@ -34,17 +42,19 @@ import kotlinx.android.synthetic.main.activity_regist_add_image.*
 class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     @Parcelize
     data class Data(
-        var username: String = "",
-        var password: String = "",
-        var email: String = "",
-        var nama: String = "",
-        var image: Uri? = Uri.EMPTY,
+        var username: String? = "",
+        var password: String? = "",
+        var email: String? = "",
+        var nama: String? = "",
+        var imageLink:String="",
         var bio: String = ""
     ) : Parcelable
     private lateinit var auth: FirebaseAuth
     private var imageCameraUri: Uri? = Uri.EMPTY
     private var resIdPhoto: Int? = null
     private var imageUri: Uri? = Uri.EMPTY
+    private var imageLink:String=""
+    private var storageRef:StorageReference?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +99,10 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                     PERMISSION_CODE
                 )
                 openGallery()
+
+            }
+            else{
+            openGallery()
             }
         }
     }
@@ -97,7 +111,7 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent, ExtraKey.FROM_GALLERY_CODE, null)
+        startActivityForResult(intent, FROM_GALLERY_CODE, null)
     }
 
 
@@ -118,7 +132,9 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(requestCode, resultCode, data)
+        storageRef=FirebaseStorage.getInstance().reference.child("userImages")
         if (resultCode == Activity.RESULT_OK && getResIdPhoto() == R.id.iv_ava) {
             when (requestCode) {
                 FROM_CAMERA_CODE -> {
@@ -126,12 +142,15 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                     btn_add_image.visibility = View.GONE
                     card_image.visibility = View.VISIBLE
                     imageUri = getImageCameraUri()
+
                 }
                 FROM_GALLERY_CODE -> {
+
                     iv_ava.setImageURI(data?.data)
                     btn_add_image.visibility = View.GONE
                     card_image.visibility = View.VISIBLE
                     imageUri = data?.data
+
 
                 }
             }
@@ -139,16 +158,50 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun uploadToDatabase(url:GetUrlListner) {
+       if(imageUri!=null){
+           val file=storageRef!!.child(System.currentTimeMillis().toString()+".jpg")
+           var uploadTask:StorageTask<*>
+           uploadTask=file.putFile(imageUri!!)
+           uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot,Task<Uri>> {
+                if(!it.isSuccessful){
+                    it.exception?.let{
+                        throw it
+                    }
+                }
+               return@Continuation file.downloadUrl
+           }).addOnCompleteListener {
+               if(it.isSuccessful){
+                   val downloadUrl=it.result
+                   val mUri=downloadUrl.toString()
+                   url.getUrl(mUri)
+                   Log.d("RegistAddImageActivity","ini uri ${mUri}")
+               }
+           }
+
+       }
+    }
+
     private fun regist(dataUpdate:Data) {
+        spinner.visibility=View.VISIBLE
         auth = Firebase.auth
-        auth.createUserWithEmailAndPassword(dataUpdate.email, dataUpdate.password)
+        auth.createUserWithEmailAndPassword(dataUpdate.email.toString(), dataUpdate.password.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    FireBaseRepo().createUser(dataUpdate)
-                    val emailPref=getSharedPreferences("email",Context.MODE_PRIVATE).edit()
-                    emailPref.putString("email",dataUpdate.email).apply()
-                    val intent=Intent(this,HomeActivity::class.java)
-                    startActivity(intent)
+                    val data=dataUpdate
+                    uploadToDatabase(object:GetUrlListner{
+                        override fun getUrl(url: String) {
+                            data.imageLink=url
+                            Log.d("RegistAddImageActivity","ini image ${imageLink}")
+                            FireBaseRepo().createUser(data)
+                            val emailPref=getSharedPreferences("email",Context.MODE_PRIVATE).edit()
+                            emailPref.putString("email",dataUpdate.email).apply()
+                            spinner.visibility=View.GONE
+                            val intent=Intent(this@RegistAddImageActivity,HomeActivity::class.java)
+                            startActivity(intent)
+                        }
+                    })
+
                 } else {
                     Toast.makeText(
                         baseContext, "Authentication failed.",
@@ -161,17 +214,17 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        var nama = findViewById<EditText>(R.id.ed_nama).text.toString()
-        var bio = findViewById<EditText>(R.id.ed_bio).text.toString()
+        val nama = findViewById<EditText>(R.id.ed_nama).text.toString()
+        val bio = findViewById<EditText>(R.id.ed_bio).text.toString()
         val DataItem = intent.getParcelableExtra<Item>("itemregist")
 
         val dataUpdate = Data(
-            username = DataItem.Username,
-            password = DataItem.password,
-            email = DataItem.email,
+            username = DataItem?.Username,
+            password = DataItem?.password,
+            email = DataItem?.email,
             nama = nama,
             bio = bio,
-            image = imageUri
+            imageLink = ""
         )
 
         when (v?.id) {
@@ -190,6 +243,7 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()
                     regist(dataUpdate)
+
                 }
             }
         }

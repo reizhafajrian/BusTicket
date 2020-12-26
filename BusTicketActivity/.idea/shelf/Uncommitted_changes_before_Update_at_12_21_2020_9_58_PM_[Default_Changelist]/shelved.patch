@@ -1,0 +1,38 @@
+Index: app/src/main/java/com/example/busticketactivity/home/HomeActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.busticketactivity.home\r\n\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.nfc.Tag\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.widget.Toast\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.example.busticketactivity.R\r\nimport com.example.busticketactivity.adapter.ItemMenuAdapter\r\nimport com.example.busticketactivity.firebase.FireBaseRepo\r\nimport com.example.busticketactivity.item.ItemMenuClass\r\nimport com.example.busticketactivity.listener.MenuItemListener\r\nimport com.example.busticketactivity.signin.UserObject\r\nimport com.example.busticketactivity.tiketmenu.TiketActivty\r\nimport com.google.gson.Gson\r\nimport kotlinx.android.synthetic.main.activity_home.*\r\n\r\n\r\nclass HomeActivity : AppCompatActivity(), MenuItemListener {\r\n    private lateinit var rvMenu: RecyclerView\r\n    private val Tag=\"HomeActivity\"\r\n    private var listItem = mutableListOf<ItemMenuClass>()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_home)\r\n        intiateUI()\r\n        getDataUser()\r\n        showRecyleList()\r\n    }\r\n\r\n\r\n\r\n    private fun getDataUser(){\r\n        val emailPref=getSharedPreferences(\"email\",Context.MODE_PRIVATE)\r\n        val email=emailPref.getString(\"email\",\"\")\r\n        if (!email.isNullOrEmpty()){\r\n        FireBaseRepo().getUser(email)\r\n            .addOnCompleteListener {\r\n                if (it.isSuccessful){\r\n                    val list=it.result!!.toObject(UserObject::class.java)\r\n                    val user=getSharedPreferences(\"dataUser\",Context.MODE_PRIVATE).edit()\r\n                    val data= Gson()//inisialisasi GSOn\r\n                    user.putString(\"dataUser\",data.toJson(list)).commit()//menset data user sebagai shared preferences\r\n                    if (list != null) {\r\n\r\n                        tv_name.text=list.nama\r\n                    }\r\n                 }\r\n                else{\r\n                    Toast.makeText(this, \"data anda gagal di tampilkan mohon cek koneksi anda\", Toast.LENGTH_SHORT).show()\r\n                }\r\n            }\r\n        }\r\n    }\r\n    private fun intiateUI() {\r\n        val list = mutableListOf(\r\n            ItemMenuClass(R.drawable.ic_scan,\"Scan\"),\r\n            ItemMenuClass(R.drawable.ic_shop,\"Beli\"),\r\n            ItemMenuClass(R.drawable.ic_history,\"History\")\r\n        )\r\n        rvMenu = findViewById(R.id.rv_menu)\r\n        rvMenu.setHasFixedSize(true)\r\n        listItem=list\r\n\r\n\r\n    }\r\n    private fun showRecyleList() {\r\n        rvMenu.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)\r\n        val listItemAdapter = ItemMenuAdapter(listItem,this)\r\n        rvMenu.adapter = listItemAdapter\r\n    }\r\n\r\n    override fun onBackPressed() {\r\n        val intent = Intent(Intent.ACTION_MAIN)\r\n        intent.addCategory(Intent.CATEGORY_HOME)\r\n        intent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK)\r\n        startActivity(intent)\r\n    }\r\n\r\n    override fun onItemClick(nama: String) {\r\n        when(nama){\r\n           \"Beli\"->{\r\n               val intent=Intent(this,TiketActivty::class.java)\r\n               startActivity(intent)\r\n            }\r\n            \"Scan\"->{\r\n                Toast.makeText(this, \"\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            \"History\"->{\r\n                Toast.makeText(this, \"\", Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/busticketactivity/home/HomeActivity.kt	(revision a3820894313e0cefa217c2e51df53a39aa490c74)
++++ app/src/main/java/com/example/busticketactivity/home/HomeActivity.kt	(date 1608562686888)
+@@ -24,6 +24,7 @@
+ class HomeActivity : AppCompatActivity(), MenuItemListener {
+     private lateinit var rvMenu: RecyclerView
+     private val Tag="HomeActivity"
++    private val data= Gson()//inisialisasi GSOn
+     private var listItem = mutableListOf<ItemMenuClass>()
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -44,8 +45,8 @@
+                 if (it.isSuccessful){
+                     val list=it.result!!.toObject(UserObject::class.java)
+                     val user=getSharedPreferences("dataUser",Context.MODE_PRIVATE).edit()
+-                    val data= Gson()//inisialisasi GSOn
+-                    user.putString("dataUser",data.toJson(list)).commit()//menset data user sebagai shared preferences
++                    val json=data.toJson(list)
++                    user.putString("dataUser",json).apply()//menset data user sebagai shared preferences
+                     if (list != null) {
+ 
+                         tv_name.text=list.nama
+@@ -71,8 +72,7 @@
+     }
+     private fun showRecyleList() {
+         rvMenu.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+-        val listItemAdapter = ItemMenuAdapter(listItem,this)
+-        rvMenu.adapter = listItemAdapter
++        rvMenu.adapter = ItemMenuAdapter(listItem,this)
+     }
+ 
+     override fun onBackPressed() {

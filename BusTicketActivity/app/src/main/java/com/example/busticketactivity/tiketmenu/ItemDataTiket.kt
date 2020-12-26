@@ -1,7 +1,5 @@
 package com.example.busticketactivity.tiketmenu
 
-import com.example.busticketactivity.pickticket.DataItemPickup
-import java.text.FieldPosition
 
 data class ItemDataTiket(
     val harga:String="",

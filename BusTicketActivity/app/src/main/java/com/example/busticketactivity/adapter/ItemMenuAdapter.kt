@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
-import com.example.busticketactivity.item.ItemMenuClass
+import com.example.busticketactivity.dataclass.ItemMenuClass
 import com.example.busticketactivity.listener.MenuItemListener
 import kotlinx.android.synthetic.main.item_menu.view.*
 
@@ -30,7 +30,7 @@ class ItemMenuAdapter(private val listItemData: MutableList<ItemMenuClass>,
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item:ItemMenuClass){
+        fun bind(item: ItemMenuClass){
             with(itemView){
                 btn_rv.background=ContextCompat.getDrawable(itemView.context,item.imageButton)
                 btn_rv.setOnClickListener { listener.onItemClick(item.nama) }

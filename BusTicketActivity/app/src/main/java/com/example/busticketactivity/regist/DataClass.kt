@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Item(
-    var Username:String="",
-    var password:String="",
-    var email:String=""
+    var Username:String?="",
+    var password:String?="",
+    var email:String?=""
 ): Parcelable

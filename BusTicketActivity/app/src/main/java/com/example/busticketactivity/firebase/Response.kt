@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 class Response {
         @SerializedName("transaction_status")
         @Expose
-        var transaction_status:String=""
+        var transaction_status : String?=""
 }

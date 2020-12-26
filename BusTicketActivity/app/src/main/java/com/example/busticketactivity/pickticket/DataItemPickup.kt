@@ -1,8 +1,12 @@
 package com.example.busticketactivity.pickticket
 
+import com.example.busticketactivity.firebase.DataClassIsKosong
+
 
 data class DataItemPickup(
     val nama:String="",
     val harga:String="",
-   val position: MutableList<Any?> = mutableListOf<Any?>()
+    val pergi:String="",
+    val terminal:String="",
+   val position: MutableList<DataClassIsKosong?> = mutableListOf()
 )

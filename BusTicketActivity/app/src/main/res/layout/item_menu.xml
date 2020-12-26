@@ -3,9 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_marginStart="3dp"
+    android:layout_marginStart="10dp"
     android:gravity="center"
-    android:layout_marginEnd="3dp"
+    android:layout_marginEnd="10dp"
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

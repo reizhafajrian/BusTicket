@@ -7,13 +7,29 @@
     android:background="@drawable/bg_gradient"
     tools:context=".home.HomeActivity">
 
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="220dp"
         android:background="#EDF1F8"
-        app:layout_constraintTop_toBottomOf="@+id/cd_image"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/iv_ava"
+        >
+        <com.synnapps.carouselview.CarouselView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/carouselView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:fillColor="#FFFFFFFF"
+            app:pageColor="#00000000"
+            app:radius="6dp"
+            app:slideInterval="3000"
+            app:strokeColor="#FF777777"
+            app:strokeWidth="1dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_dashboard"
@@ -22,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/cd_image"
+        app:layout_constraintBottom_toTopOf="@+id/iv_ava"
         android:textSize="20dp"
         android:textColor="@color/whitecolor"
         android:layout_marginTop="30dp"
@@ -32,24 +48,27 @@
         />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cd_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/cd_menu"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dashboard" 
-        app:cardCornerRadius="50dp"
-        />
+
+            <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_ava"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+                app:shapeAppearanceOverlay="@style/circleImageView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@+id/cd_menu"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tv_dashboard"
+            />
+
     <LinearLayout
         android:id="@+id/ln_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/cd_image"
-        app:layout_constraintTop_toTopOf="@+id/cd_image"
-        app:layout_constraintBottom_toBottomOf="@+id/cd_image"
+        app:layout_constraintLeft_toRightOf="@+id/iv_ava"
+        app:layout_constraintTop_toTopOf="@+id/iv_ava"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_ava"
         android:layout_marginStart="12dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,7 +80,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guruh"
+            android:text="User"
             android:textColor="@color/whitecolor"
             android:fontFamily="@font/montserrat_medium"
             />
@@ -129,6 +148,24 @@
 
 
     </androidx.cardview.widget.CardView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:visibility="visible"
+        android:translationZ="10dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/spinner"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

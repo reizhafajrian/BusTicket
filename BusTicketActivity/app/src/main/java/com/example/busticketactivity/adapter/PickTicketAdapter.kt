@@ -1,19 +1,16 @@
 package com.example.busticketactivity.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
-import com.example.busticketactivity.pickticket.DataItemPickup
-import com.example.busticketactivity.pickticket.ListenerPickTicket
+import com.example.busticketactivity.firebase.DataClassIsKosong
+import com.example.busticketactivity.listener.ListenerPickTicket
 import kotlinx.android.synthetic.main.item_pick_ticket.view.*
 
-class PickTicketAdapter(private val list:MutableList<Any?>,var listener:ListenerPickTicket):RecyclerView.Adapter<PickTicketAdapter.ListViewHolder>(){
+class PickTicketAdapter(private val list: MutableList<DataClassIsKosong?>, var listener: ListenerPickTicket):RecyclerView.Adapter<PickTicketAdapter.ListViewHolder>(){
     private val TAG="PickTicketActivity"
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -35,19 +32,19 @@ class PickTicketAdapter(private val list:MutableList<Any?>,var listener:Listener
     }
 
     inner class ListViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        fun bind(item:Any){
-            val hasil=item as MutableMap<String,String>
-              val color=hasil["isKosong"].toString()
+        fun bind(item:DataClassIsKosong){
+            val hasil=item
+              val color=hasil.isKosong
 
 
             with(itemView){
-                tv_nomor.text=hasil["nomor"]
+                tv_nomor.text=hasil.nomor
 
-                if (color.equals("false")){
+                if (color==false){
                     itemView.cd_available.setCardBackgroundColor(ContextCompat.getColor(itemView.context,R.color.colorRed))
                 }
                 else{
-                    cd_available.setOnClickListener { listener.onClick(hasil["nomor"]!!) }
+                    cd_available.setOnClickListener { listener.onClick(hasil.nomor!!) }
                 }
 
             }

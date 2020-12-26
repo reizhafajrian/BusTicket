@@ -4,14 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.example.busticketactivity.R
 import com.example.busticketactivity.regist.RegisterActivity
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in_and_regist.*
 
-class SignInAndRegistActivity : AppCompatActivity(),View.OnClickListener {
-    private lateinit var auth: FirebaseAuth
+class SignInAndRegistActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_and_regist)
@@ -20,11 +17,19 @@ class SignInAndRegistActivity : AppCompatActivity(),View.OnClickListener {
         initateUi()
 
     }
-    private fun initateUi(){
-        val prefs=getSharedPreferences("login",MODE_PRIVATE)
-        if (!prefs.getString("login","").isNullOrEmpty()){
-            val intent= Intent(this,
-                SignInActivity::class.java)
+
+    private fun initateUi() {
+        val prefs = getSharedPreferences("login", MODE_PRIVATE)
+        val prefsmanager = getSharedPreferences("manager", MODE_PRIVATE)
+        val prefskenek = getSharedPreferences("kenek", MODE_PRIVATE)
+        if (!prefs.getString("login", "").isNullOrEmpty()
+            || !prefsmanager.getString("manager", "")
+                .isNullOrEmpty() || !prefskenek.getString("kenek", "").isNullOrEmpty()
+        ) {
+            val intent = Intent(
+                this,
+                SignInActivity::class.java
+            )
             startActivity(intent)
         }
     }
@@ -32,16 +37,21 @@ class SignInAndRegistActivity : AppCompatActivity(),View.OnClickListener {
     override fun onBackPressed() {
         finish()
     }
+
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_sign_in ->{
-                val intent= Intent(this,
-                    SignInActivity::class.java)
+        when (v?.id) {
+            R.id.btn_sign_in -> {
+                val intent = Intent(
+                    this,
+                    SignInActivity::class.java
+                )
                 startActivity(intent)
             }
-            R.id.btn_register ->{
-                val intent= Intent(this,
-                    RegisterActivity::class.java)
+            R.id.btn_register -> {
+                val intent = Intent(
+                    this,
+                    RegisterActivity::class.java
+                )
                 startActivity(intent)
 
             }

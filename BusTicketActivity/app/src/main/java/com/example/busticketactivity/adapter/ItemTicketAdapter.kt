@@ -4,14 +4,11 @@ package com.example.busticketactivity.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
-import com.example.busticketactivity.item.ItemMenuClass
 import com.example.busticketactivity.listener.TicketItemListener
 import com.example.busticketactivity.tiketmenu.ItemDataTiket
-import kotlinx.android.synthetic.main.item_menu.view.*
 import kotlinx.android.synthetic.main.item_ticket.view.*
 
 
