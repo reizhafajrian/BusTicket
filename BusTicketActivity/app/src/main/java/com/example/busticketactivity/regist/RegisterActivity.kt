@@ -31,7 +31,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         password?.let {
             val passwordPattern = "^(?=.*[0-9]).{4,}$"
             val passwordMatcher = Regex(passwordPattern)
-
             return passwordMatcher.find(password) != null
         } ?: return false
     }

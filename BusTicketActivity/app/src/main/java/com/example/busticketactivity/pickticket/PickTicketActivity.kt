@@ -193,7 +193,6 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                         }
                         Log.d(TAG, "ini response ${res?.transaction_status}")
                     }
-
                     override fun onFailure(call: Call<Response>, t: Throwable) {
 
                     }

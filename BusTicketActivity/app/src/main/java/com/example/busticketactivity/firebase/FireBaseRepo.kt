@@ -43,7 +43,7 @@ class FireBaseRepo {
             }
     }
 
-    fun createUser(dataUpdate: RegistAddImageActivity.Data) {
+    fun createUser(dataUpdate: RegistAddImageActivity.Data): Task<Void> {
         val docData = hashMapOf<String, Any>(
             "username" to dataUpdate.username.toString(),
             "email" to dataUpdate.email.toString(),
@@ -51,7 +51,7 @@ class FireBaseRepo {
             "bio" to dataUpdate.bio,
             "imageUrl" to dataUpdate.imageLink
         )
-        firebaseFirestore.collection("User").document(dataUpdate.email.toString())
+        return firebaseFirestore.collection("User").document(dataUpdate.email.toString())
             .set(docData)
     }
 

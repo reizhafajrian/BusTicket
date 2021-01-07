@@ -2,7 +2,6 @@ package com.example.busticketactivity.regist
 
 import android.Manifest
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 
 import android.content.Intent
@@ -16,7 +15,6 @@ import android.util.Log
 
 import android.view.View
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -46,15 +44,15 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
         var password: String? = "",
         var email: String? = "",
         var nama: String? = "",
-        var imageLink:String="",
+        var imageLink: String = "",
         var bio: String = ""
     ) : Parcelable
+
     private lateinit var auth: FirebaseAuth
     private var imageCameraUri: Uri? = Uri.EMPTY
     private var resIdPhoto: Int? = null
     private var imageUri: Uri? = Uri.EMPTY
-    private var imageLink:String=""
-    private var storageRef:StorageReference?=null
+    private var storageRef: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,9 +98,8 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 )
                 openGallery()
 
-            }
-            else{
-            openGallery()
+            } else {
+                openGallery()
             }
         }
     }
@@ -134,7 +131,7 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
-        storageRef=FirebaseStorage.getInstance().reference.child("userImages")
+        storageRef = FirebaseStorage.getInstance().reference.child("userImages")
         if (resultCode == Activity.RESULT_OK && getResIdPhoto() == R.id.iv_ava) {
             when (requestCode) {
                 FROM_CAMERA_CODE -> {
@@ -158,59 +155,83 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun uploadToDatabase(url:GetUrlListner) {
-       if(imageUri!=null){
-           val file=storageRef!!.child(System.currentTimeMillis().toString()+".jpg")
-           var uploadTask:StorageTask<*>
-           uploadTask=file.putFile(imageUri!!)
-           uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot,Task<Uri>> {
-                if(!it.isSuccessful){
-                    it.exception?.let{
+    private fun uploadToDatabase(url: GetUrlListner) {
+        if (imageUri != null) {
+            val file = storageRef!!.child(System.currentTimeMillis().toString() + ".jpg")
+            val uploadTask: StorageTask<*>
+            uploadTask = file.putFile(imageUri!!)
+            uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
+                if (!it.isSuccessful) {
+                    it.exception?.let {
                         throw it
                     }
                 }
-               return@Continuation file.downloadUrl
-           }).addOnCompleteListener {
-               if(it.isSuccessful){
-                   val downloadUrl=it.result
-                   val mUri=downloadUrl.toString()
-                   url.getUrl(mUri)
-                   Log.d("RegistAddImageActivity","ini uri ${mUri}")
-               }
-           }
+                return@Continuation file.downloadUrl
+            }).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val downloadUrl = it.result
+                    val mUri = downloadUrl.toString()
+                    url.getUrl(mUri)
+                }
+                else{
+                    deleteUser()
+                }
+            }.addOnFailureListener {
+                deleteUser()
+            }
 
-       }
+        }
     }
 
-    private fun regist(dataUpdate:Data) {
-        spinner.visibility=View.VISIBLE
+    private fun regist(dataUpdate: Data) {
+        spinner.visibility = View.VISIBLE
         auth = Firebase.auth
-        auth.createUserWithEmailAndPassword(dataUpdate.email.toString(), dataUpdate.password.toString())
-            .addOnCompleteListener(this) { task ->
+        auth.createUserWithEmailAndPassword(
+            dataUpdate.email.toString(),
+            dataUpdate.password.toString()
+        )
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val data=dataUpdate
-                    uploadToDatabase(object:GetUrlListner{
+                    uploadToDatabase(object : GetUrlListner {
                         override fun getUrl(url: String) {
-                            data.imageLink=url
-                            Log.d("RegistAddImageActivity","ini image ${imageLink}")
-                            FireBaseRepo().createUser(data)
-                            val emailPref=getSharedPreferences("email",Context.MODE_PRIVATE).edit()
-                            emailPref.putString("email",dataUpdate.email).apply()
-                            spinner.visibility=View.GONE
-                            val intent=Intent(this@RegistAddImageActivity,HomeActivity::class.java)
-                            startActivity(intent)
+                            dataUpdate.imageLink = url
+                            FireBaseRepo().createUser(dataUpdate).addOnCompleteListener {
+
+                                val emailPref =
+                                    getSharedPreferences("email", Context.MODE_PRIVATE).edit()
+                                emailPref.putString("email", dataUpdate.email).apply()
+                                spinner.visibility = View.GONE
+                                val intent =
+                                    Intent(this@RegistAddImageActivity, HomeActivity::class.java)
+                                startActivity(intent)
+                            }
+                                .addOnFailureListener {
+
+                                    deleteUser()
+                                }
                         }
                     })
-
                 } else {
                     Toast.makeText(
                         baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    deleteUser()
                 }
             }
+            .addOnFailureListener {
+            }
+    }
 
-
+    private fun deleteUser() {
+        val auth = Firebase.auth.currentUser!!
+        auth.delete().addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("RegistAddImageActivity", "gagal")
+            } else {
+                deleteUser()
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -228,7 +249,7 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
         )
 
         when (v?.id) {
-            R.id.btn_back_regis->{
+            R.id.btn_back_regis -> {
                 onBackPressed()
             }
             R.id.btn_add_image -> {
@@ -239,11 +260,11 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btn_continue -> {
                 if (nama == "" || bio == "") {
-                    Toast.makeText(this, "Mohon masukan nama dan bio anda", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Mohon masukan nama dan bio anda", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()
                     regist(dataUpdate)
-
                 }
             }
         }
