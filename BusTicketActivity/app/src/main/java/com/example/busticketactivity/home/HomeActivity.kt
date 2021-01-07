@@ -21,11 +21,12 @@ import com.example.busticketactivity.tiketmenu.TiketActivty
 import com.example.busticketactivity.tiketmenu.TiketDetailActivity
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import com.synnapps.carouselview.ImageClickListener
 import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.activity_home.*
 
 
-class HomeActivity : AppCompatActivity(), MenuItemListener {
+class HomeActivity : AppCompatActivity(), MenuItemListener,View.OnClickListener {
     private lateinit var rvMenu: RecyclerView
     private var listItem = intiateUI()
     val Tag="HomeActivity"
@@ -36,6 +37,7 @@ class HomeActivity : AppCompatActivity(), MenuItemListener {
         carousel()
         getDataUser()
         showRecyclerList()
+        iv_ava.setOnClickListener(this)
     }
     private fun carousel(){
         val image= mutableListOf<Int>(
@@ -47,9 +49,12 @@ class HomeActivity : AppCompatActivity(), MenuItemListener {
                 imageView?.setImageResource(image[position])
             }
         })
-        carouselView.setOnClickListener{
-            Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
-        }
+        carouselView.setImageClickListener(object : ImageClickListener {
+            override fun onClick(position: Int) {
+                Toast.makeText(this@HomeActivity, "test", Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
 
 
@@ -131,6 +136,14 @@ class HomeActivity : AppCompatActivity(), MenuItemListener {
                 prefs.putString("login","")
                 prefs.apply()
                 finish()
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.iv_ava -> {
+                Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
             }
         }
     }

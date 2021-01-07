@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +13,12 @@ import com.google.zxing.WriterException
 
 import kotlinx.android.synthetic.main.activity_detail_tiket.*
 import java.sql.Time
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
-    private val infoTiket=intent.getSerializableExtra("dataTiketPembayaran") as InfoTiket
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_tiket)
@@ -26,7 +28,7 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun initiateUi() {
-
+         val infoTiket=intent.getSerializableExtra("dataTiketPembayaran") as InfoTiket
         tv_berangkat.text=infoTiket.pergi
         tv_title_bus.text=infoTiket.namaBus
         tv_terminal.text=infoTiket.terminal
@@ -60,6 +62,13 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun cancelTicket() {
-      
+        val sdf = SimpleDateFormat("HHmm", Locale.getDefault())
+        val currentDateandTime: String = sdf.format(Date())
+        val date=Calendar.getInstance().time
+        Log.d("DetailTiketActivity","ini time ${currentDateandTime}")
+
+        if(currentDateandTime.toInt()<745){
+            Toast.makeText(this, "berhasil di batalkan", Toast.LENGTH_SHORT).show()
+        }
     }
 }
