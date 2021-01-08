@@ -164,7 +164,7 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
         if (result?.response != null) {
             getStatus()
         } else {
-            Toast.makeText(this, "Transaksi di batalkan", Toast.LENGTH_SHORT).show()
+            getStatus()
         }
     }
 
@@ -187,9 +187,7 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                             if (tiket != null) {
                                 FireBaseRepo().postPosisi(namaBus = tiket.nama, nomor = posisi)
                                 FireBaseRepo().postPaymentTiket(posisi, data.email, tiket)
-
                             }
-
                         }
                         Log.d(TAG, "ini response ${res?.transaction_status}")
                     }

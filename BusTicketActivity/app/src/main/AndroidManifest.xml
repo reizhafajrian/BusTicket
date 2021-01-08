@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -17,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".signin.DriverActivity"></activity>
+        <activity android:name=".home.ProfileActivity"></activity>
+        <activity android:name=".signin.DriverActivity" />
         <activity android:name=".signin.ManagerActivity" />
         <activity android:name=".tiketmenu.DetailTiketActivity" />
         <activity android:name=".tiketmenu.TiketDetailActivity" />
@@ -25,9 +27,7 @@
         <activity android:name=".pickticket.PickTicketActivity" />
         <activity android:name=".tiketmenu.TiketActivty" />
         <activity android:name=".home.HomeActivity" />
-        <activity android:name=".regist.RegistAddImageActivity" >
-
-        </activity>
+        <activity android:name=".regist.RegistAddImageActivity"></activity>
         <activity android:name=".regist.RegisterActivity" />
         <activity android:name=".signin.SignInActivity" />
         <activity android:name=".signin.SignInAndRegistActivity" />

@@ -143,7 +143,8 @@ class HomeActivity : AppCompatActivity(), MenuItemListener,View.OnClickListener 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.iv_ava -> {
-                Toast.makeText(this, "test", Toast.LENGTH_SHORT).show()
+                val intent=Intent(this,ProfileActivity::class.java)
+                startActivity(intent)
             }
         }
     }
