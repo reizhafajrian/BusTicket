@@ -142,7 +142,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
                 }
                 FROM_GALLERY_CODE -> {
-
                     iv_ava.setImageURI(data?.data)
                     btn_add_image.visibility = View.GONE
                     card_image.visibility = View.VISIBLE
@@ -196,7 +195,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                         override fun getUrl(url: String) {
                             dataUpdate.imageLink = url
                             FireBaseRepo().createUser(dataUpdate).addOnCompleteListener {
-
                                 val emailPref =
                                     getSharedPreferences("email", Context.MODE_PRIVATE).edit()
                                 emailPref.putString("email", dataUpdate.email).apply()
@@ -206,7 +204,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                                 startActivity(intent)
                             }
                                 .addOnFailureListener {
-
                                     deleteUser()
                                 }
                         }
@@ -259,8 +256,10 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 getPictures(R.id.iv_ava)
             }
             R.id.btn_continue -> {
-                if (nama == "" || bio == "") {
-                    Toast.makeText(this, "Mohon masukan nama dan bio anda", Toast.LENGTH_SHORT)
+
+
+                if (nama == "" || bio == "" || imageUri!!.equals(Uri.EMPTY)) {
+                    Toast.makeText(this, "Mohon masukan nama,bio dan foto anda", Toast.LENGTH_SHORT)
                         .show()
                 } else {
                     Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()

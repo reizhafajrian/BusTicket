@@ -9,6 +9,7 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import com.example.busticketactivity.R
+import com.example.busticketactivity.firebase.FireBaseRepo
 import com.google.zxing.WriterException
 
 import kotlinx.android.synthetic.main.activity_detail_tiket.*
@@ -62,13 +63,23 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun cancelTicket() {
+        val infoTiket=intent.getSerializableExtra("dataTiketPembayaran") as InfoTiket
+        val time=infoTiket.pergi
         val sdf = SimpleDateFormat("HHmm", Locale.getDefault())
         val currentDateandTime: String = sdf.format(Date())
         val date=Calendar.getInstance().time
         Log.d("DetailTiketActivity","ini time ${currentDateandTime}")
+        val timeremove = time.replace(":", "")
+        FireBaseRepo().canceltiket((infoTiket.namaBus),(infoTiket.nomorKursi))
+        Toast.makeText(this, "Pembatalan anda berhasil di proses", Toast.LENGTH_SHORT).show()
+        if (timeremove.toInt()>currentDateandTime.toInt()){
+            val waktusisa=timeremove.toInt()
 
-        if(currentDateandTime.toInt()<745){
-            Toast.makeText(this, "berhasil di batalkan", Toast.LENGTH_SHORT).show()
+//            if((waktusisa-100)>=currentDateandTime.toInt()){
+
+//            }
         }
+
+
     }
 }

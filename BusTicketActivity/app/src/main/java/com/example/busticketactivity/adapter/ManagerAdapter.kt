@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.dataclass.ManagerGetData
+import com.example.busticketactivity.signin.DataTIket
+import com.example.busticketactivity.tiketmenu.InfoTiket
 import kotlinx.android.synthetic.main.item_manager.view.*
 
-class ManagerAdapter(private val list: MutableList<ManagerGetData>) :RecyclerView.Adapter<ManagerAdapter.ViewHolder>(){
+class ManagerAdapter(private val list: ManagerGetData) :RecyclerView.Adapter<ManagerAdapter.ViewHolder>(){
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    fun bind(data:ManagerGetData){
+    fun bind(data: InfoTiket){
         with(itemView){
            tv_email.text=data.email
            tv_harga.text=data.harga
@@ -25,10 +27,10 @@ class ManagerAdapter(private val list: MutableList<ManagerGetData>) :RecyclerVie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list.data[position])
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list.data.size
     }
 }

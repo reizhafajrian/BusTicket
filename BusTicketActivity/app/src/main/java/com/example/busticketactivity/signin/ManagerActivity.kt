@@ -15,6 +15,7 @@ import com.example.busticketactivity.firebase.FireBaseRepo
 import kotlinx.android.synthetic.main.activity_manager.*
 
 class ManagerActivity : AppCompatActivity() {
+    private val tag="ManagerActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manager)
@@ -30,19 +31,18 @@ class ManagerActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        val tag="ManagerActivity"
         spinner.visibility= View.VISIBLE
         FireBaseRepo().getPaymentManager().addOnCompleteListener {
             if(it.isSuccessful){
                 spinner.visibility= View.GONE
-                val data = it.result!!.toObjects(ManagerGetData::class.java)
-                showdata(data)
-                if (data != null) {
+                val hasil = it.result!!.toObjects(ManagerGetData::class.java)
+                if (hasil != null) {
+                    showdata(hasil[0])
                     rv_manager.apply {
                         setHasFixedSize(true)
                         layoutManager =
                             LinearLayoutManager(this@ManagerActivity, RecyclerView.VERTICAL, false)
-                        adapter = ManagerAdapter(data)
+                        adapter = ManagerAdapter(hasil[0])
                     }
                 }else{
                     tv_warning.visibility=View.VISIBLE
@@ -64,13 +64,17 @@ class ManagerActivity : AppCompatActivity() {
 
     }
 
-    private fun showdata(data:MutableList<ManagerGetData>) {
+    private fun showdata(data:ManagerGetData) {
+
+        val tag="ManagerActivity"
         var harga:Int=0
-        for(i in data){
-            val hargaToInt=(i.harga).toInt()
-            harga+=hargaToInt
-            tv_total_value.text=harga.toString()
+        for (data in data.data){
+            harga+=data.harga.toInt()
         }
+        tv_total.text=harga.toString()
+
+
+
 
     }
 }

@@ -9,6 +9,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
+import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.listener.ItemDetailListener
 import kotlinx.android.synthetic.main.activity_tiket_detail.*
@@ -30,27 +31,30 @@ class TiketDetailActivity : AppCompatActivity(),ItemDetailListener {
         FireBaseRepo().getPaymentTiket(emailData).addOnCompleteListener {
             if(it.isSuccessful){
                 spinner.visibility=View.GONE
-                val infoTiket=it.result!!.toObjects(InfoTiket::class.java)
-                if(infoTiket.isEmpty()){
+                val infoTiket=it.result!!.toObject(ManagerGetData::class.java)
+                Log.d(TAG," ini info $infoTiket")
+                if(infoTiket==null){
                     tv_warning.visibility= View.VISIBLE
                     tv_warning.text="Data pembelian tiket anda tidak ada"
                 }
                 else{
-                list.addAll(infoTiket)
-                showList(list)
+                showList(infoTiket!!)
                 Log.d(TAG,"ini data tiket ${infoTiket}")
                 }
             }
             else{
                 spinner.visibility=View.GONE
             }
+        }.addOnFailureListener {
+            tv_warning.visibility= View.VISIBLE
+            tv_warning.text="Data pembelian tiket anda tidak ada"
         }
     }
-    private fun showList(lis:MutableList<InfoTiket>){
+    private fun showList(lis:ManagerGetData){
         rv_detail_tiket.apply {
             setHasFixedSize(true)
             layoutManager=LinearLayoutManager(this@TiketDetailActivity,RecyclerView.VERTICAL,false)
-            adapter=ItemDetailTiketAdapter(lis,this@TiketDetailActivity)
+            adapter=ItemDetailTiketAdapter(lis.data,this@TiketDetailActivity)
         }
 
     }

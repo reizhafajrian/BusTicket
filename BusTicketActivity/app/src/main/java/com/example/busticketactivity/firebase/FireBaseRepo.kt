@@ -1,6 +1,7 @@
 package com.example.busticketactivity.firebase
 
 
+import android.util.Log
 import com.example.busticketactivity.listener.CheckTiket
 import com.example.busticketactivity.pickticket.DataItemPickup
 import com.example.busticketactivity.regist.RegistAddImageActivity
@@ -112,15 +113,41 @@ class FireBaseRepo {
             "type" to data.type,
             "pergi" to data.pergi
         )
-        firebaseFirestore.collection("Buy").document("Payment").collection("Buy").document(email)
-            .set(docData)
+        val data= hashMapOf<String,Any>(
+            "data" to mutableListOf(docData)
+        )
+        firebaseFirestore.collection("Buy").document(email)
+            .set(data)
     }
 
-    fun getPaymentTiket(email: String): Task<QuerySnapshot> {
-        return firebaseFirestore.collection("Buy").document(email).collection("Buy").get()
+    fun getPaymentTiket(email: String): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("Buy").document(email).get()
     }
 
     fun getPaymentManager(): Task<QuerySnapshot> {
-        return firebaseFirestore.collection("Buy").document("Payment").collection("Buy").get()
+        return firebaseFirestore.collection("Buy").get()
+    }
+
+    fun canceltiket(namaBus: String,nomor: String) {
+        getPosition(namaBus).addOnCompleteListener {
+            val nomorInt = nomor.toInt()
+            if (it.isSuccessful) {
+                val list = it.result!!.toObject(DataItemPickup::class.java)
+                val lis = mutableListOf<DataClassIsKosong?>()
+                if (list != null) {
+                    val data = list.position
+                    val change = DataClassIsKosong(isKosong = true, nomor = (nomor))
+                    lis.addAll(data)
+                    lis.set(nomorInt - 1, change)
+                    val docData = mapOf<String, MutableList<DataClassIsKosong?>>(
+                        "position" to lis
+                    )
+                    firebaseFirestore.collection("Bus").document(namaBus)
+                        .update(
+                            docData
+                        )
+                }
+            }
+        }
     }
 }
