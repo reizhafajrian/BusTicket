@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
@@ -22,6 +23,16 @@ class TiketDetailActivity : AppCompatActivity(),ItemDetailListener {
         setContentView(R.layout.activity_tiket_detail)
         getTiketInfo()
     }
+
+    override fun onResume() {
+
+        getTiketInfo()
+        super.onResume()
+
+    }
+
+
+
 
     private fun getTiketInfo(){
         spinner.visibility=View.VISIBLE

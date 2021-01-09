@@ -3,6 +3,7 @@ package com.example.busticketactivity.pickticket
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.PickTicketAdapter
 import com.example.busticketactivity.bottomsheets.BottomSheet
+import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.listener.BottomSheetItemListener
 import com.example.busticketactivity.firebase.*
 import com.example.busticketactivity.listener.CheckTiket
@@ -52,6 +54,15 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
         Loader()
     }
 
+
+    override fun onStart() {
+        Loader()
+        super.onStart()
+    }
+
+
+
+
     private fun DataTiket(): ItemDataTiket? {
         val getDataTicket = intent.getStringExtra("dataTicket")
         val gson = Gson()
@@ -73,10 +84,12 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
     private fun Loader() {
         val titleDoc = intent.getStringExtra("title")
         val firebaseFirestore = FirebaseFirestore.getInstance()
+        spinner.visibility= View.VISIBLE
         firebaseFirestore.collection("Bus").document(titleDoc.toString())
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
+                    spinner.visibility= View.GONE
                     val list = it.result!!.toObject(DataItemPickup::class.java)
                     Log.d(TAG, "ini list $list")
                     if (list != null) {
@@ -94,7 +107,6 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
         when (nomor) {
             nomor -> {
                 val Nomor = getSharedPreferences("nomorKursi", Context.MODE_PRIVATE)
-
                 val posisi = Nomor.edit()
                 posisi.clear()
                 posisi.putString("nomorKursi", nomor).apply()
@@ -179,7 +191,7 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                         response: retrofit2.Response<Response>
                     ) {
                         val res = response.body()
-                        if (res?.transaction_status.equals("settlement")) {
+                        if (res?.transaction_status.equals("pending")) {
                             val Nomor = getSharedPreferences("nomorKursi", Context.MODE_PRIVATE)
                             val data = getDataUser()
                             val tiket = DataTiket()
@@ -214,18 +226,6 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
         MidtransSDK.getInstance().startPaymentUiFlow(this, PaymentMethod.BANK_TRANSFER_BCA)
     }
 
-    //        private fun data1():com.midtrans.sdk.corekit.models.CustomerDetails{
-//        val getUser=getSharedPreferences("dataUser", Context.MODE_PRIVATE)
-//        val NewGson=Gson()
-//        val json=getUser.getString("dataUser","")
-//        val dataUser=NewGson.fromJson(json,UserObject::class.java)
-//        val data=com.midtrans.sdk.corekit.models.CustomerDetails()
-//        data.firstName=dataUser.nama
-//        data.lastName=dataUser.nama
-//        data.email=dataUser.email
-//        data.phone="085155208046"
-//        return data
-//    }
     private fun TransactionReq(): TransactionRequest {
         val dataTiket = DataTiket()
         val dataUser = getDataUser()

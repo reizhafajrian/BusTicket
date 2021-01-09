@@ -13,7 +13,7 @@
         android:id="@+id/tv_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create New Account"
+        android:text="Buat Akun Baru"
         android:fontFamily="@font/montserrat_regular"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,7 +30,7 @@
         android:id="@+id/tv_please"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please fill up the forms below for informations"
+        android:text="Lengkapi Semua form"
         app:layout_constraintTop_toBottomOf="@+id/tv_create"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,26 +43,18 @@
         app:flow_horizontalBias="0.0"
         android:textAlignment="center"
         />
-    <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="220dp"
-        android:background="#EDF1F8"/>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_constraint"
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tv_please"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="20dp"
         >
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cardCornerRadius="14dp"
-            >
+
             <LinearLayout
                 android:id="@+id/ln_login"
                 android:layout_width="match_parent"
@@ -101,6 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:textColor="@color/white"
                     android:text="Nama"/>
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -113,14 +106,32 @@
                     android:inputType="textEmailAddress"
                     />
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tv_bio"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/tv_username"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Bio"/>
+                    android:text="Username"/>
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_bio"
+                    android:id="@+id/ed_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="text"
+                    android:background="@drawable/round_bg"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_email"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Email"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:paddingLeft="10dp"
@@ -128,8 +139,25 @@
                     android:background="@drawable/round_bg"
                     android:inputType="textEmailAddress"
                     />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:text="Password"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/round_bg"
+                    android:inputType="textPassword"
+                    />
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         app:layout_constraintBottom_toBottomOf="parent"
@@ -138,18 +166,8 @@
         android:gravity="center"
         >
         <Button
-            android:id="@+id/btn_back_regis"
-            android:layout_width="60dp"
-            android:layout_height="45dp"
-            app:icon="@drawable/ic_back"
-            app:iconTint="#DBDBDB"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/whitecolor"
-            >
-        </Button>
-        <Button
             android:id="@+id/btn_continue"
-            android:layout_width="238dp"
+            android:layout_width="match_parent"
             android:layout_height="45dp"
             android:text="Continue"
             android:textColor="@color/whitecolor"

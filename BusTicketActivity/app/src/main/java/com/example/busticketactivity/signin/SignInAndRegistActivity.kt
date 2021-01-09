@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.busticketactivity.R
+import com.example.busticketactivity.regist.RegistAddImageActivity
 import com.example.busticketactivity.regist.RegisterActivity
 import kotlinx.android.synthetic.main.activity_sign_in_and_regist.*
 
@@ -22,9 +23,11 @@ class SignInAndRegistActivity : AppCompatActivity(), View.OnClickListener {
         val prefs = getSharedPreferences("login", MODE_PRIVATE)
         val prefsmanager = getSharedPreferences("manager", MODE_PRIVATE)
         val prefskenek = getSharedPreferences("kenek", MODE_PRIVATE)
+        val prefsadmin = getSharedPreferences("admin", MODE_PRIVATE)
         if (!prefs.getString("login", "").isNullOrEmpty()
             || !prefsmanager.getString("manager", "")
                 .isNullOrEmpty() || !prefskenek.getString("kenek", "").isNullOrEmpty()
+            || !prefsadmin.getString("admin", "").isNullOrEmpty()
         ) {
             val intent = Intent(
                 this,
@@ -50,7 +53,7 @@ class SignInAndRegistActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_register -> {
                 val intent = Intent(
                     this,
-                    RegisterActivity::class.java
+                    RegistAddImageActivity::class.java
                 )
                 startActivity(intent)
 

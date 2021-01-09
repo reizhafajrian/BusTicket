@@ -9,34 +9,22 @@
 
     <com.synnapps.carouselview.CarouselView
         android:id="@+id/carouselView"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="200dp"
         app:fillColor="#FFFFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:pageColor="#00000000"
+        app:pageColor="@color/zxing_transparent"
+        android:background="@drawable/bg_carousel_2"
+        app:indicatorVisibility="gone"
         app:radius="6dp"
         app:slideInterval="3000"
         app:strokeColor="#FF777777"
         app:strokeWidth="1dp" />
 
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_dashboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/carouselView"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/iv_ava"
-        android:textSize="20dp"
-        android:textColor="@color/whitecolor"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="24dp"
-        android:text="My Dashboard"
-        android:fontFamily="@font/montserrat_light"
-        />
+
 
 
 
@@ -50,7 +38,7 @@
             app:layout_constraintLeft_toLeftOf="@+id/cd_menu"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/tv_dashboard"
+            app:layout_constraintTop_toBottomOf="@+id/carouselView"
             />
 
     <LinearLayout
@@ -63,8 +51,6 @@
         android:layout_marginStart="12dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-
-
         >
         
         <com.google.android.material.textview.MaterialTextView
@@ -72,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User"
-            android:textColor="@color/whitecolor"
+            android:textColor="@color/white"
             android:fontFamily="@font/montserrat_medium"
             />
     </LinearLayout>
@@ -82,11 +68,10 @@
         android:layout_width="312dp"
         android:layout_height="288dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dashboard"
+        app:layout_constraintTop_toBottomOf="@+id/iv_ava"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="91dp"
 
         >
         <androidx.constraintlayout.widget.ConstraintLayout

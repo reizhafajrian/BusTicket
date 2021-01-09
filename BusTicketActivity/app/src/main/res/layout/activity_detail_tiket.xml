@@ -131,9 +131,9 @@
                     android:layout_gravity="bottom|right"
                     android:layout_margin="16dp"
                     android:tooltipText="@string/save_card"
-                    app:backgroundTint="#B13EC5"
+                    app:backgroundTint="@color/red"
 
-                    android:src="@drawable/ic_logout_white"
+                    android:src="@drawable/ic_cancel"
                     android:contentDescription="test"
                     /></androidx.coordinatorlayout.widget.CoordinatorLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

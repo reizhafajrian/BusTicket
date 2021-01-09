@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".home.ProfileActivity"></activity>
+        <activity android:name=".DetailInfoWisataActivity"></activity>
+        <activity android:name=".ResetTiketActivity" />
+        <activity android:name=".AdminActivity" />
+        <activity android:name=".home.ProfileActivity" />
         <activity android:name=".signin.DriverActivity" />
         <activity android:name=".signin.ManagerActivity" />
         <activity android:name=".tiketmenu.DetailTiketActivity" />
@@ -27,7 +30,7 @@
         <activity android:name=".pickticket.PickTicketActivity" />
         <activity android:name=".tiketmenu.TiketActivty" />
         <activity android:name=".home.HomeActivity" />
-        <activity android:name=".regist.RegistAddImageActivity"></activity>
+        <activity android:name=".regist.RegistAddImageActivity" />
         <activity android:name=".regist.RegisterActivity" />
         <activity android:name=".signin.SignInActivity" />
         <activity android:name=".signin.SignInAndRegistActivity" />

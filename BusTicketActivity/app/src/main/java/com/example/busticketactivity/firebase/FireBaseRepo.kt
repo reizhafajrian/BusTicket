@@ -2,14 +2,17 @@ package com.example.busticketactivity.firebase
 
 
 import android.util.Log
+import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.listener.CheckTiket
 import com.example.busticketactivity.pickticket.DataItemPickup
 import com.example.busticketactivity.regist.RegistAddImageActivity
+import com.example.busticketactivity.tiketmenu.InfoTiket
 import com.example.busticketactivity.tiketmenu.ItemDataTiket
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 
 
@@ -67,7 +70,6 @@ class FireBaseRepo {
             if (it.isSuccessful) {
                 val list = it.result!!.toObject(DataItemPickup::class.java)
                 val lis = mutableListOf<DataClassIsKosong?>()
-
                 if (list != null) {
                     val data = list.position
                     val change = DataClassIsKosong(isKosong = false, nomor = (nomor))
@@ -103,7 +105,11 @@ class FireBaseRepo {
         }
     }
 
-    fun postPaymentTiket(nomor: String, email: String, data: ItemDataTiket) {
+    fun postPaymentTiket(
+        nomor: String,
+        email: String,
+        data: ItemDataTiket
+    ) {
         val docData = hashMapOf<String, Any>(
             "email" to email,
             "namaBus" to data.nama,
@@ -113,11 +119,28 @@ class FireBaseRepo {
             "type" to data.type,
             "pergi" to data.pergi
         )
-        val data= hashMapOf<String,Any>(
+        val docudata = InfoTiket(
+            email = email,
+            namaBus = data.nama,
+            nomorKursi = nomor,
+            harga = data.harga,
+            terminal = data.terminal,
+            type = data.type,
+            pergi = data.pergi
+        )
+        val data = hashMapOf<String, Any>(
             "data" to mutableListOf(docData)
         )
-        firebaseFirestore.collection("Buy").document(email)
-            .set(data)
+        getPaymentTiket(email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val hasil = it.result!!.toObject(ManagerGetData::class.java)
+                hasil?.data?.add(docudata)
+                if (hasil != null) {
+                    firebaseFirestore.collection("Buy").document(email).set(hasil)
+                }
+            }
+        }
+
     }
 
     fun getPaymentTiket(email: String): Task<DocumentSnapshot> {
@@ -128,7 +151,18 @@ class FireBaseRepo {
         return firebaseFirestore.collection("Buy").get()
     }
 
-    fun canceltiket(namaBus: String,nomor: String) {
+    fun deletetiket(email: String): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("Buy").document(email).get()
+    }
+
+    fun repostTiket(email: String, data: List<InfoTiket>) {
+        val repost = hashMapOf<String, Any>(
+            "data" to data
+        )
+        firebaseFirestore.collection("Buy").document(email).set(repost)
+    }
+
+    fun canceltiket(namaBus: String, nomor: String) {
         getPosition(namaBus).addOnCompleteListener {
             val nomorInt = nomor.toInt()
             if (it.isSuccessful) {
@@ -146,6 +180,40 @@ class FireBaseRepo {
                         .update(
                             docData
                         )
+                }
+            }
+        }
+    }
+
+    fun postDeleteTicket(email: String, data: List<InfoTiket>) {
+        val repost = hashMapOf<String, Any>(
+            "data" to data
+        )
+        firebaseFirestore.collection("Cancel").document(email).set(repost)
+    }
+
+    fun resetTiket(namaBus: String) {
+        getPosition(namaBus).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val list = it.result!!.toObject(DataItemPickup::class.java)
+                val lis = mutableListOf<DataClassIsKosong?>()
+                if (list != null) {
+                    val data = list.position
+//                    val change = DataClassIsKosong(isKosong = false, nomor = (nomor))
+                    lis.addAll(data)
+
+                    for (i in 1..lis.size) {
+
+                        lis[i - 1] = DataClassIsKosong(isKosong = true, nomor = i.toString())
+                    }
+                    val docData = mapOf<String, MutableList<DataClassIsKosong?>>(
+                        "position" to lis
+                    )
+                    firebaseFirestore.collection("Bus").document(namaBus)
+                        .update(
+                            docData
+                        )
+
                 }
             }
         }

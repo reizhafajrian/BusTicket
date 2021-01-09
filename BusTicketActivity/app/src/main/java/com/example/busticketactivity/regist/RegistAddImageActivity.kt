@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
+import android.util.Patterns
 
 import android.view.View
 import android.widget.EditText
@@ -63,7 +64,6 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     private fun initiateUi() {
         btn_add_image.setOnClickListener(this)
         btn_continue.setOnClickListener(this)
-        btn_back_regis.setOnClickListener(this)
         iv_ava.setOnClickListener(this)
     }
 
@@ -111,6 +111,20 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(intent, FROM_GALLERY_CODE, null)
     }
 
+    private fun isValidPassword(password: String?) : Boolean {
+        password?.let {
+            val passwordPattern = "^(?=.*[0-9]).{4,}$"
+            val passwordMatcher = Regex(passwordPattern)
+            return passwordMatcher.find(password) != null
+        } ?: return false
+    }
+    private fun isValidEmail(Email: String?) : Boolean {
+        Email?.let {
+            val emailPattern = Patterns.EMAIL_ADDRESS
+
+            return  emailPattern.matcher(Email).matches()
+        } ?: return false
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -180,6 +194,9 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }
+        else{
+            url.getUrl("")
+        }
     }
 
     private fun regist(dataUpdate: Data) {
@@ -233,22 +250,18 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         val nama = findViewById<EditText>(R.id.ed_nama).text.toString()
-        val bio = findViewById<EditText>(R.id.ed_bio).text.toString()
-        val DataItem = intent.getParcelableExtra<Item>("itemregist")
-
+        var namaEd=findViewById<EditText>(R.id.ed_username).text.toString()
+        var passwordEd=findViewById<EditText>(R.id.ed_password).text.toString()
+        var emailEd=findViewById<EditText>(R.id.ed_email).text.toString()
         val dataUpdate = Data(
-            username = DataItem?.Username,
-            password = DataItem?.password,
-            email = DataItem?.email,
+            username = namaEd,
+            password = passwordEd,
+            email = emailEd,
             nama = nama,
-            bio = bio,
             imageLink = ""
         )
 
         when (v?.id) {
-            R.id.btn_back_regis -> {
-                onBackPressed()
-            }
             R.id.btn_add_image -> {
                 getPictures(R.id.iv_ava)
             }
@@ -256,12 +269,12 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 getPictures(R.id.iv_ava)
             }
             R.id.btn_continue -> {
-
-
-                if (nama == "" || bio == "" || imageUri!!.equals(Uri.EMPTY)) {
-                    Toast.makeText(this, "Mohon masukan nama,bio dan foto anda", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
+                if (nama == "" || namaEd==""||passwordEd==""||emailEd=="" || imageUri!!.equals(Uri.EMPTY)) {
+                    Toast.makeText(this, "Mohon isi semua data", Toast.LENGTH_SHORT).show()
+                }
+                else if(!isValidPassword(passwordEd)||!isValidEmail(emailEd)){
+                    Toast.makeText(this, "mohon masukan password yang berisi angka dan email yang valid", Toast.LENGTH_SHORT).show()
+                }else {
                     Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()
                     regist(dataUpdate)
                 }

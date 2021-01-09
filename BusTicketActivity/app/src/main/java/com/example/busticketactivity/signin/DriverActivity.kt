@@ -31,14 +31,6 @@ class DriverActivity : AppCompatActivity(), TicketItemListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_driver)
 //        initiateUi()
-        btn_logout.setOnClickListener {
-            val kenek = getSharedPreferences("kenek", Context.MODE_PRIVATE)
-            kenek.edit().apply {
-                putString("kenek", "")
-                apply()
-            }
-            finish()
-        }
         btn_open_scan.setOnClickListener {
             val fragment = OpenCameraFragment()
             supportFragmentManager.beginTransaction().apply {
@@ -47,6 +39,15 @@ class DriverActivity : AppCompatActivity(), TicketItemListener {
                 )
                 addToBackStack(null)
                 commit()
+
+        }
+        btn_open_logout.setOnClickListener {
+            val kenek = getSharedPreferences("kenek", Context.MODE_PRIVATE)
+            kenek.edit().apply {
+                putString("kenek", "")
+                apply()
+            }
+            finish()
             }
 
         }

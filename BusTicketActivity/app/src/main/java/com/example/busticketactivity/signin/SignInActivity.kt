@@ -7,8 +7,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.busticketactivity.AdminActivity
 import com.example.busticketactivity.R
 import com.example.busticketactivity.home.HomeActivity
+import com.example.busticketactivity.regist.RegistAddImageActivity
 import com.example.busticketactivity.regist.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -31,6 +33,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         val prefs = getSharedPreferences("login", MODE_PRIVATE)
         val prefsmanager = getSharedPreferences("manager", MODE_PRIVATE)
         val prefskenek = getSharedPreferences("kenek", MODE_PRIVATE)
+        val prefsadmin = getSharedPreferences("admin", MODE_PRIVATE)
         if (!prefs.getString("login", "").isNullOrEmpty()) {
             Toast.makeText(this, "${prefs.getString("login", "")}", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, HomeActivity::class.java)
@@ -43,7 +46,12 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "${prefskenek.getString("kenek", "")}", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, DriverActivity::class.java)
             startActivity(intent)
+        }else if(!prefsadmin.getString("admin", "").isNullOrEmpty()){
+            Toast.makeText(this, "${prefskenek.getString("kenek", "")}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, AdminActivity::class.java)
+            startActivity(intent)
         }
+
         super.onStart()
     }
 
@@ -59,6 +67,7 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         val prefsmanager = getSharedPreferences("manager", MODE_PRIVATE)
         val prefskenek = getSharedPreferences("kenek", MODE_PRIVATE)
         val emailPref = getSharedPreferences("email", Context.MODE_PRIVATE).edit()
+        val prefsadmin = getSharedPreferences("admin", MODE_PRIVATE)
         emailPref.putString("email", usernameText).apply()
 
 
@@ -76,6 +85,11 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
                         "kenektiket@gmail.com" -> {
                             prefskenek.edit().putString("kenek", "${auth.currentUser}").apply()
                             val intent = Intent(this, DriverActivity::class.java)
+                            startActivity(intent)
+                        }
+                        "admin@gmail.com"->{
+                            prefsadmin.edit().putString("admin", "${auth.currentUser}").apply()
+                            val intent = Intent(this, AdminActivity::class.java)
                             startActivity(intent)
                         }
                         else -> {
@@ -97,11 +111,13 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         val intent = Intent(
             this,
-            RegisterActivity::class.java
+            RegistAddImageActivity::class.java
         )
         when (v?.id) {
             R.id.btn_sign_in -> {
-                firebaseLogin()
+                if(ed_username.text.toString() !=""||ed_password.text.toString() !=""){
+                    firebaseLogin()
+                }
             }
             R.id.tv_register -> {
                 startActivity(intent)

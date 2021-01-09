@@ -24,7 +24,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         btn_continue.setOnClickListener(this)
-        btn_back_regis.setOnClickListener(this)
 
     }
     private fun isValidPassword(password: String?) : Boolean {

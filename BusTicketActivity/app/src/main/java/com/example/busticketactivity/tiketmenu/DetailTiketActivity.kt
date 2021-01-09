@@ -9,6 +9,7 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import com.example.busticketactivity.R
+import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.google.zxing.WriterException
 
@@ -71,6 +72,24 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
         Log.d("DetailTiketActivity","ini time ${currentDateandTime}")
         val timeremove = time.replace(":", "")
         FireBaseRepo().canceltiket((infoTiket.namaBus),(infoTiket.nomorKursi))
+        FireBaseRepo().deletetiket(infoTiket.email).addOnCompleteListener {
+            if(it.isSuccessful){
+                val list=it.result!!.toObject(ManagerGetData::class.java)
+                val hasul =list?.data
+                if (hasul != null) {
+                    val data=hasul.filter { tiket ->
+                        tiket.nomorKursi!=infoTiket.nomorKursi
+                    }
+                    val dataDelete=hasul.filter {
+                            tiket ->
+                        tiket.nomorKursi==infoTiket.nomorKursi
+                    }
+                    FireBaseRepo().repostTiket(infoTiket.email,data)
+                    FireBaseRepo().postDeleteTicket(infoTiket.email,dataDelete)
+                }
+            }
+
+        }
         Toast.makeText(this, "Pembatalan anda berhasil di proses", Toast.LENGTH_SHORT).show()
         if (timeremove.toInt()>currentDateandTime.toInt()){
             val waktusisa=timeremove.toInt()

@@ -61,24 +61,27 @@ class TiketActivty : AppCompatActivity(),TicketItemListener {
 
     override fun onItemClick(Nama: String) {
         when(Nama){
-            "DPK-YGY"->{
-                Log.d(TAG,"ini nama ${Nama}")
+            Nama->{
                 val gson=Gson()
-                val data=gson.toJson(datahasil[1])
+                val dataFilter=datahasil.filter {
+                    it.nama==Nama
+                } as MutableList
+                val data=gson.toJson(dataFilter[0])
+                Log.d(TAG,"ini nama ${dataFilter}")
                 val intent=Intent(this,PickTicketActivity::class.java)
                 intent.putExtra("title",Nama)
                 intent.putExtra("dataTicket",data)
                 startActivity(intent)
             }
-            "DPK-KLATEN"->{
-                Log.d(TAG,"ini nama ${Nama}")
-                val gson=Gson()
-                val data=gson.toJson(datahasil[0])
-                val intent=Intent(this,PickTicketActivity::class.java)
-                intent.putExtra("title",Nama)
-                intent.putExtra("dataTicket",data)
-                startActivity(intent)
-            }
+//            "DPK-KLATEN"->{
+//                Log.d(TAG,"ini nama ${Nama}")
+//                val gson=Gson()
+//                val data=gson.toJson(datahasil[0])
+//                val intent=Intent(this,PickTicketActivity::class.java)
+//                intent.putExtra("title",Nama)
+//                intent.putExtra("dataTicket",data)
+//                startActivity(intent)
+//            }
         }
 
     }

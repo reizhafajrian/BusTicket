@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "347157552440",
-    "firebase_url": "https://busticket-ac2ab.firebaseio.com",
-    "project_id": "busticket-ac2ab",
-    "storage_bucket": "busticket-ac2ab.appspot.com"
+    "project_number": "150100657930",
+    "project_id": "busticket-33ecd",
+    "storage_bucket": "busticket-33ecd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:347157552440:android:00b329d7303ecb9e8b35cd",
+        "mobilesdk_app_id": "1:150100657930:android:1aee0d3979edb789e05cf3",
         "android_client_info": {
           "package_name": "com.example.busticketactivity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "347157552440-crvge0g6lubd0b57s5557eatnkg2eqce.apps.googleusercontent.com",
+          "client_id": "150100657930-v9avdgnio6tqlm0khluan0mlvrcch0gl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.busticketactivity",
+            "certificate_hash": "bfcffa7f22ecbfa926e5fc407e7a525adfff627e"
+          }
+        },
+        {
+          "client_id": "150100657930-7j5ooii9dldbunlkho9hglu40aposlni.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCp95UDXfdgr23UKEqciwZUx6dJfJbGfV8"
+          "current_key": "AIzaSyDPwTVtAvbZeYo0wAqbFnCVns34R7sMMG8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "347157552440-crvge0g6lubd0b57s5557eatnkg2eqce.apps.googleusercontent.com",
+              "client_id": "150100657930-7j5ooii9dldbunlkho9hglu40aposlni.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
