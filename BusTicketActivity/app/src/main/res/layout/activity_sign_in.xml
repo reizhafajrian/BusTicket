@@ -36,7 +36,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tiket"
+            android:text="PO."
             android:textColor="@color/whitecolor"
 
             android:textSize="42dp" />
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
 
-            android:text="Saya"
+            android:text="Murni Jaya"
             android:textColor="@color/whitecolor"
             android:textSize="42dp" />
     </LinearLayout>
@@ -67,7 +67,7 @@
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username" />
+            android:text="Email" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_username"
@@ -102,7 +102,7 @@
             android:layout_marginTop="20dp"
             android:clickable="true"
             android:fontFamily="@font/montserrat_light"
-            android:text="Create New Account"
+            android:text="Buat Akun Baru?"
             android:textColor="@color/whitecolor"
             android:textSize="18dp"
             app:flow_horizontalBias="0.0"

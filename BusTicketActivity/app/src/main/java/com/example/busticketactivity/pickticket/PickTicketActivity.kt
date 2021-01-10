@@ -91,10 +91,8 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                 if (it.isSuccessful) {
                     spinner.visibility= View.GONE
                     val list = it.result!!.toObject(DataItemPickup::class.java)
-                    Log.d(TAG, "ini list $list")
-                    if (list != null) {
+                   if (list != null) {
                         rvPickTicket.layoutManager = GridLayoutManager(this, 5)
-                        Log.d(TAG, "ini list ${list.position}")
                         val listItemAdapter = PickTicketAdapter(list.position, this)
                         listItemAdapter.notifyDataSetChanged()
                         rvPickTicket.adapter = listItemAdapter
@@ -129,8 +127,7 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                     data,
                     object : CheckTiket {
                         override fun Gettiket(isKosong: Boolean) {
-                            Log.d(TAG,"ini boolean ${isKosong}")
-                            if (isKosong==true) {
+                           if (isKosong==true) {
                                 pay()
                                 showMidtrans()
                             } else {
@@ -191,7 +188,7 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                         response: retrofit2.Response<Response>
                     ) {
                         val res = response.body()
-                        if (res?.transaction_status.equals("pending")) {
+                        if (res?.transaction_status.equals("settlement")) {
                             val Nomor = getSharedPreferences("nomorKursi", Context.MODE_PRIVATE)
                             val data = getDataUser()
                             val tiket = DataTiket()
@@ -201,7 +198,6 @@ class PickTicketActivity : AppCompatActivity(), ListenerPickTicket, BottomSheetI
                                 FireBaseRepo().postPaymentTiket(posisi, data.email, tiket)
                             }
                         }
-                        Log.d(TAG, "ini response ${res?.transaction_status}")
                     }
                     override fun onFailure(call: Call<Response>, t: Throwable) {
 

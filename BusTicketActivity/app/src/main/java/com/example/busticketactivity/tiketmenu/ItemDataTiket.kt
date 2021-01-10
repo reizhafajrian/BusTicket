@@ -6,5 +6,6 @@ data class ItemDataTiket(
     val nama:String="",
     val pergi:String="",
     val terminal:String="",
-    val type:String=""
+    val type:String="",
+    val busCount:String=""
 )

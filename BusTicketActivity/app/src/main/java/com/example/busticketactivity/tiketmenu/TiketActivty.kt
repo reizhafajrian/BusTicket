@@ -67,7 +67,6 @@ class TiketActivty : AppCompatActivity(),TicketItemListener {
                     it.nama==Nama
                 } as MutableList
                 val data=gson.toJson(dataFilter[0])
-                Log.d(TAG,"ini nama ${dataFilter}")
                 val intent=Intent(this,PickTicketActivity::class.java)
                 intent.putExtra("title",Nama)
                 intent.putExtra("dataTicket",data)

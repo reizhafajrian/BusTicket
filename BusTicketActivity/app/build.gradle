@@ -94,4 +94,5 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    implementation "org.apache.poi:poi:3.17"
 }

@@ -35,19 +35,15 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         val prefskenek = getSharedPreferences("kenek", MODE_PRIVATE)
         val prefsadmin = getSharedPreferences("admin", MODE_PRIVATE)
         if (!prefs.getString("login", "").isNullOrEmpty()) {
-            Toast.makeText(this, "${prefs.getString("login", "")}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, HomeActivity::class.java)
+           val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         } else if (!prefsmanager.getString("manager", "").isNullOrEmpty()) {
-            Toast.makeText(this, "${prefsmanager.getString("manager", "")}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, ManagerActivity::class.java)
+          val intent = Intent(this, ManagerActivity::class.java)
             startActivity(intent)
         } else if (!prefskenek.getString("kenek", "").isNullOrEmpty()) {
-            Toast.makeText(this, "${prefskenek.getString("kenek", "")}", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, DriverActivity::class.java)
+           val intent = Intent(this, DriverActivity::class.java)
             startActivity(intent)
         }else if(!prefsadmin.getString("admin", "").isNullOrEmpty()){
-            Toast.makeText(this, "${prefskenek.getString("kenek", "")}", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, AdminActivity::class.java)
             startActivity(intent)
         }

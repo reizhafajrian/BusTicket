@@ -69,8 +69,7 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
         val sdf = SimpleDateFormat("HHmm", Locale.getDefault())
         val currentDateandTime: String = sdf.format(Date())
         val date=Calendar.getInstance().time
-        Log.d("DetailTiketActivity","ini time ${currentDateandTime}")
-        val timeremove = time.replace(":", "")
+       val timeremove = time.replace(":", "")
         FireBaseRepo().canceltiket((infoTiket.namaBus),(infoTiket.nomorKursi))
         FireBaseRepo().deletetiket(infoTiket.email).addOnCompleteListener {
             if(it.isSuccessful){

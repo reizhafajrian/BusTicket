@@ -38,19 +38,16 @@ class TiketDetailActivity : AppCompatActivity(),ItemDetailListener {
         spinner.visibility=View.VISIBLE
         val email=getSharedPreferences("email",Context.MODE_PRIVATE)
         val emailData=email.getString("email","").toString()
-        Log.d(TAG,"Ini email ${emailData}")
-        FireBaseRepo().getPaymentTiket(emailData).addOnCompleteListener {
+       FireBaseRepo().getPaymentTiket(emailData).addOnCompleteListener {
             if(it.isSuccessful){
                 spinner.visibility=View.GONE
                 val infoTiket=it.result!!.toObject(ManagerGetData::class.java)
-                Log.d(TAG," ini info $infoTiket")
                 if(infoTiket==null){
                     tv_warning.visibility= View.VISIBLE
                     tv_warning.text="Data pembelian tiket anda tidak ada"
                 }
                 else{
                 showList(infoTiket!!)
-                Log.d(TAG,"ini data tiket ${infoTiket}")
                 }
             }
             else{

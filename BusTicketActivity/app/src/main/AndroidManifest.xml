@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -18,12 +19,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".DetailInfoWisataActivity"></activity>
+        <activity android:name=".home.InfoActivity"></activity>
+        <activity android:name=".DetailInfoWisataActivity" />
         <activity android:name=".ResetTiketActivity" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".home.ProfileActivity" />
         <activity android:name=".signin.DriverActivity" />
-        <activity android:name=".signin.ManagerActivity" />
+        <activity android:name=".signin.ManagerActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".tiketmenu.DetailTiketActivity" />
         <activity android:name=".tiketmenu.TiketDetailActivity" />
         <activity android:name=".payment.PaymentActivity" />
@@ -35,11 +43,7 @@
         <activity android:name=".signin.SignInActivity" />
         <activity android:name=".signin.SignInAndRegistActivity" />
         <activity android:name=".ui.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

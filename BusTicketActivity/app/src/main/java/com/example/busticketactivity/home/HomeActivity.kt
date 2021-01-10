@@ -163,8 +163,8 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
         val list = mutableListOf(
             ItemMenuClass(R.drawable.ic_scan, "Scan"),
             ItemMenuClass(R.drawable.ic_shop, "Beli"),
-            ItemMenuClass(R.drawable.ic_logout, "SignOut"),
-            ItemMenuClass(R.drawable.ic_info,"info")
+            ItemMenuClass(R.drawable.ic_info, "info"),
+            ItemMenuClass(R.drawable.ic_logout, "SignOut")
         )
         return list
 
@@ -205,7 +205,9 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
                 prefs.apply()
                 finish()
             }
-            "info"->{
+            "info" -> {
+                val intent=Intent(this@HomeActivity,InfoActivity::class.java)
+                startActivity(intent)
 
             }
         }

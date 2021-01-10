@@ -34,8 +34,7 @@ class AdminActivity : AppCompatActivity(),TicketItemListener {
             if (it.isSuccessful) {
                 datahasil = it.result!!.toObjects(ItemDataTiket::class.java)
                 spinner.visibility= View.GONE
-                Log.d("AdminActivity","ini data hasil $datahasil")
-                if(datahasil!=null){
+               if(datahasil!=null){
                     rv_admin.apply {
                         layoutManager =
                             LinearLayoutManager(this@AdminActivity, RecyclerView.VERTICAL, false)

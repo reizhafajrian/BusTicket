@@ -38,7 +38,7 @@ class FireBaseRepo {
                     val data = it.result!!.toObject(DataItemPickup::class.java)
 
                     if (data != null) {
-                        firebaseFirestore.collection("Bus").document("DPK-YGY")
+                        firebaseFirestore.collection("Bus").document("DPK-WONOSOBO")
                             .set(
                                 data
                             )

@@ -34,6 +34,7 @@ class ItemTicketAdapter(private val list: MutableList<ItemDataTiket>,
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: ItemDataTiket){
             with(itemView){
+                tv_buscount.text=item.busCount
                itemView.tv_title_bus.text=item.nama
                 itemView.tv_type_bus.text=item.type
                 itemView.tv_terminal.text=item.terminal
