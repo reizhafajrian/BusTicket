@@ -19,8 +19,9 @@ class ItemDetailTiketAdapter(private val list: MutableList<InfoTiket>,private va
                 tv_berangkat.text=data.pergi
                 tv_terminal.text=data.terminal
                 tv_nomor.text=data.nomorKursi
-                tv_type_bus.text=data.namaBus
+                tv_type_bus.text=data.type
                 tv_title_bus.text=data.namaBus
+                tv_id.text=data.id
                 val posisi=adapterPosition
                 cvItem.setOnClickListener { listener.onItemClick(posisi,data) }
             }

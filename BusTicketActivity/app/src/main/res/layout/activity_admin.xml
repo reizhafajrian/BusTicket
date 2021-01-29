@@ -8,40 +8,68 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_admin"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_ticket"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_ticket" />
+
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/spinner"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true" />
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:indeterminate="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!-- Main content -->
+        <!-- Main content -->
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        app:backgroundTint="#B13EC5"
-        android:src="@drawable/ic_scan_white"
-        android:contentDescription="test"
-        /></androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:menu_openDirection="up"
+            app:menu_colorNormal="#B13EC5"
+            android:layout_gravity="right"
+            app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+            app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+            app:menu_icon="@drawable/ic_scan_white"
+            >
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_scan_white"
+                app:backgroundTint="#B13EC5"  />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_add_driver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_scan_white"
+                app:fab_colorNormal="#B13EC5"  />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_add_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_scan_white"
+                app:fab_colorNormal="#B13EC5"  />
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

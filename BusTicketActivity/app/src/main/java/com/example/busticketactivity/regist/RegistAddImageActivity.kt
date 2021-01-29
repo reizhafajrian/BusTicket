@@ -111,18 +111,19 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
         startActivityForResult(intent, FROM_GALLERY_CODE, null)
     }
 
-    private fun isValidPassword(password: String?) : Boolean {
+    private fun isValidPassword(password: String?): Boolean {
         password?.let {
             val passwordPattern = "^(?=.*[0-9]).{4,}$"
             val passwordMatcher = Regex(passwordPattern)
             return passwordMatcher.find(password) != null
         } ?: return false
     }
-    private fun isValidEmail(Email: String?) : Boolean {
+
+    private fun isValidEmail(Email: String?): Boolean {
         Email?.let {
             val emailPattern = Patterns.EMAIL_ADDRESS
 
-            return  emailPattern.matcher(Email).matches()
+            return emailPattern.matcher(Email).matches()
         } ?: return false
     }
 
@@ -185,16 +186,14 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                     val downloadUrl = it.result
                     val mUri = downloadUrl.toString()
                     url.getUrl(mUri)
-                }
-                else{
+                } else {
                     deleteUser()
                 }
             }.addOnFailureListener {
                 deleteUser()
             }
 
-        }
-        else{
+        } else {
             url.getUrl("")
         }
     }
@@ -212,13 +211,33 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                         override fun getUrl(url: String) {
                             dataUpdate.imageLink = url
                             FireBaseRepo().createUser(dataUpdate).addOnCompleteListener {
-                                val emailPref =
-                                    getSharedPreferences("email", Context.MODE_PRIVATE).edit()
-                                emailPref.putString("email", dataUpdate.email).apply()
-                                spinner.visibility = View.GONE
-                                val intent =
-                                    Intent(this@RegistAddImageActivity, HomeActivity::class.java)
-                                startActivity(intent)
+                                FireBaseRepo().createDataPay(dataUpdate.email!!)
+                                    .addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            FireBaseRepo().createCancel(dataUpdate.email!!)
+                                                    if (it.isSuccessful) {
+                                                        val emailPref =
+                                                            getSharedPreferences(
+                                                                "email",
+                                                                Context.MODE_PRIVATE
+                                                            ).edit()
+                                                        emailPref.putString(
+                                                            "email",
+                                                            dataUpdate.email
+                                                        ).apply()
+                                                        spinner.visibility = View.GONE
+                                                        val intent =
+                                                            Intent(
+                                                                this@RegistAddImageActivity,
+                                                                HomeActivity::class.java
+                                                            )
+                                                        startActivity(intent)
+                                                    }
+                                                }
+
+                                    }.addOnFailureListener {
+                                        deleteUser()
+                                    }
                             }
                                 .addOnFailureListener {
                                     deleteUser()
@@ -250,9 +269,9 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         val nama = findViewById<EditText>(R.id.ed_nama).text.toString()
-        var namaEd=findViewById<EditText>(R.id.ed_username).text.toString()
-        var passwordEd=findViewById<EditText>(R.id.ed_password).text.toString()
-        var emailEd=findViewById<EditText>(R.id.ed_email).text.toString()
+        var namaEd = findViewById<EditText>(R.id.ed_username).text.toString()
+        var passwordEd = findViewById<EditText>(R.id.ed_password).text.toString()
+        var emailEd = findViewById<EditText>(R.id.ed_email).text.toString()
         val dataUpdate = Data(
             username = namaEd,
             password = passwordEd,
@@ -269,12 +288,18 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 getPictures(R.id.iv_ava)
             }
             R.id.btn_continue -> {
-                if (nama == "" || namaEd==""||passwordEd==""||emailEd=="" || imageUri!!.equals(Uri.EMPTY)) {
+                if (nama == "" || namaEd == "" || passwordEd == "" || emailEd == "" || imageUri!!.equals(
+                        Uri.EMPTY
+                    )
+                ) {
                     Toast.makeText(this, "Mohon isi semua data", Toast.LENGTH_SHORT).show()
-                }
-                else if(!isValidPassword(passwordEd)||!isValidEmail(emailEd)){
-                    Toast.makeText(this, "mohon masukan password yang berisi angka dan email yang valid", Toast.LENGTH_SHORT).show()
-                }else {
+                } else if (!isValidPassword(passwordEd) || !isValidEmail(emailEd)) {
+                    Toast.makeText(
+                        this,
+                        "mohon masukan password yang berisi angka dan email yang valid",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
                     Toast.makeText(this, "$dataUpdate", Toast.LENGTH_SHORT).show()
                     regist(dataUpdate)
                 }

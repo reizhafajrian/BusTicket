@@ -10,14 +10,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/rv_pick_ticket"
+        app:layout_constraintBottom_toTopOf="@+id/rv_add_ticket"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="500dp"
         android:padding="30dp"
+        tools:listitem="@layout/item_pick_ticket"
+        />
 
+    <androidx.recyclerview.widget.RecyclerView
+
+        android:id="@+id/rv_add_ticket"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_pick_ticket"
+        app:layout_constraintBottom_toTopOf="@+id/ly_card"
+        android:orientation="horizontal"
+        android:layout_height="50dp"
+        tools:listitem="@layout/item_pick_ticket"
         />
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/rv_pick_ticket"
+        android:id="@+id/ly_card"
+        app:layout_constraintTop_toBottomOf="@+id/rv_add_ticket"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="1"
         android:layout_width="match_parent"
@@ -89,6 +102,14 @@
                     android:text="Jam Keberangkatan  :"
                     android:textSize="20dp"
                     android:fontFamily="@font/montserrat_light"
+                    />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_checkout"
+                    android:text="Bayar"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

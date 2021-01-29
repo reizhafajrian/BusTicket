@@ -42,7 +42,7 @@ class TiketDetailActivity : AppCompatActivity(),ItemDetailListener {
             if(it.isSuccessful){
                 spinner.visibility=View.GONE
                 val infoTiket=it.result!!.toObject(ManagerGetData::class.java)
-                if(infoTiket==null){
+                if(infoTiket?.data==null){
                     tv_warning.visibility= View.VISIBLE
                     tv_warning.text="Data pembelian tiket anda tidak ada"
                 }

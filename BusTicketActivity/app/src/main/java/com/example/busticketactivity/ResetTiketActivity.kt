@@ -80,7 +80,7 @@ class ResetTiketActivity : AppCompatActivity(),ListenerPickTicket,View.OnClickLi
     }
     private fun reset(){
         val newData = DataTiket()
-        FireBaseRepo().resetTiket(newData!!.nama)
+        FireBaseRepo().resetTiket(newData!!.id)
         Loader()
         }
 }

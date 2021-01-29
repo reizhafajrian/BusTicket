@@ -2,6 +2,8 @@ package com.example.busticketactivity.firebase
 
 
 import android.util.Log
+import com.example.busticketactivity.DriverDataClass
+import com.example.busticketactivity.TicketPostDataClass
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.listener.CheckTiket
 import com.example.busticketactivity.pickticket.DataItemPickup
@@ -10,15 +12,18 @@ import com.example.busticketactivity.tiketmenu.InfoTiket
 import com.example.busticketactivity.tiketmenu.ItemDataTiket
 
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.ktx.Firebase
 
 
 class FireBaseRepo {
 
     private val firebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth = Firebase.auth
     fun getPost(): Task<QuerySnapshot> {
         return firebaseFirestore
             .collection("Bus")
@@ -28,6 +33,10 @@ class FireBaseRepo {
     fun getPosition(namDoc: String): Task<DocumentSnapshot> {
         return firebaseFirestore.collection("Bus").document(namDoc)
             .get()
+    }
+
+    fun CheckFull(): Task<QuerySnapshot> {
+        return getPost()
     }
 
     fun getPostCopy() {
@@ -58,6 +67,20 @@ class FireBaseRepo {
         return firebaseFirestore.collection("User").document(dataUpdate.email.toString())
             .set(docData)
     }
+    fun createDriver(dataUpdate: DriverDataClass){
+         auth.createUserWithEmailAndPassword(dataUpdate.email,dataUpdate.pass).addOnCompleteListener {
+            firebaseFirestore.collection("User").document(dataUpdate.email)
+                .set(dataUpdate)
+        }.addOnFailureListener {
+            if(auth.currentUser!=null){
+                auth.currentUser!!.delete()
+                firebaseFirestore.collection("User").document(dataUpdate.email).delete()
+            }
+
+        }
+
+
+    }
 
     fun getUser(email: String): Task<DocumentSnapshot> {
         return firebaseFirestore.collection("User").document(email)
@@ -85,20 +108,72 @@ class FireBaseRepo {
                 }
             }
         }
-
-
+    }
+    fun createDataPay(email :String): Task<Void> {
+        val data= mapOf<String,Any>(
+            "data" to mutableListOf<Any>()
+        )
+        return firebaseFirestore.collection("Buy").document(email).set(
+            data
+        )
     }
 
-    fun getCheckTiket(namaBus: String, nomor: String, isKosong: CheckTiket) {
+    fun postCancel(
+        email: String,
+        data: InfoTiket
+    ) {
+//        val docData = hashMapOf<String, Any>(
+//            "email" to email,
+//            "namaBus" to data.nama,
+//            "nomorKursi" to nomor,
+//            "harga" to data.harga,
+//            "terminal" to data.terminal,
+//            "type" to data.type,
+//            "pergi" to data.pergi
+//        )
+        val docudata = InfoTiket(
+            email = data.email,
+            namaBus = data.nama,
+            nomorKursi = data.nomorKursi,
+            harga = data.harga,
+            terminal = data.terminal,
+            type = data.type,
+            tanggal = data.tanggal,
+            pergi = data.pergi
+        )
+//        val data = hashMapOf<String, Any>(
+//            "data" to mutableListOf(docudata)
+//        )
+        getCancelTicket(email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val hasil = it.result!!.toObject(ManagerGetData::class.java)
+                hasil?.data?.add(docudata)
+                if (hasil != null) {
+                    firebaseFirestore.collection("Cancel").document(email).set(hasil)
+                }
+            }
+        }
+
+    }
+    fun getCheckTiket(namaBus: String, nomor: MutableList<String>, isKosong: CheckTiket) {
         getPosition(namaBus).addOnCompleteListener {
             if (it.isSuccessful) {
                 val data = it.result!!.toObject(DataItemPickup::class.java)
                 val list = data?.position
-                val nomorInt = nomor.toInt()
-                if ((list?.get(nomorInt - 1)?.isKosong) == true) {
-                    isKosong.Gettiket(true)
-                } else {
-                    isKosong.Gettiket(false)
+                val listData= mutableListOf<Boolean>()
+                for (i in nomor){
+                    if ((list?.get(i.toInt() - 1)?.isKosong) == true) {
+                        listData.add(true)
+                    } else {
+                        listData.add(false)
+                        isKosong.Gettiket(false,i)
+                    }
+                }
+                val hasil=listData.filter {
+                    it==true
+                }
+                if(listData.size==hasil.size){
+                    isKosong.Gettiket(true,"")
                 }
 
             }
@@ -108,7 +183,7 @@ class FireBaseRepo {
     fun postPaymentTiket(
         nomor: String,
         email: String,
-        data: ItemDataTiket
+        data: DataItemPickup
     ) {
         val docData = hashMapOf<String, Any>(
             "email" to email,
@@ -126,6 +201,7 @@ class FireBaseRepo {
             harga = data.harga,
             terminal = data.terminal,
             type = data.type,
+            tanggal = data.tanggal,
             pergi = data.pergi
         )
         val data = hashMapOf<String, Any>(
@@ -145,6 +221,15 @@ class FireBaseRepo {
 
     fun getPaymentTiket(email: String): Task<DocumentSnapshot> {
         return firebaseFirestore.collection("Buy").document(email).get()
+    }
+    fun getCancelTicket(email: String): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("Cancel").document(email).get()
+    }
+    fun createCancel(email: String) {
+        val data= hashMapOf<String,Any>(
+            "data" to mutableListOf<Any>()
+        )
+        firebaseFirestore.collection("Cancel").document(email).set(data)
     }
 
     fun getPaymentManager(): Task<QuerySnapshot> {
@@ -217,5 +302,9 @@ class FireBaseRepo {
                 }
             }
         }
+    }
+
+    fun PostTicket(data:TicketPostDataClass) {
+        firebaseFirestore.collection("Bus").document(data.id).set(data)
     }
 }

@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.listener.TicketItemListener
+import com.example.busticketactivity.pickticket.DataItemPickup
 import com.example.busticketactivity.tiketmenu.ItemDataTiket
 import kotlinx.android.synthetic.main.item_ticket.view.*
 
 
-class ItemTicketAdapter(private val list: MutableList<ItemDataTiket>,
-                        private  val listener : TicketItemListener
-                        ):RecyclerView.Adapter<ItemTicketAdapter.ListViewHolder>(){
+class ItemTicketAdapter(
+    private val list: MutableList<DataItemPickup>,
+    private val listener: TicketItemListener
+) : RecyclerView.Adapter<ItemTicketAdapter.ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_ticket,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ticket, parent, false)
         return ListViewHolder(view)
     }
 
@@ -32,14 +34,21 @@ class ItemTicketAdapter(private val list: MutableList<ItemDataTiket>,
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: ItemDataTiket){
-            with(itemView){
-                tv_buscount.text=item.busCount
-               itemView.tv_title_bus.text=item.nama
-                itemView.tv_type_bus.text=item.type
-                itemView.tv_terminal.text=item.terminal
-                itemView.tv_berangkat.text=item.pergi
-                cd_item.setOnClickListener { listener.onItemClick(item.nama) }
+        fun bind(item: DataItemPickup) {
+            with(itemView) {
+                tv_id.text = item.id
+                itemView.tv_title_bus.text = item.nama
+                itemView.tv_type_bus.text = item.type
+                itemView.tv_terminal.text = item.terminal
+                itemView.tv_berangkat.text = "${item.pergi}/${item.tanggal}"
+                cd_item.setOnClickListener { listener.onItemClick(item.id) }
+                val v=item.position.filter {
+                    it!!.isKosong==false
+                }
+                if (v.size==item.position.size){
+                    tv_full.text="full"
+                }
+
             }
         }
 

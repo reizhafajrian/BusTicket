@@ -86,7 +86,7 @@ class BottomSheet(private val listener: BottomSheetItemListener) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_no.setOnClickListener {
-            dismiss()
+            listener.getUserChoice(false)
         }
         btn_yes.setOnClickListener {
             listener.getUserChoice(true)

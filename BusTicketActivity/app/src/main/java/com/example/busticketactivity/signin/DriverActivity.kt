@@ -15,6 +15,7 @@ import com.example.busticketactivity.adapter.ItemTicketAdapter
 import com.example.busticketactivity.firebase.FireBaseRepo
 
 import com.example.busticketactivity.listener.TicketItemListener
+import com.example.busticketactivity.pickticket.DataItemPickup
 
 import com.example.busticketactivity.tiketmenu.ItemDataTiket
 
@@ -77,10 +78,11 @@ class DriverActivity : AppCompatActivity(), TicketItemListener {
         spinner.visibility= View.VISIBLE
         FireBaseRepo().getPost().addOnCompleteListener {
             if (it.isSuccessful) {
-                val datahasil = it.result!!.toObjects(ItemDataTiket::class.java)
+                val datahasil = it.result!!.toObjects(DataItemPickup::class.java)
                 spinner.visibility= View.GONE
                 if(datahasil!=null){
                 rv_item_Tiket.apply {
+
                     layoutManager =
                         LinearLayoutManager(this@DriverActivity, RecyclerView.VERTICAL, false)
                     adapter = ItemTicketAdapter(datahasil, this@DriverActivity)
