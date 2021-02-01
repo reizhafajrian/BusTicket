@@ -111,13 +111,13 @@
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nama Panggilan"/>
+                    android:text="Nomor Telepon"/>
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_username"
+                    android:id="@+id/ed_telepon"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:inputType="text"
+                    android:inputType="number|phone"
                     android:background="@drawable/round_bg"
                     android:paddingLeft="10dp"
                     android:layout_marginTop="10dp"/>

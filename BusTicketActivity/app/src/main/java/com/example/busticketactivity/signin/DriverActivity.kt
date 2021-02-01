@@ -33,13 +33,8 @@ class DriverActivity : AppCompatActivity(), TicketItemListener {
         setContentView(R.layout.activity_driver)
 //        initiateUi()
         btn_open_scan.setOnClickListener {
-            val fragment = OpenCameraFragment()
-            supportFragmentManager.beginTransaction().apply {
-                replace(
-                    R.id.fragment, fragment
-                )
-                addToBackStack(null)
-                commit()
+            val intent = Intent(this, OpenCameraActivity::class.java)
+            startActivity(intent)
 
         }
         btn_open_logout.setOnClickListener {
@@ -49,48 +44,35 @@ class DriverActivity : AppCompatActivity(), TicketItemListener {
                 apply()
             }
             finish()
-            }
-
         }
         showlist()
     }
 
-    //    private fun initiateUi() {
+
+//    private fun initiateUi() {
 //       val fragment=OpenCameraFragment()
 //        supportFragmentManager.beginTransaction().replace(
 //            R.id.fragment,fragment
 //        )
 //    }
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStackImmediate()
-        } else {
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.apply {
-                addCategory(Intent.CATEGORY_HOME)
-                flags = (Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            startActivity(intent)
-        }
-    }
+
 
     private fun showlist() {
-        spinner.visibility= View.VISIBLE
+        spinner.visibility = View.VISIBLE
         FireBaseRepo().getPost().addOnCompleteListener {
             if (it.isSuccessful) {
                 val datahasil = it.result!!.toObjects(DataItemPickup::class.java)
-                spinner.visibility= View.GONE
-                if(datahasil!=null){
-                rv_item_Tiket.apply {
+                spinner.visibility = View.GONE
+                if (datahasil != null) {
+                    rv_item_Tiket.apply {
 
-                    layoutManager =
-                        LinearLayoutManager(this@DriverActivity, RecyclerView.VERTICAL, false)
-                    adapter = ItemTicketAdapter(datahasil, this@DriverActivity)
-                }
-                }
-                else{
-                    tv_warning.visibility=View.GONE
-                    tv_warning.text="Data tidak Tersedia"
+                        layoutManager =
+                            LinearLayoutManager(this@DriverActivity, RecyclerView.VERTICAL, false)
+                        adapter = ItemTicketAdapter(datahasil, this@DriverActivity)
+                    }
+                } else {
+                    tv_warning.visibility = View.GONE
+                    tv_warning.text = "Data tidak Tersedia"
                 }
             }
         }

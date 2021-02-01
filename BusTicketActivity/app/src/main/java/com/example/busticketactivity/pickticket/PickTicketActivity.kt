@@ -288,8 +288,8 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
         val customerData = CustomerDetails()
         customerData.apply {
             email = dataUser.email
-            firstName = dataUser.email
-            lastName = dataUser.lastname
+            firstName = dataUser.nama
+            lastName = dataUser.nama
         }
 
         req.apply {

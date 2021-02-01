@@ -72,12 +72,13 @@ class OpenCameraFragment : Fragment(), ZXingScannerView.ResultHandler {
           }
       }
         else{
-          val fragment=FragmentDeny()
-          activity?.supportFragmentManager?.beginTransaction()!!.apply {
-              add(R.id.fragment,fragment)
-              addToBackStack(null)
-              commit()
+
+            Log.d("DriverActivity","result $rawResult")
+//          val fragment=FragmentDeny()
+//          activity?.supportFragmentManager?.beginTransaction()!!.apply {
+//              add(R.id.fragment,fragment)
+//              addToBackStack(null)
+//              commit()
           }
         }
     }
-}

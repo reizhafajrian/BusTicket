@@ -69,6 +69,13 @@
                 android:layout_margin="16dp"
                 android:src="@drawable/ic_scan_white"
                 app:fab_colorNormal="#B13EC5"  />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_scan_white"
+                app:fab_colorNormal="#B13EC5"  />
         </com.github.clans.fab.FloatingActionMenu>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

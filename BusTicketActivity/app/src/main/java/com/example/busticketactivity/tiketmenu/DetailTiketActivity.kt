@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.busticketactivity.R
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
+import com.google.gson.Gson
 import com.google.zxing.WriterException
 import kotlinx.android.synthetic.main.activity_detail_tiket.*
 import java.text.SimpleDateFormat
@@ -18,7 +19,7 @@ import java.util.*
 
 
 class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
-
+    val gson=Gson()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_tiket)
@@ -38,7 +39,9 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getData() {
         val infoTiket = intent.getSerializableExtra("dataTiketPembayaran") as InfoTiket
-        val qrCode = QRGEncoder("settlement", null, QRGContents.Type.TEXT, 250)
+        val gsontojson=gson.toJson(infoTiket,infoTiket::class.java)
+        gsontojson
+        val qrCode = QRGEncoder(gsontojson, null, QRGContents.Type.TEXT, 250)
         qrCode.apply {
             colorBlack = Color.BLACK
             colorWhite = Color.WHITE

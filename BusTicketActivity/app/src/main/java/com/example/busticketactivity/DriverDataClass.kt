@@ -3,7 +3,7 @@ package com.example.busticketactivity
 data class DriverDataClass(
     var email: String = "",
     var pass: String = "",
-    var phone: String = "",
+    var telepon: String = "",
     var nama:String="",
-    val role:String="driver"
+    var role:String=""
 )

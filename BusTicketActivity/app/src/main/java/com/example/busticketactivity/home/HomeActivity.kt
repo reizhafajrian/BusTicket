@@ -9,8 +9,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.busticketactivity.CancelUserActivity
 import com.example.busticketactivity.DetailInfoWisataActivity
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.ItemMenuAdapter
@@ -163,6 +165,7 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
         val list = mutableListOf(
             ItemMenuClass(R.drawable.ic_scan, "Scan"),
             ItemMenuClass(R.drawable.ic_shop, "Beli"),
+            ItemMenuClass(R.drawable.ic_shop, "Cancel"),
             ItemMenuClass(R.drawable.ic_info, "info"),
             ItemMenuClass(R.drawable.ic_logout, "SignOut")
         )
@@ -175,7 +178,7 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
         rvMenu.apply {
             setHasFixedSize(true)
             layoutManager =
-                LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(this@HomeActivity,4, LinearLayoutManager.VERTICAL, false)
             adapter = ItemMenuAdapter(listItem, this@HomeActivity)
         }
     }
@@ -204,6 +207,10 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
                 prefs.putString("login", "")
                 prefs.apply()
                 finish()
+            }
+            "Cancel" -> {
+                val intent=Intent(this@HomeActivity, CancelUserActivity::class.java)
+                startActivity(intent)
             }
             "info" -> {
                 val intent=Intent(this@HomeActivity,InfoActivity::class.java)

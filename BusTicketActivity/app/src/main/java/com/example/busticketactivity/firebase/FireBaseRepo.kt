@@ -56,23 +56,37 @@ class FireBaseRepo {
             }
     }
 
+    fun getCancel(): Task<QuerySnapshot> {
+        return firebaseFirestore.collection("Cancel").get()
+    }
+
+
     fun createUser(dataUpdate: RegistAddImageActivity.Data): Task<Void> {
         val docData = hashMapOf<String, Any>(
-            "username" to dataUpdate.username.toString(),
             "email" to dataUpdate.email.toString(),
             "nama" to dataUpdate.nama.toString(),
-            "bio" to dataUpdate.bio,
-            "imageUrl" to dataUpdate.imageLink
+            "telepon" to dataUpdate.telepon,
+            "imageUrl" to dataUpdate.imageLink,
+            "role" to dataUpdate.role
         )
         return firebaseFirestore.collection("User").document(dataUpdate.email.toString())
             .set(docData)
     }
-    fun createDriver(dataUpdate: DriverDataClass){
-         auth.createUserWithEmailAndPassword(dataUpdate.email,dataUpdate.pass).addOnCompleteListener {
-            firebaseFirestore.collection("User").document(dataUpdate.email)
-                .set(dataUpdate)
-        }.addOnFailureListener {
-            if(auth.currentUser!=null){
+
+    fun createDriver(dataUpdate: DriverDataClass) {
+        val docData = hashMapOf<String, Any>(
+            "email" to dataUpdate.email.toString(),
+            "nama" to dataUpdate.nama.toString(),
+            "telepon" to dataUpdate.telepon,
+            "imageUrl" to "",
+            "role" to dataUpdate.role
+        )
+        auth.createUserWithEmailAndPassword(dataUpdate.email, dataUpdate.pass)
+            .addOnCompleteListener {
+                firebaseFirestore.collection("User").document(dataUpdate.email)
+                    .set(dataUpdate)
+            }.addOnFailureListener {
+            if (auth.currentUser != null) {
                 auth.currentUser!!.delete()
                 firebaseFirestore.collection("User").document(dataUpdate.email).delete()
             }
@@ -109,8 +123,9 @@ class FireBaseRepo {
             }
         }
     }
-    fun createDataPay(email :String): Task<Void> {
-        val data= mapOf<String,Any>(
+
+    fun createDataPay(email: String): Task<Void> {
+        val data = mapOf<String, Any>(
             "data" to mutableListOf<Any>()
         )
         return firebaseFirestore.collection("Buy").document(email).set(
@@ -155,25 +170,26 @@ class FireBaseRepo {
         }
 
     }
+
     fun getCheckTiket(namaBus: String, nomor: MutableList<String>, isKosong: CheckTiket) {
         getPosition(namaBus).addOnCompleteListener {
             if (it.isSuccessful) {
                 val data = it.result!!.toObject(DataItemPickup::class.java)
                 val list = data?.position
-                val listData= mutableListOf<Boolean>()
-                for (i in nomor){
+                val listData = mutableListOf<Boolean>()
+                for (i in nomor) {
                     if ((list?.get(i.toInt() - 1)?.isKosong) == true) {
                         listData.add(true)
                     } else {
                         listData.add(false)
-                        isKosong.Gettiket(false,i)
+                        isKosong.Gettiket(false, i)
                     }
                 }
-                val hasil=listData.filter {
-                    it==true
+                val hasil = listData.filter {
+                    it == true
                 }
-                if(listData.size==hasil.size){
-                    isKosong.Gettiket(true,"")
+                if (listData.size == hasil.size) {
+                    isKosong.Gettiket(true, "")
                 }
 
             }
@@ -222,11 +238,13 @@ class FireBaseRepo {
     fun getPaymentTiket(email: String): Task<DocumentSnapshot> {
         return firebaseFirestore.collection("Buy").document(email).get()
     }
+
     fun getCancelTicket(email: String): Task<DocumentSnapshot> {
         return firebaseFirestore.collection("Cancel").document(email).get()
     }
+
     fun createCancel(email: String) {
-        val data= hashMapOf<String,Any>(
+        val data = hashMapOf<String, Any>(
             "data" to mutableListOf<Any>()
         )
         firebaseFirestore.collection("Cancel").document(email).set(data)
@@ -304,7 +322,24 @@ class FireBaseRepo {
         }
     }
 
-    fun PostTicket(data:TicketPostDataClass) {
+    fun PostTicket(data: TicketPostDataClass) {
         firebaseFirestore.collection("Bus").document(data.id).set(data)
+    }
+
+    fun cancelDetail(email: String): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("Cancel").document(email).get()
+    }
+
+    fun getUserRole(email: String): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("User").document(email).get()
+
+    }
+
+    fun GetCancelTicketUser(email: String?): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("Cancel").document(email!!).get()
+    }
+
+    fun CheckTicket(data: InfoTiket): Task<QuerySnapshot> {
+        return firebaseFirestore.collection("Buy").whereArrayContains("data", data).get()
     }
 }

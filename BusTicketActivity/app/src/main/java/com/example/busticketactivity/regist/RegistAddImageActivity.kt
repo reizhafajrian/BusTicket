@@ -41,12 +41,12 @@ import kotlinx.android.synthetic.main.activity_regist_add_image.*
 class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
     @Parcelize
     data class Data(
-        var username: String? = "",
+        var nama: String? = "",
         var password: String? = "",
         var email: String? = "",
-        var nama: String? = "",
         var imageLink: String = "",
-        var bio: String = ""
+        var telepon: String = "",
+        var role:String="User"
     ) : Parcelable
 
     private lateinit var auth: FirebaseAuth
@@ -269,14 +269,14 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         val nama = findViewById<EditText>(R.id.ed_nama).text.toString()
-        var namaEd = findViewById<EditText>(R.id.ed_username).text.toString()
+        var telepon = findViewById<EditText>(R.id.ed_telepon).text.toString()
         var passwordEd = findViewById<EditText>(R.id.ed_password).text.toString()
         var emailEd = findViewById<EditText>(R.id.ed_email).text.toString()
         val dataUpdate = Data(
-            username = namaEd,
+            nama = nama,
             password = passwordEd,
             email = emailEd,
-            nama = nama,
+            telepon = telepon,
             imageLink = ""
         )
 
@@ -288,7 +288,7 @@ class RegistAddImageActivity : AppCompatActivity(), View.OnClickListener {
                 getPictures(R.id.iv_ava)
             }
             R.id.btn_continue -> {
-                if (nama == "" || namaEd == "" || passwordEd == "" || emailEd == "" || imageUri!!.equals(
+                if (nama == "" || telepon == "" || passwordEd == "" || emailEd == "" || imageUri!!.equals(
                         Uri.EMPTY
                     )
                 ) {
