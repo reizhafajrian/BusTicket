@@ -24,6 +24,8 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
         btn_logout.setOnClickListener(this)
         btn_add_driver.setOnClickListener(this)
         btn_add_ticket.setOnClickListener(this)
+        btn_cancel.setOnClickListener(this)
+        menu.isIconAnimated=false
     }
 
     private fun showlist() {
@@ -86,6 +88,10 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
             }
             R.id.btn_add_ticket->{
                 val intent=Intent(this,AddTicketActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.btn_cancel->{
+                val intent=Intent(this,AdminCancelActivity::class.java)
                 startActivity(intent)
             }
         }

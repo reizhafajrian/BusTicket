@@ -24,7 +24,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/tools"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintHorizontal_bias="1"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,45 +48,56 @@
 
 
         <com.github.clans.fab.FloatingActionMenu
+            fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+            fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
             android:id="@+id/menu"
-            android:layout_width="55dp"
+            android:layout_width="wrap_content"
             android:layout_height="55dp"
-            app:menu_openDirection="up"
-            app:menu_colorNormal="#B13EC5"
             android:layout_gravity="right"
-            app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
-            app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
-            app:menu_icon="@drawable/ic_scan_white"
-            >
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/btn_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_scan_white"
-                app:backgroundTint="#B13EC5"  />
+            fab:menu_colorNormal="#B13EC5"
+            fab:menu_labels_position="left"
+            fab:menu_icon="@drawable/ic_menu"
+         >
+
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/btn_add_driver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_scan_white"
-                app:fab_colorNormal="#B13EC5"  />
+                fab:fab_colorNormal="#B13EC5"
+                android:src="@drawable/ic_add"
+                fab:fab_label="Tambah Pengguna"
+
+              />
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/btn_add_ticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_scan_white"
-                app:fab_colorNormal="#B13EC5"  />
+                fab:fab_label="Tambah Tiket"
+                fab:fab_colorNormal="#B13EC5"
+                android:src="@drawable/ic_add"
+                />
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/btn_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_scan_white"
-                app:fab_colorNormal="#B13EC5"  />
+                fab:fab_label="Tiket Batal"
+                fab:fab_colorNormal="#B13EC5"
+                android:src="@drawable/ic_cancel"
+               />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                fab:fab_colorNormal="#B13EC5"
+                android:src="@drawable/ic_logout_white"
+                fab:fab_label="Keluar"
+                />
         </com.github.clans.fab.FloatingActionMenu>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
