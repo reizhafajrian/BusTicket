@@ -8,13 +8,14 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.busticketactivity.AdminActivity
-import com.example.busticketactivity.DriverDataClass
+import com.example.busticketactivity.admin.AdminActivity
 import com.example.busticketactivity.R
+import com.example.busticketactivity.dataclass.UserObject
+import com.example.busticketactivity.driver.DriverActivity
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.home.HomeActivity
+import com.example.busticketactivity.manager.ManagerActivity
 import com.example.busticketactivity.regist.RegistAddImageActivity
-import com.example.busticketactivity.regist.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -74,13 +75,13 @@ class SignInActivity : AppCompatActivity(), View.OnClickListener {
         auth.signInWithEmailAndPassword(usernameText, passwordText)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    FireBaseRepo().getUserRole(usernameText).addOnCompleteListener {
+
+                    FireBaseRepo().getUserRoleAll(usernameText).addOnCompleteListener {
                         if (it.isSuccessful) {
                             val data = it!!.result!!.toObject(UserObject::class.java)
                             if (data !== null) {
                                 Log.d(tag, "Sign berhasil di dapatkan")
                                 when (data?.role) {
-
                                     "User" -> {
                                         prefs.edit().putString("login", "${auth.currentUser}")
                                             .apply()

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".pickticket.PickTicketActivity">
 
+
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +90,23 @@
                     android:textSize="20dp"
                     android:fontFamily="@font/montserrat_light"
                     />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/ed_tanggal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_bias="1"
+                        android:hint="12-02-2021"
+                        android:inputType="none"
+                        android:textSize="24sp"
+                        android:textColor="@color/bluegd"
+                        app:layout_constraintEnd_toEndOf="@id/btn_checkout"
+                        android:clickable="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_terminal"
+                        />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_berangkat"
                     android:layout_width="wrap_content"

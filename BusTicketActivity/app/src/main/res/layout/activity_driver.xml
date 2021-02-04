@@ -4,96 +4,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signin.DriverActivity">
+    tools:context=".driver.DriverActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment"
-        app:layout_constraintTop_toTopOf="parent"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_item_Tiket"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_ticket" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_item_Tiket"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_ticket" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/tools"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintHorizontal_bias="1"
+        fab:layout_constraintStart_toStartOf="parent">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            app:layout_constraintStart_toStartOf="parent">
 
             <!-- Main content -->
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btn_open_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_margin="16dp"
-                android:tooltipText="@string/save_card"
-                app:backgroundTint="#B13EC5"
 
-                android:src="@drawable/ic_logout_white"
-                android:contentDescription="test"
-                />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btn_open_scan"
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/menu"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|left"
-                android:layout_margin="16dp"
-                app:backgroundTint="#B13EC5"
-                android:src="@drawable/ic_scan_white"
-                android:contentDescription="test"
-                />
+                android:layout_height="55dp"
+                android:layout_gravity="right"
+                fab:menu_colorNormal="#B13EC5"
+                fab:menu_icon="@drawable/ic_menu"
+                fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                fab:menu_labels_position="left"
+                fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/btn_histori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_download"
+                    fab:fab_colorNormal="#B13EC5"
+                    fab:fab_label="Histori Penumpang" />
+
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/btn_open_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_scan_white"
+                    fab:fab_colorNormal="#B13EC5"
+                    fab:fab_label="Scan Tiket" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/btn_open_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_logout_white"
+                    fab:fab_colorNormal="#B13EC5"
+                    fab:fab_label="Keluar" />
+            </com.github.clans.fab.FloatingActionMenu>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--        android:id="@+id/btn_scan"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"/>-->
-
-<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--        android:layout_width=""-->
-<!--        android:layout_height=""-->
 
 
     <com.google.android.material.textview.MaterialTextView
-        android:visibility="gone"
         android:id="@+id/tv_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/spinner"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

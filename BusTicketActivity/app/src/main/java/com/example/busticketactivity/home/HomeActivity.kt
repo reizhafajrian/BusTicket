@@ -8,18 +8,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.CancelUserActivity
-import com.example.busticketactivity.DetailInfoWisataActivity
+import com.example.busticketactivity.infowisata.DetailInfoWisataActivity
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.ItemMenuAdapter
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.dataclass.ItemMenuClass
 import com.example.busticketactivity.listener.MenuItemListener
-import com.example.busticketactivity.signin.UserObject
+import com.example.busticketactivity.dataclass.UserObject
 import com.example.busticketactivity.tiketmenu.TiketActivty
 import com.example.busticketactivity.tiketmenu.TiketDetailActivity
 import com.example.busticketactivity.utils.DataClassInfoWisata
@@ -195,8 +194,10 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
     override fun onItemClick(nama: String) {
         when (nama) {
             "Beli" -> {
+//                FireBaseRepo().posisiByTanggal()
                 val intent = Intent(this, TiketActivty::class.java)
                 startActivity(intent)
+
             }
             "Scan" -> {
                 val intent = Intent(this, TiketDetailActivity::class.java)

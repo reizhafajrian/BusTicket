@@ -20,38 +20,46 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".signin.NotValidActivity"></activity>
-        <activity android:name=".DetailDriverTIcketActivity" />
-        <activity android:name=".signin.OpenCameraActivity" />
+        <activity android:name=".driver.DetailHistoryActivity"></activity>
+        <activity android:name=".driver.HistoriActivity" />
+        <activity android:name=".driver.NotValidActivity" />
+        <activity android:name=".driver.DetailDriverTIcketActivity" />
+        <activity android:name=".driver.OpenCameraActivity" />
         <activity android:name=".CancelUserActivity" />
-        <activity android:name=".AdminDetailActivity" />
-        <activity android:name=".AdminCancelActivity" />
-        <activity android:name=".AddDriverActivty" />
-        <activity android:name=".AddTicketActivity" />
+        <activity android:name=".admin.AdminDetailActivity" />
+        <activity android:name=".admin.AdminCancelActivity" />
+        <activity android:name=".admin.AddDriverActivty" />
+        <activity android:name=".admin.AddTicketActivity" />
         <activity android:name=".home.InfoActivity" />
-        <activity android:name=".DetailInfoWisataActivity" />
-        <activity android:name=".ResetTiketActivity" />
-        <activity android:name=".AdminActivity" />
+        <activity android:name=".infowisata.DetailInfoWisataActivity" />
+        <activity android:name=".admin.ResetTiketActivity" />
+        <activity android:name=".admin.AdminActivity" >
+
+
+        </activity>
         <activity android:name=".home.ProfileActivity" />
-        <activity android:name=".signin.DriverActivity" />
-        <activity android:name=".signin.ManagerActivity" />
+        <activity android:name=".driver.DriverActivity">
+
+        </activity>
+        <activity android:name=".manager.ManagerActivity" />
         <activity android:name=".tiketmenu.DetailTiketActivity" />
         <activity android:name=".tiketmenu.TiketDetailActivity" />
         <activity android:name=".payment.PaymentActivity" />
-        <activity android:name=".pickticket.PickTicketActivity" />
+        <activity android:name=".pickticket.PickTicketActivity" >
+
+        </activity>
         <activity android:name=".tiketmenu.TiketActivty" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".regist.RegistAddImageActivity" />
-        <activity android:name=".regist.RegisterActivity" />
-        <activity android:name=".signin.SignInActivity">
+        <activity android:name=".signin.SignInActivity" />
+        <activity android:name=".signin.SignInAndRegistActivity" />
+        <activity android:name=".ui.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".signin.SignInAndRegistActivity" />
-        <activity android:name=".ui.MainActivity" />
     </application>
 
 </manifest>

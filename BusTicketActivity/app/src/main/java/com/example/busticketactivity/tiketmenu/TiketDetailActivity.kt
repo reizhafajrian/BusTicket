@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
+import com.example.busticketactivity.adapter.ItemDetailTiketAdapter
+import com.example.busticketactivity.dataclass.InfoTiket
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.listener.ItemDetailListener
@@ -62,7 +62,7 @@ class TiketDetailActivity : AppCompatActivity(),ItemDetailListener {
         rv_detail_tiket.apply {
             setHasFixedSize(true)
             layoutManager=LinearLayoutManager(this@TiketDetailActivity,RecyclerView.VERTICAL,false)
-            adapter=ItemDetailTiketAdapter(lis.data,this@TiketDetailActivity)
+            adapter= ItemDetailTiketAdapter(lis.data,this@TiketDetailActivity)
         }
 
     }

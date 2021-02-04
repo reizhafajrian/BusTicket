@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signin.OpenCameraActivity">
+    tools:context=".driver.OpenCameraActivity">
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@+id/zxscan"
         android:layout_width="match_parent"

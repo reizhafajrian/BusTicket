@@ -1,14 +1,11 @@
 package com.example.busticketactivity.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
-import com.example.busticketactivity.dataclass.ManagerGetData
-import com.example.busticketactivity.signin.DataTIket
-import com.example.busticketactivity.tiketmenu.InfoTiket
+import com.example.busticketactivity.dataclass.InfoTiket
 import kotlinx.android.synthetic.main.item_manager.view.*
 
 class ManagerAdapter(private val list: MutableList<InfoTiket>) :RecyclerView.Adapter<ManagerAdapter.ViewHolder>(){
@@ -18,7 +15,6 @@ class ManagerAdapter(private val list: MutableList<InfoTiket>) :RecyclerView.Ada
         with(itemView){
                 tv_email.text=data.email
                 tv_harga.text=data.harga
-
         }
     }
 

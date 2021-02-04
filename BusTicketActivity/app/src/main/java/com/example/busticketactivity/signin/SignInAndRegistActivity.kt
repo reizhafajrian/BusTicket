@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import com.example.busticketactivity.R
 import com.example.busticketactivity.regist.RegistAddImageActivity
-import com.example.busticketactivity.regist.RegisterActivity
 import kotlinx.android.synthetic.main.activity_sign_in_and_regist.*
 
 class SignInAndRegistActivity : AppCompatActivity(), View.OnClickListener {

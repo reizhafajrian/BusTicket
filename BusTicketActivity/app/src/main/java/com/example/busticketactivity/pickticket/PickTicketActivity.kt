@@ -2,6 +2,8 @@ package com.example.busticketactivity.pickticket
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,14 +14,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.PickTicketAdapter
 import com.example.busticketactivity.bottomsheets.BottomSheet
-import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.listener.BottomSheetItemListener
 import com.example.busticketactivity.firebase.*
 import com.example.busticketactivity.listener.CheckTiket
 import com.example.busticketactivity.listener.GetStatus
 import com.example.busticketactivity.listener.ListenerPickTicket
-import com.example.busticketactivity.signin.UserObject
-import com.example.busticketactivity.tiketmenu.ItemDataTiket
+import com.example.busticketactivity.dataclass.UserObject
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.midtrans.sdk.corekit.callback.TransactionFinishedCallback
@@ -40,13 +41,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
+import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPickTicket, BottomSheetItemListener,
-    TransactionFinishedCallback {
+class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPickTicket,
+    BottomSheetItemListener,
+    TransactionFinishedCallback,TextWatcher {
     val TAG = "PickTicketActivity"
+    var tanggal=""
     var orderId = ""
+
     private var nomor = mutableListOf<String>()
     private val gson = Gson()
     private val btnAlert by lazy { BottomSheet(this) }
@@ -57,13 +62,20 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pick_ticket)
         intitateUI()
-        Loader()
+        val sdf = SimpleDateFormat("dd-M-yyyy")
+        val currentDate = sdf.format(Date())
+        tanggal=currentDate
+        ed_tanggal.text=tanggal
+        Loader(tanggal)
         btn_checkout.setOnClickListener(this)
+        ed_tanggal.setOnClickListener(this)
+        ed_tanggal.addTextChangedListener (this)
+
     }
 
 
     override fun onStart() {
-        Loader()
+        Loader(tanggal)
         super.onStart()
     }
 
@@ -82,25 +94,49 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
             tv_title_bus.text = newData.nama
             tv_type_bus.text = newData.type
             tv_terminal.text = newData.terminal
-            tv_berangkat.text = "${newData.pergi}/${newData.tanggal}"
+            tv_berangkat.text = "${newData.pergi}"
+        }
+
+    }
+
+    private fun tanggal() {
+        val builder: MaterialDatePicker.Builder<Long> =
+            MaterialDatePicker.Builder.datePicker()
+        val picker: MaterialDatePicker<*> = builder.build()
+        picker.show(supportFragmentManager, picker.toString())
+        picker.addOnPositiveButtonClickListener{
+            val dateFormat=SimpleDateFormat("dd MMM yy")
+            val hasil=dateFormat.parse(picker.headerText)
+            val dateAfterFormat=SimpleDateFormat("dd-M-yyyy").format(hasil)
+            simpanTanggal(dateAfterFormat)
+            tanggal=dateAfterFormat
         }
     }
 
-    private fun Loader() {
+    private fun simpanTanggal(picker: String){
+        ed_tanggal.text=picker
+    }
+
+    private fun Loader(tanggal:String) {
         val titleDoc = intent.getStringExtra("title")
         val firebaseFirestore = FirebaseFirestore.getInstance()
         spinner.visibility = View.VISIBLE
-        firebaseFirestore.collection("Bus").document(titleDoc.toString())
+        Log.d(TAG,"ini tanggal${tanggal}")
+        Log.d(TAG,"ini tanggal${titleDoc}")
+        firebaseFirestore.collection("Keberangkatan").document(titleDoc.toString()).collection("posisi").document(tanggal)
             .get()
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     spinner.visibility = View.GONE
                     val list = it.result!!.toObject(DataItemPickup::class.java)
                     if (list != null) {
+                        rvPickTicket.visibility=View.VISIBLE
                         rvPickTicket.layoutManager = GridLayoutManager(this, 5)
-                        val listItemAdapter = PickTicketAdapter(list.position, this)
+                        val listItemAdapter = PickTicketAdapter(list.posisi, this)
                         listItemAdapter.notifyDataSetChanged()
                         rvPickTicket.adapter = listItemAdapter
+                    }
+                    else{
                     }
                 }
             }
@@ -122,9 +158,9 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
         btnAlert.show(supportFragmentManager, "Alert")
     }
 
-    private fun PayMent(dataTiket: DataItemPickup){
+    private fun PayMent(dataTiket: DataItemPickup) {
         FireBaseRepo().getCheckTiket(
-            dataTiket!!.id,
+            dataTiket!!.id,tanggal,
             nomor,
             object : CheckTiket {
                 override fun Gettiket(isKosong: Boolean, nomor: String) {
@@ -150,9 +186,8 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
         if (nomor.size == 0) {
             nomor.add(data)
         }
-
         if (Choice) {
-        PayMent(dataTiket!!)
+            PayMent(dataTiket!!)
         } else {
             val Nomor = getSharedPreferences("nomorKursi", Context.MODE_PRIVATE)
             val data = Nomor.getString("nomorKursi", "").toString()
@@ -194,18 +229,6 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
             .buildSDK()
     }
 
-    //    private fun getCheckTiket(){
-//        FireBaseRepo().getPost().addOnCompleteListener {
-//            if (it.isSuccessful) {
-//                val data = it.result!!.toObjects(ItemDataTiket::class.java)
-//                rvTiket.layoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-//                listItemAdapter.notifyDataSetChanged()
-//                rvTiket.adapter = listItemAdapter
-//            } else {
-//                Log.d(TAG,"error")
-//            }
-//        }
-//    }
     override fun onTransactionFinished(result: TransactionResult?) {
         if (result?.response != null) {
             getStatus()
@@ -225,10 +248,11 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
                         response: retrofit2.Response<Response>
                     ) {
                         val res = response.body()
-                        if (res?.transaction_status.equals("pending")) {
+                        if (res?.transaction_status.equals("settlement")) {
 
                             val data = getDataUser()
                             val tiket = DataTiket()
+
                             if (tiket != null) {
                                 runBlocking {
                                     fungsibaru(nomor, tiket)
@@ -249,7 +273,8 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
         GlobalScope.launch {
             val data = getDataUser()
             for (i in nomor) {
-                FireBaseRepo().postPosisi(namaBus = tiket.id, nomor = i)
+                tiket.tanggal=tanggal
+                FireBaseRepo().postPosisi(namaBus = tiket.id, nomor = i,tanggal = tanggal)
                 FireBaseRepo().postPaymentTiket(i, data.email, tiket)
                 delay(1000)
             }
@@ -306,16 +331,34 @@ class PickTicketActivity : AppCompatActivity(),View.OnClickListener, ListenerPic
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.btn_checkout -> {
                 if (nomor.isEmpty()) {
-                    Toast.makeText(this, "Anda belum memilih Nomor Kursi", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    val data=DataTiket()
+                    Toast.makeText(this, "Anda belum memilih Nomor Kursi", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    val data = DataTiket()
                     PayMent(data!!)
                 }
             }
+            R.id.ed_tanggal -> {
+                tanggal()
+            }
         }
     }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        tanggal=s.toString()
+        nomor.removeAll(nomor)
+        Loader(tanggal)
+    }
+
+
 }

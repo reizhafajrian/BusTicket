@@ -11,6 +11,6 @@ data class DataItemPickup(
     val harga:String="",
     val pergi:String="",
     val terminal:String="",
-    val tanggal:String="",
-    val position: MutableList<DataClassIsKosong?> = mutableListOf()
+    var tanggal:String="",
+    val posisi: MutableList<DataClassIsKosong?> = mutableListOf()
 ):Serializable

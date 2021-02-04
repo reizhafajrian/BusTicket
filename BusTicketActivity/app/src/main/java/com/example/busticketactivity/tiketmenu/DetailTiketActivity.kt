@@ -8,13 +8,13 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import com.example.busticketactivity.R
+import com.example.busticketactivity.dataclass.InfoTiket
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.google.gson.Gson
 import com.google.zxing.WriterException
 import kotlinx.android.synthetic.main.activity_detail_tiket.*
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -30,8 +30,8 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initiateUi() {
         val infoTiket = intent.getSerializableExtra("dataTiketPembayaran") as InfoTiket
-        tv_berangkat.text = infoTiket.pergi
-        tv_title_bus.text = infoTiket.namaBus
+        tv_berangkat.text = "${infoTiket.pergi}/${infoTiket.tanggal}"
+        tv_title_bus.text = infoTiket.nama
         tv_terminal.text = infoTiket.terminal
         tv_nomor.text = infoTiket.nomorKursi
         tv_type_bus.text = infoTiket.type
@@ -79,7 +79,7 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
 //            if (timeremove.toInt() > currentDateandTime.toInt()) {
 //                val waktusisa = timeremove.toInt()
 //                if ((waktusisa - 100) >= currentDateandTime.toInt()) {
-                    FireBaseRepo().canceltiket((infoTiket.namaBus), (infoTiket.nomorKursi))
+                    FireBaseRepo().canceltiket(infoTiket.id,infoTiket.tanggal, infoTiket.nomorKursi)
                     FireBaseRepo().deletetiket(infoTiket.email).addOnCompleteListener {
                         if (it.isSuccessful) {
                             val list = it.result!!.toObject(ManagerGetData::class.java)

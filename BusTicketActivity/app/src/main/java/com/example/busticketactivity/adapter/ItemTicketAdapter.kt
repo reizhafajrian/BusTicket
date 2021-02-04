@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.listener.TicketItemListener
 import com.example.busticketactivity.pickticket.DataItemPickup
-import com.example.busticketactivity.tiketmenu.ItemDataTiket
 import kotlinx.android.synthetic.main.item_ticket.view.*
 
 
@@ -40,13 +39,13 @@ class ItemTicketAdapter(
                 itemView.tv_title_bus.text = item.nama
                 itemView.tv_type_bus.text = item.type
                 itemView.tv_terminal.text = item.terminal
-                itemView.tv_berangkat.text = "${item.pergi}/${item.tanggal}"
+                itemView.tv_berangkat.text = "${item.pergi}"
                 cd_item.setOnClickListener { listener.onItemClick(item.id) }
-                val v=item.position.filter {
+                val v=item.posisi.filter {
                     it!!.isKosong==false
                 }
-                if (v.size==item.position.size){
-                    tv_full.text="full"
+                if (v.size==item.posisi.size){
+//                    tv_full.text="full"
                 }
 
             }

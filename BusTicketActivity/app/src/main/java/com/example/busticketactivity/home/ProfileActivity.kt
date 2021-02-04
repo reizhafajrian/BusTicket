@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.busticketactivity.R
 import com.example.busticketactivity.firebase.FireBaseRepo
-import com.example.busticketactivity.signin.UserObject
+import com.example.busticketactivity.dataclass.UserObject
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_profile.*
 
