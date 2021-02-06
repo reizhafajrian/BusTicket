@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
@@ -15,6 +16,7 @@ import com.example.busticketactivity.pickticket.DataItemPickup
 import com.example.busticketactivity.pickticket.PickTicketActivity
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_tiket_detail.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class TiketActivty : AppCompatActivity(),TicketItemListener {
@@ -33,6 +35,8 @@ class TiketActivty : AppCompatActivity(),TicketItemListener {
     private fun intitateUI() {
         rvTiket = findViewById(R.id.rv_tiket)
         rvTiket.setHasFixedSize(true)
+        tv_menu.text="Pilih Tiket"
+        iv_menu.background=ContextCompat.getDrawable(this,R.drawable.ic_movie_tickets)
     }
 
 

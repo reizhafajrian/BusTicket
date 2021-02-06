@@ -6,16 +6,28 @@
     android:layout_marginStart="10dp"
     android:gravity="center"
     android:layout_marginEnd="10dp"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageButton
         android:id="@+id/btn_rv"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/ic_scan_"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="menu"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="#736464"
         />
 
 

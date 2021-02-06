@@ -4,126 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
     tools:context=".home.HomeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ly_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_po"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Po Mitra Jaya"
+            android:textColor="#736464"
+
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Guruh Kristanto"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_po" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_role_akun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Akun Pengguna"
+            android:textColor="#736464"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_nama" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_ava"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:shapeAppearanceOverlay="@style/circleImageView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.synnapps.carouselview.CarouselView
         android:id="@+id/carouselView"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
-        app:fillColor="#FFFFFFFF"
+        android:layout_width="339dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:pageColor="@color/zxing_transparent"
-        android:background="@drawable/bg_carousel_2"
+        app:layout_constraintTop_toBottomOf="@+id/ly_profile"
+        android:backgroundTint="#82B7DC"
         app:indicatorVisibility="gone"
-        app:radius="6dp"
+        app:radius="38dp"
         app:slideInterval="3000"
         app:strokeColor="#FF777777"
         app:strokeWidth="1dp" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ly_menu"
+        android:layout_marginTop="37dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/carouselView"
+        android:layout_width="363dp"
+        android:layout_height="284dp">
 
-
-
-
-
-            <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_ava"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-                app:shapeAppearanceOverlay="@style/circleImageView"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="@+id/cd_menu"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/carouselView"
-            />
-
-    <LinearLayout
-        android:id="@+id/ln_text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/iv_ava"
-        app:layout_constraintTop_toTopOf="@+id/iv_ava"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_ava"
-        android:layout_marginStart="12dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        >
-        
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User"
-            android:textColor="@color/white"
-            android:fontFamily="@font/montserrat_medium"
-            />
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cd_menu"
-        android:layout_width="312dp"
-        android:layout_height="288dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_ava"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_menu"
+            app:cardCornerRadius="38dp"
+            android:backgroundTint="#F1F1F1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/ln_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="14dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:orientation="vertical"
-                >
-                <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Main Menus"
-                />
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Explore The beauty of the world"
-                    android:layout_marginTop="4dp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@+id/ln_text"
-               >
+                android:padding="50dp"
+                >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_menu"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    app:layout_constraintVertical_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:listitem="@layout/item_menu" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:visibility="gone"
@@ -143,5 +139,4 @@
             android:indeterminate="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,7 +40,7 @@ class ItemTicketAdapter(
                 itemView.tv_type_bus.text = item.type
                 itemView.tv_terminal.text = item.terminal
                 itemView.tv_berangkat.text = "${item.pergi}"
-                cd_item.setOnClickListener { listener.onItemClick(item.id) }
+                cv_item.setOnClickListener { listener.onItemClick(item.id) }
                 val v=item.posisi.filter {
                     it!!.isKosong==false
                 }

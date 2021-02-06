@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/cv_item"
-        app:cardElevation="5dp"
-        app:cardUseCompatPadding="true"
+        android:layout_height="180dp"
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:id="@+id/cv_item"
+        style="@style/card_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,104 +22,128 @@
                 android:id="@+id/tv_title_bus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Depok - Yogyakarta"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:text="Depok - Yogyakarta"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_bold"
-                />
-
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_type_bus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_bus"
-                app:layout_constraintHorizontal_bias="0.0"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="Type         :"
-                android:textSize="20dp"
                 android:fontFamily="@font/montserrat_light"
-                />
+                android:text="Type         :"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_title_bus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_bus"
+                app:layout_constraintTop_toTopOf="@+id/tv_title_bus" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_nomor_kursi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="Nomor kursi :"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_title_bus"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintLeft_toRightOf="@+id/tv_type_bus"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_berangkat"
+                app:layout_constraintTop_toBottomOf="@+id/tv_berangkat"
+                app:layout_constraintVertical_bias="0" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_nomor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@+id/tv_type_bus"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_bus"
-                app:layout_constraintHorizontal_bias="1"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="nomor kursi"
-                android:textSize="20dp"
+                android:layout_marginStart="5dp"
                 android:fontFamily="@font/montserrat_light"
-                />
+                android:text="30"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_nomor_kursi"
+                app:layout_constraintStart_toEndOf="@+id/tv_nomor_kursi"
+                app:layout_constraintTop_toTopOf="@+id/tv_nomor_kursi" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_terminal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="Terminal  :"
-                android:textSize="20dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/montserrat_light"
-                />
+                android:text="Terminal  :"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iv_icon"
+                app:layout_constraintHorizontal_bias="0.0"
+
+                app:layout_constraintStart_toStartOf="@+id/iv_icon"
+                app:layout_constraintTop_toBottomOf="@+id/iv_icon" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_berangkat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/montserrat_light"
+                android:text="Jam Keberangkatan  :"
+                android:textSize="18sp"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_terminal"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="Jam Keberangkatan  :"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_light"
-                />
+                app:layout_constraintStart_toStartOf="@+id/tv_buscount"
+                app:layout_constraintTop_toBottomOf="@+id/tv_buscount" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_buscount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="9dp"
                 android:fontFamily="@font/montserrat_light"
                 android:text="Id-Bus :"
-                android:textSize="20dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintHorizontal_bias="1"
+                android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/tv_id"
-                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus" />
+                app:layout_constraintStart_toStartOf="@+id/tv_title_bus"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_bus" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
+
                 android:fontFamily="@font/montserrat_light"
                 android:text=""
-                android:textSize="20dp"
-                app:layout_constraintHorizontal_bias="1.0"
 
+                android:textSize="18sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus" />
+                app:layout_constraintStart_toEndOf="@+id/tv_buscount"
+                app:layout_constraintTop_toTopOf="@+id/tv_buscount" />
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:background="@drawable/ic_bus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.972"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus"
+                app:layout_constraintVertical_bias="0.471" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

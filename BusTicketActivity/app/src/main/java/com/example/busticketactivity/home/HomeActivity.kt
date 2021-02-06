@@ -3,22 +3,22 @@ package com.example.busticketactivity.home
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.CancelUserActivity
-import com.example.busticketactivity.infowisata.DetailInfoWisataActivity
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.ItemMenuAdapter
-import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.dataclass.ItemMenuClass
-import com.example.busticketactivity.listener.MenuItemListener
 import com.example.busticketactivity.dataclass.UserObject
+import com.example.busticketactivity.firebase.FireBaseRepo
+import com.example.busticketactivity.infowisata.DetailInfoWisataActivity
+import com.example.busticketactivity.listener.MenuItemListener
 import com.example.busticketactivity.tiketmenu.TiketActivty
 import com.example.busticketactivity.tiketmenu.TiketDetailActivity
 import com.example.busticketactivity.utils.DataClassInfoWisata
@@ -143,9 +143,12 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
                         val dataUser = gson.toJson(list)
                         prefs.putString("dataUser", dataUser).apply()
                         if (list != null) {
-                            tv_name.text = list.nama
+                            tv_nama.text = list.nama
                             if (!(list.imageUrl).equals("")) {
                                 Picasso.get().load(list?.imageUrl).into(iv_ava)
+                            }
+                            else{
+                                Picasso.get().load(R.color.colorgrey).into(iv_ava)
                             }
                         }
                     } else {
@@ -162,11 +165,11 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
 
     private fun intiateUI(): MutableList<ItemMenuClass> {
         val list = mutableListOf(
-            ItemMenuClass(R.drawable.ic_scan, "Scan"),
-            ItemMenuClass(R.drawable.ic_shop, "Beli"),
-            ItemMenuClass(R.drawable.ic_shop, "Cancel"),
-            ItemMenuClass(R.drawable.ic_info, "info"),
-            ItemMenuClass(R.drawable.ic_logout, "SignOut")
+            ItemMenuClass(R.drawable.ic_scan_, "Pindai"),
+            ItemMenuClass(R.drawable.ic_ticket, "Beli"),
+            ItemMenuClass(R.drawable.ic_cancel_, "Batal"),
+            ItemMenuClass(R.drawable.ic_info_, "Info"),
+            ItemMenuClass(R.drawable.ic_logout_, "Keluar")
         )
         return list
 
@@ -174,10 +177,17 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
 
     private fun showRecyclerList() {
         rvMenu = findViewById(R.id.rv_menu)
+        val data=GridMenuDecoration.space(
+            spacing = 40,
+            spanCount = 3,
+            edge = false
+        )
+
         rvMenu.apply {
             setHasFixedSize(true)
+            addItemDecoration(GridMenuDecoration(data))
             layoutManager =
-                GridLayoutManager(this@HomeActivity,4, LinearLayoutManager.VERTICAL, false)
+                GridLayoutManager(this@HomeActivity, 3, LinearLayoutManager.VERTICAL, false)
             adapter = ItemMenuAdapter(listItem, this@HomeActivity)
         }
     }
@@ -199,22 +209,22 @@ class HomeActivity : AppCompatActivity(), MenuItemListener, View.OnClickListener
                 startActivity(intent)
 
             }
-            "Scan" -> {
+            "Pindai" -> {
                 val intent = Intent(this, TiketDetailActivity::class.java)
                 startActivity(intent)
             }
-            "SignOut" -> {
+            "Keluar" -> {
                 val prefs = getSharedPreferences("login", MODE_PRIVATE).edit()
                 prefs.putString("login", "")
                 prefs.apply()
                 finish()
             }
-            "Cancel" -> {
-                val intent=Intent(this@HomeActivity, CancelUserActivity::class.java)
+            "Batal" -> {
+                val intent = Intent(this@HomeActivity, CancelUserActivity::class.java)
                 startActivity(intent)
             }
-            "info" -> {
-                val intent=Intent(this@HomeActivity,InfoActivity::class.java)
+            "Info" -> {
+                val intent = Intent(this@HomeActivity, InfoActivity::class.java)
                 startActivity(intent)
 
             }

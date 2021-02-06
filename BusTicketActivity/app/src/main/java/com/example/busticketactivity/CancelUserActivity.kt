@@ -2,6 +2,7 @@ package com.example.busticketactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -9,6 +10,7 @@ import com.example.busticketactivity.adapter.AdminCancelDetailAdapter
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
 import kotlinx.android.synthetic.main.activity_cancel_user.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -33,6 +35,8 @@ class CancelUserActivity : AppCompatActivity(),SwipeRefreshLayout.OnRefreshListe
             getData()
             ly_refresh.isRefreshing = false
         }
+        tv_menu.text="Pembatalan"
+        iv_menu.background=ContextCompat.getDrawable(this,R.drawable.ic_batal)
 
     }
 

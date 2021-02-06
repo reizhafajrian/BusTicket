@@ -32,6 +32,7 @@ class ItemMenuAdapter(private val listItemData: MutableList<ItemMenuClass>,
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: ItemMenuClass){
             with(itemView){
+                tv_menu.text=item.nama
                 btn_rv.background=ContextCompat.getDrawable(itemView.context,item.imageButton)
                 btn_rv.setOnClickListener { listener.onItemClick(item.nama) }
             }

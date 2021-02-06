@@ -16,9 +16,10 @@ class AdminCancelDetailAdapter(private val data: ManagerGetData?) :
             with(itemView) {
                 tv_title_bus.text =item.nama
                 tv_type_bus.text =item.type
-                tv_nomor.text ="Nomor Kursi :${item.nomorKursi}"
+                tv_nomor.text ="${item.nomorKursi}"
                 tv_berangkat.text =item.pergi
                 tv_id.text=item.id
+                tv_terminal.text=item.terminal
             }
         }
 
