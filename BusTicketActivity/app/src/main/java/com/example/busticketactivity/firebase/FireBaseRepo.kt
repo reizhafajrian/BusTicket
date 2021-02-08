@@ -230,7 +230,8 @@ class FireBaseRepo {
         }
     }
 
-    fun postPaymentTiket(
+    fun
+            postPaymentTiket(
         nomor: String,
         email: String,
         data: DataItemPickup
@@ -251,7 +252,9 @@ class FireBaseRepo {
             nomorKursi = nomor,
             harga = data.harga,
             terminal = data.terminal,
+            tanggalBeli = data.tanggalBeli,
             type = data.type,
+            noplat = data.noplat,
             tanggal = data.tanggal,
             pergi = data.pergi
         )
@@ -411,7 +414,20 @@ class FireBaseRepo {
     }
 
     fun CheckTicket(data: InfoTiket): Task<QuerySnapshot> {
-        return firebaseFirestore.collection("Buy").whereArrayContains("data", data).get()
+        val hasil= mapOf(
+            "email" to data.email,
+            "id" to data.id,
+            "nama" to data.nama,
+            "nomorKursi" to data.nomorKursi,
+            "noplat" to data.noplat,
+            "harga" to data.harga,
+            "pergi" to data.pergi,
+            "tanggal" to data.tanggal,
+            "tanggalBeli" to data.tanggalBeli,
+            "terminal" to data.terminal,
+            "type" to data.type
+        )
+        return firebaseFirestore.collection("Buy").whereArrayContains("data", hasil).get()
     }
 
     fun PostBus(data: TicketPostDataClass) {
@@ -441,6 +457,14 @@ class FireBaseRepo {
         }
 
 
+    }
+
+    fun getIdBus(): Task<QuerySnapshot> {
+        return firebaseFirestore.collection("Bus").get()
+    }
+
+    fun DetailTiket(newData:ItemDataTiket,nomor: String): Task<QuerySnapshot> {
+        return firebaseFirestore.collection("Buy").get()
     }
 
 

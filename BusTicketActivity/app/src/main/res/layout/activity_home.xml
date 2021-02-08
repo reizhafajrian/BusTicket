@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Po Mitra Jaya"
+            android:text="Po Agen Murni Jaya Depok"
             android:textColor="#736464"
 
             android:textSize="13sp"

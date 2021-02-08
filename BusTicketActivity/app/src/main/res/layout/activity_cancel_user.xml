@@ -24,14 +24,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.2" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="135dp"
         android:id="@+id/ly_refresh"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_ticket_cancel_detail"

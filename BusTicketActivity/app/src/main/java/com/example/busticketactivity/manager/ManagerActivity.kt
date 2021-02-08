@@ -23,7 +23,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
 
-@Suppress("DEPRECATION")
 class ManagerActivity : AppCompatActivity(), View.OnClickListener {
     private val tag = "ManagerActivity"
     private val dataExcel = mutableListOf<InfoTiket>()
@@ -110,8 +109,9 @@ class ManagerActivity : AppCompatActivity(), View.OnClickListener {
         row.createCell(2).setCellValue("Tujuan")
         row.createCell(3).setCellValue("Nomor Kursi")
         row.createCell(4).setCellValue("Jam Keberangakatan")
-        row.createCell(5).setCellValue("Tipe Bus")
-        row.createCell(6).setCellValue("Total Penjualan")
+        row.createCell(5).setCellValue("Tanggal Pembelian")
+        row.createCell(6).setCellValue("Tipe Bus")
+        row.createCell(7).setCellValue("Total Penjualan")
 
         Log.d(tag,"ini harga $harga")
         for (i in 0 until dataExcel.size) {
@@ -121,11 +121,13 @@ class ManagerActivity : AppCompatActivity(), View.OnClickListener {
             row.createCell(2).setCellValue(dataExcel[i].nama)
             row.createCell(3).setCellValue(dataExcel[i].nomorKursi)
             row.createCell(4).setCellValue(dataExcel[i].pergi)
-            row.createCell(5).setCellValue(dataExcel[i].type)
+            row.createCell(5).setCellValue(dataExcel[i].tanggalBeli)
+            row.createCell(6).setCellValue(dataExcel[i].type)
+
 
         }
         row2.createCell(6).setCellValue(harga.toString())
-        val extStorageDirectory = Environment.getExternalStorageDirectory().toString()
+        val extStorageDirectory = getExternalFilesDir(null)?.absolutePath
         val folder = File("$extStorageDirectory/RekapPenjualanTiket.xls")
         try {
             if (!folder.exists()) {

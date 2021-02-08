@@ -55,7 +55,7 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
                     it.id == Nama
                 } as MutableList
                 val data = gson.toJson(dataFilter[0])
-                val intent = Intent(this, ResetTiketActivity::class.java)
+                val intent = Intent(this, RekapPerjalananActivity::class.java)
                 intent.putExtra("title", Nama)
                 intent.putExtra("dataTicket", data)
                 startActivity(intent)

@@ -117,7 +117,7 @@ class HistoriActivity : AppCompatActivity(),ListenerDriverCheck,SwipeRefreshLayo
             row.createCell(5).setCellValue(dataExcel[i].type)
 
         }
-        val extStorageDirectory = Environment.getExternalStorageDirectory().toString()
+        val extStorageDirectory = getExternalFilesDir(null)?.absolutePath
         val folder = File("$extStorageDirectory/data_penumpang_driver.xls")
         try {
             if (!folder.exists()) {

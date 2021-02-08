@@ -51,7 +51,7 @@ class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPi
     val TAG = "PickTicketActivity"
     var tanggal=""
     var orderId = ""
-
+    var tanggalbeli=""
     private var nomor = mutableListOf<String>()
     private val gson = Gson()
     private val btnAlert by lazy { BottomSheet(this) }
@@ -65,6 +65,7 @@ class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPi
         val sdf = SimpleDateFormat("dd-M-yyyy")
         val currentDate = sdf.format(Date())
         tanggal=currentDate
+        tanggalbeli=currentDate
         ed_tanggal.text=tanggal
         Loader(tanggal)
         btn_checkout.setOnClickListener(this)
@@ -105,7 +106,7 @@ class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPi
         val picker: MaterialDatePicker<*> = builder.build()
         picker.show(supportFragmentManager, picker.toString())
         picker.addOnPositiveButtonClickListener{
-            val dateFormat=SimpleDateFormat("dd MMM yy")
+            val dateFormat=SimpleDateFormat("MMM dd, yyyy")
             val hasil=dateFormat.parse(picker.headerText)
             val dateAfterFormat=SimpleDateFormat("dd-M-yyyy").format(hasil)
             simpanTanggal(dateAfterFormat)
@@ -274,9 +275,10 @@ class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPi
             val data = getDataUser()
             for (i in nomor) {
                 tiket.tanggal=tanggal
+                tiket.tanggalBeli=tanggalbeli
                 FireBaseRepo().postPosisi(namaBus = tiket.id, nomor = i,tanggal = tanggal)
                 FireBaseRepo().postPaymentTiket(i, data.email, tiket)
-                delay(1000)
+               delay(1000)
             }
         }
     }

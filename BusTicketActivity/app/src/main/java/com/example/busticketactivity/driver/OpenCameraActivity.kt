@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.busticketactivity.R
 import com.example.busticketactivity.dataclass.ManagerGetData
@@ -22,7 +23,9 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class OpenCameraActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     val gson = Gson()
+    val tag="OpenCameraActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_open_camera)
 
@@ -55,9 +58,9 @@ class OpenCameraActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
         try {
             FireBaseRepo().CheckTicket(data).addOnCompleteListener {
                 if (it.isSuccessful) {
+                    val dataHasil =it.result!!.documents[0].toObject(ManagerGetData::class.java)
+                    Log.d(tag,"ini datanya $dataHasil")
                     try {
-                        val dataHasil =
-                            it.result!!.documents[0].toObject(ManagerGetData::class.java)
                         if (dataHasil!!.data.isNotEmpty()) {
                             val filter = dataHasil!!.data.filter {
                                 it.id == data.id && it.nomorKursi == data.nomorKursi && it.nama == data.nama && it.tanggal == data.tanggal

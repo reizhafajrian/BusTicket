@@ -26,6 +26,8 @@ class DetailDriverTIcketActivity : AppCompatActivity() {
         tv_type_bus.text =data.type
         tv_nomor.text ="Nomor Kursi :${data.nomorKursi}"
         tv_berangkat.text =data.pergi
+        tv_terminal.text =data.terminal
+
         tv_id.text=data.id
     }
 }

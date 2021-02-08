@@ -34,21 +34,57 @@ class AddTicketActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_ticket)
-        list()
+        idBus()
         btn_simpan.setOnClickListener(this)
         ly_tanggal.setOnClickListener(this)
         ly_jam.setOnClickListener(this)
         driver()
+        tipebus()
+        berangkat()
+        tujuan()
+        terminal()
 
     }
 
-    private fun list() {
-        val items = mutableListOf<Int>()
-        for (i in 1 until 40) {
-            items.add(i)
-        }
+    private fun terminal() {
+        val items = mutableListOf("JatiJajar")
         val adapter = ArrayAdapter(this, R.layout.dropdown, items)
-        dropdown.setAdapter(adapter)
+        dw_terminal.setAdapter(adapter)
+    }
+
+    private fun tujuan() {
+        val items = mutableListOf("WONOSOBO","BANDUNG","KLATEN","YOGYAKARTA")
+        val adapter = ArrayAdapter(this, R.layout.dropdown, items)
+        dw_tujuan.setAdapter(adapter)
+    }
+
+    private fun berangkat() {
+        val items = mutableListOf("DEPOK")
+        val adapter = ArrayAdapter(this, R.layout.dropdown, items)
+        dw_berangkat.setAdapter(adapter)
+    }
+
+    private fun tipebus() {
+        val items = mutableListOf("EKONOMI AC","VIP")
+        val adapter = ArrayAdapter(this, R.layout.dropdown, items)
+        dd_tipe_bus.setAdapter(adapter)
+    }
+
+    private fun idBus() {
+        FireBaseRepo().getIdBus().addOnCompleteListener{
+            val listIdBus= mutableListOf<String>()
+            if (it.isSuccessful){
+               val data=it.result!!.documents
+                for (i in data){
+                    listIdBus.add(i.id)
+                }
+                listIdBus
+                val adapter = ArrayAdapter(this, R.layout.dropdown, listIdBus)
+                dw_id_bus.setAdapter(adapter)
+            }
+        }
+
+
 
     }
 
@@ -77,18 +113,18 @@ class AddTicketActivity : AppCompatActivity(), View.OnClickListener {
 
         picker.addOnPositiveButtonClickListener{
             ed_tanggal.text=picker.headerText
+//            val remove=picker.headerText.removeRange(5,13)
             val startDate= it.first
             val endDate = it.second
             val msDiff = endDate?.minus(startDate!!)
             val daysDiff: Long = TimeUnit.MILLISECONDS.toDays(msDiff!!)
-            val currentTime = SimpleDateFormat("dd-M-yyyy", Locale.getDefault()).format(Date())
+
             val sdf = SimpleDateFormat("dd-M-yyyy")
+            val calender=Date(startDate!!)
+            val date=sdf.format(Date(startDate!!))
             val c=Calendar.getInstance()
-            try {
-                c.time = sdf.parse(currentTime)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
+            c.time=calender
+            c.time = sdf.parse(date)
             for(i in 0..daysDiff.toInt()){
                 val data=sdf.format(c.time)
                 list.add(i,data)
@@ -198,7 +234,7 @@ class AddTicketActivity : AppCompatActivity(), View.OnClickListener {
                 if (minute.toInt() < 10) {
                     ed_jam.text = "$hour:0$minute"
                 } else {
-                    ed_jam.text = "0$hour:$minute"
+                    ed_jam.text = "$hour:$minute"
                 }
             }
 
@@ -207,25 +243,27 @@ class AddTicketActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getAllData() {
         var data = TicketPostDataClass()
-        val isKosong = dropdown.text.toString()
-
-        if (isKosong != "") {
-            for (i in 0 until isKosong.toInt()) {
+        data.type = dd_tipe_bus.text.toString()
+        if (data.type =="EKONOMI AC") {
+            for (i in 0 until 40) {
                 val nomor = i + 1
                 data.position.add(i, (DataClassIsKosong(isKosong = true, nomor = nomor.toString())))
             }
         } else {
-            Toast.makeText(this@AddTicketActivity, "Mohon isi nomor kursi", Toast.LENGTH_SHORT)
-                .show()
+            for (i in 0 until 24) {
+                val nomor = i + 1
+                data.position.add(i, (DataClassIsKosong(isKosong = true, nomor = nomor.toString())))
+            }
         }
-        data.id = ed_id_bus.text.toString()
+        data.id = dw_id_bus.text.toString()
         data.harga = ed_harga.text.toString()
-        data.terminal = ed_terminal.text.toString()
-        data.nama = ed_tujuan.text.toString()
+        data.terminal = dw_terminal.text.toString()
+        data.nama = "${dw_berangkat.text.toString()}-${dw_tujuan.text.toString()}"
         data.noplat = ed_plat.text.toString()
         data.driver = ed_driver.text.toString()
-        data.type = ed_type.text.toString()
+
         data.tanggal.addAll(list)
+        Log.d(tag," data tanggal ${data.tanggal}")
         data.pergi = ed_jam.text.toString()
         if (data.harga != "" && data.id != ""
             && data.terminal != "" && data.nama != "" && data.type != ""
@@ -237,6 +275,7 @@ class AddTicketActivity : AppCompatActivity(), View.OnClickListener {
                         FireBaseRepo().PostTicket(data)
                         FireBaseRepo().postPosisiTanggal(data)
                         FireBaseRepo().PostBus(data)
+
                     }
                     data.await()
                 } catch (e: Exception) {
@@ -262,6 +301,7 @@ class AddTicketActivity : AppCompatActivity(), View.OnClickListener {
             R.id.btn_simpan -> {
                 getAllData()
                 onBackPressed()
+
             }
         }
     }
