@@ -4,168 +4,360 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C7E3FF"
     tools:context=".driver.DetailDriverTIcketActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/cv_item"
-        app:layout_constraintVertical_bias="0.5"
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_deny"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/ic_aproove"
-            android:layout_width="150dp"
-            android:layout_height="150dp"/>
-
-        <TextView
-            android:id="@+id/tv_validasi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tiket Anda Tervalidasi"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_deny"
-            app:layout_constraintVertical_bias="0.265"
-            tools:layout_editor_absoluteX="0dp" />
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textAlignment="center"
-            android:textSize="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_validasi"
-            app:layout_constraintVertical_bias="0.265"
-            tools:layout_editor_absoluteX="0dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.cardview.widget.CardView
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/cv_item"
-        app:cardElevation="5dp"
-        app:cardUseCompatPadding="true"
-        android:layout_width="match_parent"
-        android:layout_height="180dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_title_bus"
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:text="Depok - Yogyakarta"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_bold"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.196">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_tiket"
+                    android:layout_width="301dp"
+                    android:layout_height="492dp"
+                    android:background="@drawable/bg_tiket"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Guruh"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_tiket"
+                    app:layout_constraintVertical_bias="0" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_bus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                    app:layout_constraintVertical_bias="0.03"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ly_constraint"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="301dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_logo">
 
 
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_nama"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Jurusan"
+                        android:textSize="12sp"
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_type_bus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_bus"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="Type         :"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_light"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_nomor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toRightOf="@+id/tv_type_bus"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title_bus"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_nama_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="DEPOK-WONOSOBO"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_nama"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_nama" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_nomor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Nomor Kursi"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.848"
+                        app:layout_constraintStart_toEndOf="@+id/tv_nama"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_nomor_kursi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="1"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_nomor"
+                        app:layout_constraintStart_toStartOf="@+id/tv_nomor"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_nomor" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ly_constraint_4"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="301dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ly_constraint_3">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_terminal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Terminal"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_terminal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="12-20-2021"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_terminal"
+                        app:layout_constraintStart_toStartOf="@+id/tv_terminal"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_terminal" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_tipe_bus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tipe-Bus"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.848"
+
+                        app:layout_constraintStart_toEndOf="@+id/tv_terminal"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_tipe_bus_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="1"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_tipe_bus"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tipe_bus"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tipe_bus" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ly_constraint_2"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="301dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ly_constraint">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_harga"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Harga"
+                        android:textSize="12sp"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_harga_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="17000"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_harga"
+                        />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_jam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Jam"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.848"
+
+                        app:layout_constraintStart_toEndOf="@+id/tv_harga"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_jam_berangkat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="1"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_jam"
+                        app:layout_constraintStart_toStartOf="@+id/tv_jam"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_jam" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ly_constraint_3"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="301dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ly_constraint_2">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_tanggal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tanggal Berangkat"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_tanggal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="12-20-2021"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_tanggal"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tanggal"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tanggal" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_tanggal_pesan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Tanggal Pemesanan"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.848"
+
+                        app:layout_constraintStart_toEndOf="@+id/tv_tanggal"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_tanggal_pesan_berangkat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="1"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_tanggal_pesan"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tanggal_pesan"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_pesan" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_tiket"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/iv_tiket"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.984">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_deny"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:background="@drawable/ic_aproove"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_validasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tiket Anda Tervalidasi"
+                        android:textAlignment="center"
+                        android:textSize="22sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_deny"
+                        app:layout_constraintVertical_bias="0.265"
+                        tools:layout_editor_absoluteX="0dp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="nomor kursi"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_light"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_terminal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="Terminal  :"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_light"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_berangkat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_terminal"
-                app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:text="Jam Keberangkatan  :"
-                android:textSize="20dp"
-                android:fontFamily="@font/montserrat_light"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_buscount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_light"
-                android:text="Id-Bus :"
-                android:textSize="20dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/tv_id"
-                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus" />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_light"
-                android:text=""
-                android:textSize="20dp"
-                app:layout_constraintHorizontal_bias="1.0"
+                <!-- Main content -->
 
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_type_bus" />
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </androidx.cardview.widget.CardView>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_margin="16dp"
+                    android:tooltipText="@string/save_card"
+                    app:backgroundTint="@color/red"
+                    android:src="@drawable/ic_cancel"
+                    app:fab_label="Cancel"
+                    /></androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

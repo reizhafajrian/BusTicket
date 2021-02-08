@@ -15,32 +15,34 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="500dp"
+        android:layout_marginTop="10dp"
         android:padding="30dp"
         tools:listitem="@layout/item_pick_ticket"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-
+        app:layout_constraintVertical_bias="1"
         android:id="@+id/rv_add_ticket"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_pick_ticket"
-        app:layout_constraintBottom_toTopOf="@+id/ly_card"
-        android:orientation="horizontal"
         android:layout_height="50dp"
-        tools:listitem="@layout/item_pick_ticket"
-        />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/ly_card"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_pick_ticket" />
+
     <LinearLayout
         android:id="@+id/ly_card"
-        app:layout_constraintTop_toBottomOf="@+id/rv_add_ticket"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1">
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cd_item"
             android:layout_width="match_parent"
             android:layout_height="180dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,85 +52,80 @@
                     android:id="@+id/tv_title_bus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Depok - Yogyakarta"
                     android:textSize="20dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    />
-
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_type_bus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_title_bus"
-                    app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/montserrat_light"
                     android:text="Type         :"
                     android:textSize="20dp"
-                    android:fontFamily="@font/montserrat_light"
-                    />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_bus" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_terminal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_type_bus"
-                    app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/montserrat_light"
                     android:text="Terminal  :"
                     android:textSize="20dp"
-                    android:fontFamily="@font/montserrat_light"
-                    />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_type_bus" />
 
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/ed_tanggal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintHorizontal_bias="1"
-                        android:hint="12-02-2021"
-                        android:inputType="none"
-                        android:textSize="24sp"
-                        android:textColor="@color/bluegd"
-                        app:layout_constraintEnd_toEndOf="@id/btn_checkout"
-                        android:clickable="true"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tv_terminal"
-                        />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/ed_tanggal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:hint="12-02-2021"
+                    android:inputType="none"
+                    android:textColor="@color/bluegd"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="@id/btn_checkout"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@+id/tv_terminal"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_berangkat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_terminal"
-                    app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/montserrat_light"
                     android:text="Jam Keberangkatan  :"
                     android:textSize="20dp"
-                    android:fontFamily="@font/montserrat_light"
-                    />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_terminal" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_checkout"
-                    android:text="Bayar"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Bayar"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
