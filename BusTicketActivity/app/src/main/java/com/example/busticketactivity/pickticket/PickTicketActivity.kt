@@ -143,7 +143,8 @@ class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPi
             }
     }
 
-    override fun onClick(nomor: String) {
+
+    override fun onClicks(nomor: String) {
         when (nomor) {
             nomor -> {
                 val Nomor = getSharedPreferences("nomorKursi", Context.MODE_PRIVATE)
@@ -361,6 +362,8 @@ class PickTicketActivity : AppCompatActivity(), View.OnClickListener, ListenerPi
         nomor.removeAll(nomor)
         Loader(tanggal)
     }
+
+
 
 
 }

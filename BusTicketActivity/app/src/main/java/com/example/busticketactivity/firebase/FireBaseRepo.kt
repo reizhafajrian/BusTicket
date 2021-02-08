@@ -8,9 +8,7 @@ import com.example.busticketactivity.regist.RegistAddImageActivity
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -402,7 +400,9 @@ class FireBaseRepo {
 
         }
 
-    }  fun getUserRoleAll(email: String): Task<DocumentSnapshot> {
+    }
+
+    fun getUserRoleAll(email: String): Task<DocumentSnapshot> {
         return firebaseFirestore.collection("Role").document(email).get().addOnCompleteListener {
 
         }
@@ -414,7 +414,7 @@ class FireBaseRepo {
     }
 
     fun CheckTicket(data: InfoTiket): Task<QuerySnapshot> {
-        val hasil= mapOf(
+        val hasil = mapOf(
             "email" to data.email,
             "id" to data.id,
             "nama" to data.nama,
@@ -461,11 +461,15 @@ class FireBaseRepo {
 
     fun getIdBus(): Task<QuerySnapshot> {
         return firebaseFirestore.collection("Bus").get()
+    } fun getDataBus(id:String): Task<DocumentSnapshot> {
+        return firebaseFirestore.collection("Bus").document(id).get()
     }
 
-    fun DetailTiket(newData:ItemDataTiket,nomor: String): Task<QuerySnapshot> {
+    fun DetailTiket(): Task<QuerySnapshot> {
         return firebaseFirestore.collection("Buy").get()
     }
 
-
+    fun getUserNama(email: String): Task<QuerySnapshot> {
+        return firebaseFirestore.collection("User").whereEqualTo("email", email).get()
+    }
 }

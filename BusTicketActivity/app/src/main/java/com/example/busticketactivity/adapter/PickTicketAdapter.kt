@@ -44,7 +44,7 @@ class PickTicketAdapter(private val list: MutableList<DataClassIsKosong?>, var l
                     itemView.cd_available.setCardBackgroundColor(ContextCompat.getColor(itemView.context,R.color.colorRed))
                 }
                 else{
-                    cd_available.setOnClickListener { listener.onClick(hasil.nomor!!) }
+                    cd_available.setOnClickListener { listener.onClicks(hasil.nomor!!) }
                 }
 
             }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.ManagerAdapter
+import com.example.busticketactivity.admin.getName
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.dataclass.InfoTiket
@@ -26,12 +27,15 @@ import java.lang.Exception
 class ManagerActivity : AppCompatActivity(), View.OnClickListener {
     private val tag = "ManagerActivity"
     private val dataExcel = mutableListOf<InfoTiket>()
+    private var tanggal = ""
+    private var listtemp = listOf<InfoTiket>()
+    private var list = mutableListOf<InfoTiket>()
     private var harga: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manager)
         getData()
-
+        getData2()
         ActivityCompat.requestPermissions(
             this,
             arrayOf(
@@ -48,6 +52,7 @@ class ManagerActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         }
         btn_download.setOnClickListener(this)
+        btn_download_rekap.setOnClickListener(this)
     }
 
     private fun getData() {
@@ -98,7 +103,61 @@ class ManagerActivity : AppCompatActivity(), View.OnClickListener {
         }
         tv_total.text = harga.toString()
     }
+    private fun getData2() {
+        FireBaseRepo().DetailTiket().addOnCompleteListener {
+            if (it.isSuccessful) {
+                val data = it.result!!.documents
+                for (i in data) {
+                    val hasil = i.toObject(ManagerGetData::class.java)
+                    for (i in hasil!!.data) {
+                        FireBaseRepo().getUserNama(i.email).addOnCompleteListener {
+                            val usernama=it.result!!.toObjects(getName::class.java)
+                            i.namaUser=usernama!![0].nama
+                        }
+                        list.add(i)
+                        Log.d(tag, "data tiket $list")
+                    }
+                }
+            }
+        }
+    }
+    private fun downloadExcelHistori() {
+        val excel = HSSFWorkbook()
+        val sheet = excel.createSheet()
+        val row = sheet.createRow(0)
+        val row2=sheet.createRow(1)
+        row.createCell(0).setCellValue("Email")
+        row.createCell(1).setCellValue("Harga")
+        row.createCell(2).setCellValue("Tujuan")
+        row.createCell(3).setCellValue("Nomor Kursi")
+        row.createCell(4).setCellValue("Jam Keberangakatan")
+        row.createCell(5).setCellValue("Tanggal Pembelian")
+        row.createCell(6).setCellValue("Tipe Bus")
+        row.createCell(7).setCellValue("Nama Pembeli")
 
+        for (i in 0 until list.size) {
+            val row = sheet.createRow(i + 1)
+            row.createCell(0).setCellValue(list[i].email)
+            row.createCell(1).setCellValue(list[i].harga)
+            row.createCell(2).setCellValue(list[i].nama)
+            row.createCell(3).setCellValue(list[i].nomorKursi)
+            row.createCell(4).setCellValue(list[i].pergi)
+            row.createCell(5).setCellValue(list[i].tanggalBeli)
+            row.createCell(6).setCellValue(list[i].type)
+            row.createCell(7).setCellValue(list[i].namaUser)
+        }
+        val extStorageDirectory = getExternalFilesDir(null)?.absolutePath
+        val folder = File("$extStorageDirectory/RekapPerjalananManager.xls")
+        try {
+            if (!folder.exists()) {
+                folder.createNewFile()
+            }
+            excel.write(FileOutputStream(folder))
+            Toast.makeText(this, "Rekap data berhasil di buat di ${extStorageDirectory}/RekapPerjalananManager.xls", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
     private fun downloadExcel() {
         val excel = HSSFWorkbook()
         val sheet = excel.createSheet()
@@ -134,7 +193,7 @@ class ManagerActivity : AppCompatActivity(), View.OnClickListener {
                 folder.createNewFile()
             }
             excel.write(FileOutputStream(folder))
-            Toast.makeText(this, "Rekap data berhasil di buat di ${extStorageDirectory}/hasil.xls", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Rekap data berhasil di buat di ${extStorageDirectory}/ekapPenjualanTiket.xls", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -144,6 +203,8 @@ class ManagerActivity : AppCompatActivity(), View.OnClickListener {
         when (v?.id) {
             R.id.btn_download -> {
                 downloadExcel()
+            }  R.id.btn_download_rekap -> {
+            downloadExcelHistori()
             }
         }
     }

@@ -30,19 +30,16 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-
-
-        </com.google.android.material.imageview.ShapeableImageView>
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
             android:fontFamily="@font/montserrat_bold"
             android:text="DEPOK-WONOSOBO"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,53 +50,262 @@
             android:id="@+id/iv_logo"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:layout_constraintVertical_bias="0.03"
             android:background="@drawable/ic_bus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintVertical_bias="0.03"/>
 
-        </com.google.android.material.imageview.ShapeableImageView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_nama"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ly_constraint"
+            android:layout_marginTop="20dp"
+            android:layout_width="301dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Nama"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-            app:layout_constraintVertical_bias="0.034" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_nama_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="DEPOK-WONOSOBO"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_nama"
-            app:layout_constraintTop_toBottomOf="@+id/tv_nama" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_nomor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_regular"
-            android:text="Nama"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.848"
-            app:layout_constraintStart_toEndOf="@+id/tv_nama"
-            app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-            app:layout_constraintVertical_bias="0.032" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo">
 
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_nama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Nama"
+                android:textSize="12sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_nama_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="DEPOK-WONOSOBO"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_nama"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nama" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_nomor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Nomor"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.848"
+                app:layout_constraintStart_toEndOf="@+id/tv_nama"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_nomor_kursi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_nomor"
+                app:layout_constraintStart_toStartOf="@+id/tv_nomor"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nomor" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ly_constraint_4"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="301dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ly_constraint_3">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_terminal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Terminal"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_terminal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="12-20-2021"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_terminal"
+                app:layout_constraintStart_toStartOf="@+id/tv_terminal"
+                app:layout_constraintTop_toBottomOf="@+id/tv_terminal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_tipe_bus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Tipe-Bus"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.848"
+
+                app:layout_constraintStart_toEndOf="@+id/tv_terminal"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_tipe_bus_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="1"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_tipe_bus"
+                app:layout_constraintStart_toStartOf="@+id/tv_tipe_bus"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tipe_bus" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ly_constraint_2"
+            android:layout_marginTop="30dp"
+            android:layout_width="301dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ly_constraint">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_harga"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Harga"
+                android:textSize="12sp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_harga_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="17000"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_harga"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_jam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Jam"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.848"
+
+                app:layout_constraintStart_toEndOf="@+id/tv_harga"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_jam_berangkat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="1"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_jam"
+                app:layout_constraintStart_toStartOf="@+id/tv_jam"
+                app:layout_constraintTop_toBottomOf="@+id/tv_jam" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ly_constraint_3"
+            android:layout_marginTop="30dp"
+            android:layout_width="301dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ly_constraint_2">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_tanggal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Tanggal Berangkat"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_tanggal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="12-20-2021"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_tanggal"
+                app:layout_constraintStart_toStartOf="@+id/tv_tanggal"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tanggal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_tanggal_pesan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="Tanggal Pemesanan"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.848"
+
+                app:layout_constraintStart_toEndOf="@+id/tv_tanggal"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_tanggal_pesan_berangkat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="1"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_tanggal_pesan"
+                app:layout_constraintStart_toStartOf="@+id/tv_tanggal_pesan"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_pesan" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_nama_penumpang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:fontFamily="@font/montserrat_bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_tiket"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ly_constraint_4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

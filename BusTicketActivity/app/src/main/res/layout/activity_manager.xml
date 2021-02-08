@@ -118,12 +118,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:src="@drawable/ic_download"
+                    android:src="@drawable/ic_download_2"
                     fab:fab_colorNormal="#B13EC5"
-                    fab:fab_label="Histori Penumpang" />
+                    fab:fab_label="Download Rekap Penjualan" />
 
 
 
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/btn_download_rekap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_download_2"
+                    fab:fab_colorNormal="#B13EC5"
+                    fab:fab_label="Download Rekap Perjaanan" />
                 <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/btn_open_logout"
                     android:layout_width="wrap_content"

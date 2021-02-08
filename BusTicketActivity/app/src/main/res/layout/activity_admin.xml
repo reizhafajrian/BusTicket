@@ -68,6 +68,15 @@
                 android:src="@drawable/ic_add"
                 fab:fab_label="Tambah Pengguna"
 
+              /><com.github.clans.fab.FloatingActionButton
+                android:id="@+id/btn_add_bus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                fab:fab_colorNormal="#B13EC5"
+                android:src="@drawable/ic_add"
+                fab:fab_label="Tambah Bus"
+
               />
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/btn_add_ticket"

@@ -13,5 +13,6 @@ data class InfoTiket(
     val tanggalBeli:String="",
     val noplat:String="",
     val terminal:String="",
-    val type:String=""
+    val type:String="",
+    var namaUser:String=""
     ):Serializable

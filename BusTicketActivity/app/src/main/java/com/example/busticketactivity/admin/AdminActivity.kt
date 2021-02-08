@@ -24,6 +24,7 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
         btn_add_driver.setOnClickListener(this)
         btn_add_ticket.setOnClickListener(this)
         btn_cancel.setOnClickListener(this)
+        btn_add_bus.setOnClickListener(this)
         menu.isIconAnimated=false
     }
 
@@ -39,8 +40,6 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
                             LinearLayoutManager(this@AdminActivity, RecyclerView.VERTICAL, false)
                         adapter = ItemTicketAdapter(datahasil, this@AdminActivity)
                     }
-                } else {
-
                 }
             }
         }
@@ -91,6 +90,10 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
             }
             R.id.btn_cancel ->{
                 val intent=Intent(this, AdminCancelActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.btn_add_bus ->{
+                val intent=Intent(this, AddBusActivity::class.java)
                 startActivity(intent)
             }
         }
