@@ -13,8 +13,10 @@
             layout="@layout/toolbar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="132dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +26,7 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_tiket"
                 android:layout_width="301dp"
-                android:layout_height="492dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/bg_tiket"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -297,27 +299,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_tanggal_pesan" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_nama_penumpang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:fontFamily="@font/montserrat_bold"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_tiket"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ly_constraint_4" />
 
-            <ImageView
-                android:id="@+id/iv_barcode"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.959" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -342,7 +324,17 @@
             android:src="@drawable/ic_cancel"
             app:fab_label="Cancel"
             /></androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/iv_barcode"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 <!--    <com.google.android.material.textview.MaterialTextView-->

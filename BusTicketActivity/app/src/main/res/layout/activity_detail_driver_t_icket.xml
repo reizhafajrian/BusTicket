@@ -336,28 +336,4 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <!-- Main content -->
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_margin="16dp"
-                    android:tooltipText="@string/save_card"
-                    app:backgroundTint="@color/red"
-                    android:src="@drawable/ic_cancel"
-                    app:fab_label="Cancel"
-                    /></androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

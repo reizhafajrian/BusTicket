@@ -243,7 +243,7 @@ class FireBaseRepo {
             "type" to data.type,
             "pergi" to data.pergi
         )
-        val docudata = InfoTiket(
+        val docudata = InfoTiketPayment(
             email = email,
             id = data.id,
             nama = data.nama,
@@ -261,7 +261,7 @@ class FireBaseRepo {
         )
         getPaymentTiket(email).addOnCompleteListener {
             if (it.isSuccessful) {
-                val hasil = it.result!!.toObject(ManagerGetData::class.java)
+                val hasil = it.result!!.toObject(GetDataTiketPayment::class.java)
                 hasil?.data?.add(docudata)
                 if (hasil != null) {
                     firebaseFirestore.collection("Buy").document(email).set(hasil)
