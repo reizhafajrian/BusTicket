@@ -30,11 +30,13 @@ class DetailTiketActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initiateUi() {
         val infoTiket = intent.getSerializableExtra("dataTiketPembayaran") as InfoTiket
-        tv_berangkat.text = "${infoTiket.pergi}/${infoTiket.tanggal}"
-        tv_title_bus.text = infoTiket.nama
+        tv_jam_berangkat.text = infoTiket.pergi
+        tv_nama_text.text = infoTiket.nama
         tv_terminal.text = infoTiket.terminal
-        tv_nomor.text = infoTiket.nomorKursi
-        tv_type_bus.text = infoTiket.type
+        tv_nomor_kursi.text = infoTiket.nomorKursi
+        tv_tanggal_pesan_berangkat.text=infoTiket.tanggalBeli
+        tv_tanggal_text.text=infoTiket.tanggal
+        tv_tipe_bus_text.text = infoTiket.type
     }
 
     private fun getData() {

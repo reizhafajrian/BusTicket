@@ -39,11 +39,7 @@
         <activity android:name=".home.ProfileActivity" />
         <activity android:name=".driver.DriverActivity" />
         <activity android:name=".manager.ManagerActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".tiketmenu.DetailTiketActivity" />
         <activity android:name=".tiketmenu.TiketDetailActivity" />
@@ -55,7 +51,11 @@
         <activity android:name=".signin.SignInActivity" />
         <activity android:name=".signin.SignInAndRegistActivity" />
         <activity android:name=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

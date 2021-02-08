@@ -15,4 +15,6 @@ data class InfoTiket(
     val terminal:String="",
     val type:String="",
     var namaUser:String=""
-    ):Serializable
+    ):Serializable{
+        var name:String=""
+    }
