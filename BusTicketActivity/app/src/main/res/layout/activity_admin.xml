@@ -6,8 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".admin.AdminActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_admin"
+        android:layout_marginTop="132dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"

@@ -19,9 +19,9 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
     private var datahasil = mutableListOf<DataItemPickup>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tv_menu.text="Admin"
         setContentView(R.layout.activity_admin)
         showlist()
+        tv_menu.text="Admin"
         btn_logout.setOnClickListener(this)
         btn_add_driver.setOnClickListener(this)
         btn_add_ticket.setOnClickListener(this)
