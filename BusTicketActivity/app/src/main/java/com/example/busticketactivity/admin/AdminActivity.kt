@@ -13,11 +13,13 @@ import com.example.busticketactivity.listener.TicketItemListener
 import com.example.busticketactivity.pickticket.DataItemPickup
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_admin.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListener {
     private var datahasil = mutableListOf<DataItemPickup>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        tv_menu.text="Admin"
         setContentView(R.layout.activity_admin)
         showlist()
         btn_logout.setOnClickListener(this)
@@ -43,7 +45,6 @@ class AdminActivity : AppCompatActivity(), TicketItemListener, View.OnClickListe
                 }
             }
         }
-
     }
 
     override fun onItemClick(Nama: String) {

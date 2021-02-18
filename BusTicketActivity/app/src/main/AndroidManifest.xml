@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".admin.AddBusActivity"></activity>
+        <activity android:name=".manager.DetailRekapManagerActivity"></activity>
+        <activity android:name=".admin.AddBusActivity" />
         <activity android:name=".admin.DetailRekapActivity" />
         <activity android:name=".driver.DetailHistoryActivity" />
         <activity android:name=".driver.HistoriActivity" />
@@ -35,10 +36,10 @@
         <activity android:name=".home.InfoActivity" />
         <activity android:name=".infowisata.DetailInfoWisataActivity" />
         <activity android:name=".admin.RekapPerjalananActivity" />
-        <activity android:name=".admin.AdminActivity"></activity>
+        <activity android:name=".admin.AdminActivity" />
         <activity android:name=".home.ProfileActivity" />
         <activity android:name=".driver.DriverActivity" />
-        <activity android:name=".manager.ManagerActivity" >
+        <activity android:name=".manager.ManagerActivity">
 
         </activity>
         <activity android:name=".tiketmenu.DetailTiketActivity" />
@@ -56,6 +57,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
 import com.example.busticketactivity.adapter.PickTicketAdapter
 import com.example.busticketactivity.dataclass.InfoTiket
@@ -17,18 +19,9 @@ import com.example.busticketactivity.dataclass.ItemDataTiket
 import com.example.busticketactivity.dataclass.ManagerGetData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_detail_rekap2.*
-import kotlinx.android.synthetic.main.activity_pick_ticket.rv_pick_ticket
-import kotlinx.android.synthetic.main.activity_pick_ticket.spinner
-import kotlinx.android.synthetic.main.activity_pick_ticket.tv_berangkat
-import kotlinx.android.synthetic.main.activity_pick_ticket.tv_terminal
-import kotlinx.android.synthetic.main.activity_pick_ticket.tv_title_bus
-import kotlinx.android.synthetic.main.activity_pick_ticket.tv_type_bus
+
 import kotlinx.android.synthetic.main.activity_reset_tiket.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import kotlinx.android.synthetic.main.toolbar.*
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import java.io.File
 import java.io.FileOutputStream
@@ -40,6 +33,7 @@ class RekapPerjalananActivity : AppCompatActivity(), ListenerPickTicket,View.OnC
     private var tanggal = ""
     private var listtemp = listOf<InfoTiket>()
     private var list = mutableListOf<InfoTiket>()
+    private var listTujuan= mutableListOf<InfoTiket?>()
     var tag = "RekapPerjalananActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,40 +41,19 @@ class RekapPerjalananActivity : AppCompatActivity(), ListenerPickTicket,View.OnC
         getData()
         val currentTime = SimpleDateFormat("dd-M-yyyy", Locale.getDefault()).format(Date())
         btn_download_rekap.setOnClickListener(this)
-        Loader(currentTime)
         intitateUI()
+        tanggal_berangkat.text=currentTime
         tanggal = currentTime
+        ly_spinner.visibility=View.VISIBLE
     }
 
-    private fun Loader(tanggal: String) {
-        val titleDoc = intent.getStringExtra("title")
-        val firebaseFirestore = FirebaseFirestore.getInstance()
-        spinner.visibility = View.VISIBLE
-        firebaseFirestore.collection("Keberangkatan").document(titleDoc.toString())
-            .collection("posisi").document(tanggal)
-            .get()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    spinner.visibility = View.GONE
-                    val list = it.result!!.toObject(DataItemPickup::class.java)
-                    if (list != null) {
-                        rv_pick_ticket.layoutManager = GridLayoutManager(this, 5)
-                        val listItemAdapter = RekapAdapter(list.posisi, this)
-                        listItemAdapter.notifyDataSetChanged()
-                        rv_pick_ticket.adapter = listItemAdapter
-                    }
-                }
-            }
-    }
+
 
     private fun intitateUI() {
         val newData = DataTiket()
-        if (newData != null) {
-            tv_title_bus.text = newData.nama
-            tv_type_bus.text = newData.id
-            tv_terminal.text = newData.terminal
-            tv_berangkat.text = newData.pergi
-        }
+        tv_jam_berangkat.text=newData!!.pergi
+        tv_menu.text=newData.nama
+
     }
 
     private fun DataTiket(): ItemDataTiket? {
@@ -106,6 +79,16 @@ class RekapPerjalananActivity : AppCompatActivity(), ListenerPickTicket,View.OnC
                         Log.d(tag, "data tiket $list")
                     }
                 }
+                listTujuan.addAll(list.filter { get->
+                    get.id==newData!!.id && get.type==newData.type && get.pergi==newData.pergi && get.tanggal==tanggal
+                })
+                rv_admin_rekap.apply {
+                    layoutManager=LinearLayoutManager(this@RekapPerjalananActivity,RecyclerView.VERTICAL,false)
+                    adapter=RekapAdapter(listTujuan,this@RekapPerjalananActivity)
+                }
+                ly_spinner.visibility=View.GONE}
+            else{
+                ly_spinner.visibility=View.GONE
             }
         }
     }
@@ -123,16 +106,16 @@ class RekapPerjalananActivity : AppCompatActivity(), ListenerPickTicket,View.OnC
         row.createCell(6).setCellValue("Tipe Bus")
         row.createCell(7).setCellValue("Nama Pembeli")
 
-        for (i in 0 until list.size) {
+        for (i in 0 until listTujuan.size) {
             val row = sheet.createRow(i + 1)
-            row.createCell(0).setCellValue(list[i].email)
-            row.createCell(1).setCellValue(list[i].harga)
-            row.createCell(2).setCellValue(list[i].nama)
-            row.createCell(3).setCellValue(list[i].nomorKursi)
-            row.createCell(4).setCellValue(list[i].pergi)
-            row.createCell(5).setCellValue(list[i].tanggalBeli)
-            row.createCell(6).setCellValue(list[i].type)
-            row.createCell(7).setCellValue(list[i].namaUser)
+            row.createCell(0).setCellValue(listTujuan[i]!!.email)
+            row.createCell(1).setCellValue(listTujuan[i]!!.harga)
+            row.createCell(2).setCellValue(listTujuan[i]!!.nama)
+            row.createCell(3).setCellValue(listTujuan[i]!!.nomorKursi)
+            row.createCell(4).setCellValue(listTujuan[i]!!.pergi)
+            row.createCell(5).setCellValue(listTujuan[i]!!.tanggalBeli)
+            row.createCell(6).setCellValue(listTujuan[i]!!.type)
+            row.createCell(7).setCellValue(listTujuan[i]!!.namaUser)
         }
         val extStorageDirectory = getExternalFilesDir(null)?.absolutePath
         val folder = File("$extStorageDirectory/RekapPerjalananAdmin.xls")

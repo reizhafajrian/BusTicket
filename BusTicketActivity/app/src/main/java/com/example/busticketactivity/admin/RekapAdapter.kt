@@ -6,16 +6,18 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busticketactivity.R
-import com.example.busticketactivity.firebase.DataClassIsKosong
+import com.example.busticketactivity.dataclass.InfoTiket
+import com.example.busticketactivity.firebase.FireBaseRepo
 import com.example.busticketactivity.listener.ListenerPickTicket
-import kotlinx.android.synthetic.main.item_pick_ticket.view.*
+import kotlinx.android.synthetic.main.activity_detail_rekap2.*
+import kotlinx.android.synthetic.main.item_rekap_tujuan.view.*
 
-class RekapAdapter(private val list: MutableList<DataClassIsKosong?>, var listener: ListenerPickTicket):RecyclerView.Adapter<RekapAdapter.ListViewHolder>(){
+class RekapAdapter(private val list: MutableList<InfoTiket?>, var listener: ListenerPickTicket):RecyclerView.Adapter<RekapAdapter.ListViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ListViewHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_pick_ticket,parent,false)
+        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_rekap_tujuan,parent,false)
         return ListViewHolder(view)
     }
 
@@ -31,20 +33,22 @@ class RekapAdapter(private val list: MutableList<DataClassIsKosong?>, var listen
     }
 
     inner class ListViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        fun bind(item:DataClassIsKosong){
-            val hasil=item
-            val color=hasil.isKosong
-
-
+        fun bind(item:InfoTiket){
+            FireBaseRepo().getUserNama(item.email).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val data =
+                        it.result?.toObjects(getName::class.java)
+                    itemView.tv_nama_penumpang.text = data!![0].nama
+                }
+            }
             with(itemView){
-                tv_nomor.text=hasil.nomor
+                tv_id.text=item.nomorKursi
+                tv_email.text=item.email
+                tv_harga.text=item.harga
+                tv_type_bus.text=item.type
 
-                if (color==true){
-                    itemView.cd_available.setCardBackgroundColor(ContextCompat.getColor(itemView.context,R.color.colorRed))
-                }
-                else{
-                    cd_available.setOnClickListener { listener.onClicks(hasil.nomor!!) }
-                }
+                cv_item.setOnClickListener { listener.onClicks(item.nomorKursi) }
+
 
             }
         }
